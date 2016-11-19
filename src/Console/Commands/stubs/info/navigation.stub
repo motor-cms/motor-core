@@ -1,0 +1,7 @@
+'{{pluralSnake}}' => [
+	'name'  => 'backend/{{pluralSnake}}.{{pluralSnake}}',
+	'icon'  => 'fa fa-plus',
+	'route' => 'backend.{{pluralSnake}}.index',
+	'roles'       => [ 'SuperAdmin' ],
+	'permissions' => [],
+],

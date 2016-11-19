@@ -1,0 +1,15 @@
+@extends('layouts.app')
+
+@section('htmlheader_title')
+    {{ trans('backend.global.home') }}
+@endsection
+
+@section('contentheader_title')
+    {{ trans('backend/{{pluralSnake}}.edit') }}
+    {!! link_to_action('Backend\{{pluralStudly}}Controller@index', trans('backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
+@endsection
+
+@section('main-content')
+	@include('errors.list')
+	@include('backend.{{pluralSnake}}.form')
+@endsection

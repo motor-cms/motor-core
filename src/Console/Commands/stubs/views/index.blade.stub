@@ -1,0 +1,33 @@
+@extends('layouts.app')
+
+@section('htmlheader_title')
+    {{ trans('backend.global.home') }}
+@endsection
+
+@section('contentheader_title')
+    {{ trans('backend/{{pluralSnake}}.{{pluralSnake}}') }}
+    {!! link_to_action('Backend\{{pluralStudly}}Controller@create', trans('backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+@endsection
+
+@section('main-content')
+	<div class="box">
+		<div class="box-header">
+			@include('backend.partials.search')
+		</div>
+		<!-- /.box-header -->
+		@if (isset($grid))
+			@include('grid.table')
+		@endif
+	</div>
+@endsection
+
+@section('view_scripts')
+    <script type="text/javascript">
+        $('.delete-record').click(function (e) {
+            if (!confirm('{{ trans('backend/global.delete_question') }}')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
+@endsection

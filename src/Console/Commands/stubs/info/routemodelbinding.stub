@@ -1,0 +1,3 @@
+$router->bind('{{pluralSnake}}', function($id){
+	return \App\{{singularStudly}}::findOrFail($id);
+});

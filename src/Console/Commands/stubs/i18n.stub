@@ -1,0 +1,12 @@
+<?php
+
+return [
+    '{{pluralSnake}}' => '{{pluralTitle}}',
+    '{{singularSnake}}' => '{{singularTitle}}',
+    'new'     => 'Create {{singularLowercase}}',
+    'edit'    => 'Edit {{singularLowercase}}',
+    'save'    => 'Save {{singularLowercase}}'
+    'created' => '{{singularLowercase}} created'
+    'updated' => 'Save {{singularLowercase}} updated'
+    'deleted' => 'Save {{singularLowercase}} deleted'
+];

@@ -1,0 +1,17 @@
+<?php
+
+namespace DummyRootNamespaceGrids;
+
+use App\Motor\Grid\Grid;
+
+class DummyGrid extends Grid
+{
+
+    protected function setup()
+    {
+        $this->addColumn('id', 'ID', true);
+        $this->setDefaultSorting('id', 'ASC');
+        $this->addEditAction(trans('backend/global.edit'), 'Backend\DummyController@edit');
+        $this->addDeleteAction(trans('backend/global.delete'), 'Backend\DummyController@destroy');
+    }
+}
