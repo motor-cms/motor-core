@@ -6,7 +6,7 @@
 
 @section('contentheader_title')
     {{ trans('backend/{{pluralSnake}}.{{pluralSnake}}') }}
-    {!! link_to_action('Backend\{{pluralStudly}}Controller@create', trans('backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+    {!! link_to_route('backend.{{pluralSnake}}.create', trans('backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
 @endsection
 
 @section('main-content')

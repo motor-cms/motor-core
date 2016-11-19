@@ -94,7 +94,7 @@ class DummyClass extends Controller
     {
         $form = $this->form(DummyForm::class, [
             'method'  => 'PATCH',
-            'url'     => action('Backend\DummyClass@update', [ $record->id ]),
+            'url'     => route('backend.DummyView.update', [ $record->id ]),
             'enctype' => 'multipart/form-data',
             'model'   => $record
         ]);
