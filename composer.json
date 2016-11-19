@@ -1,0 +1,23 @@
+{
+  "name": "dfox288/Motor-Core",
+  "description": "Motor base package",
+  "license": "MIT",
+  "keywords": [
+    "motor"
+  ],
+  "authors": [
+    {
+      "name": "Reza Esmaili",
+      "email": "me@dfox.info"
+    }
+  ],
+  "require": {},
+  "require-dev": {
+    "phpunit/phpunit": "4.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Motor\\Core\\": "src"
+    }
+  }
+}
