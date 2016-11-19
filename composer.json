@@ -19,5 +19,6 @@
     "psr-4": {
       "Motor\\Core\\": "src"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
