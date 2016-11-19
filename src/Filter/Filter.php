@@ -57,7 +57,7 @@ class Filter
         if (Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))->setOptions([Auth::user()->client_id => Auth::user()->client->name])->setDefaultValue(Auth::user()->client_id)->isVisible(false);
         } else {
-            $this->add(new SelectRenderer('client_id'))->setOptions(\App\Client::lists('name', 'id'));
+            $this->add(new SelectRenderer('client_id'))->setOptions(\App\Models\Client::lists('name', 'id'));
         }
     }
 

@@ -14,7 +14,7 @@ use Motor\Core\Console\Commands\MotorMakeModuleCommand;
 use Motor\Core\Console\Commands\MotorMakeRequestCommand;
 use Motor\Core\Console\Commands\MotorMakeViewCommand;
 
-class MotorServiceProdiver extends ServiceProvider
+class MotorServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
