@@ -1,4 +1,5 @@
-'{{pluralSnake}}' => [
+'{{pluralSnake}}' => [ // <-- !!! replace {{pluralSnake}} with integer !!!
+	'slug' => '{{pluralSnake}}'
 	'name'  => 'backend/{{pluralSnake}}.{{pluralSnake}}',
 	'icon'  => 'fa fa-plus',
 	'route' => 'backend.{{pluralSnake}}.index',

@@ -11,7 +11,7 @@ class DummyGrid extends Grid
     {
         $this->addColumn('id', 'ID', true);
         $this->setDefaultSorting('id', 'ASC');
-        $this->addEditAction(trans('backend/global.edit'), 'backend.DummyView.edit');
-        $this->addDeleteAction(trans('backend/global.delete'), 'backend.DummyView.destroy');
+        $this->addEditAction(trans('motor-backend::backend/global.edit'), 'backend.DummyView.edit');
+        $this->addDeleteAction(trans('motor-backend::backend/global.delete'), 'backend.DummyView.destroy');
     }
 }

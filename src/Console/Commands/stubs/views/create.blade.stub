@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('htmlheader_title')
-    {{ trans('backend.global.home') }}
+    {{ trans('motor-backend::backend/global.home') }}
 @endsection
 
 @section('contentheader_title')
     {{ trans('backend/{{pluralSnake}}.new') }}
-    {!! link-to_route('backend.{{pluralSnake}}.index', trans('backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
+    {!! link-to_route('backend.{{pluralSnake}}.index', trans('motor-backend::backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
 @endsection
 
 @section('main-content')
