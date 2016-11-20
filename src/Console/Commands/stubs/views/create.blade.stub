@@ -6,10 +6,10 @@
 
 @section('contentheader_title')
     {{ trans('backend/{{pluralSnake}}.new') }}
-    {!! link-to_route('backend.{{pluralSnake}}.index', trans('motor-backend::backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
+    {!! link_to_route('backend.{{pluralSnake}}.index', trans('motor-backend::backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
 @endsection
 
 @section('main-content')
-	@include('errors.list')
+	@include('motor-backend::errors.list')
 	@include('backend.{{pluralSnake}}.form')
 @endsection
