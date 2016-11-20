@@ -9,7 +9,7 @@ class SearchRenderer extends Base
 
     public function render()
     {
-        return view('motor.filters.search', [ 'value' => $this->getValue() ]);
+        return view('motor-backend::filters.search', [ 'value' => $this->getValue() ]);
     }
 
 

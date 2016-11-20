@@ -19,7 +19,7 @@ class PerPageRenderer extends Base
 
     public function render()
     {
-        return view('motor.filters.select',
+        return view('motor-backend::filters.select',
             [ 'name' => $this->name, 'options' => $this->options, 'value' => $this->getValue() ]);
 
     }

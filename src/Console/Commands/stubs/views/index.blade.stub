@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('motor-backend::layouts.backend')
 
 @section('htmlheader_title')
     {{ trans('motor-backend::backend/global.home') }}
