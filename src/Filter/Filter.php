@@ -8,7 +8,7 @@ use Auth;
 class Filter
 {
 
-    protected $grid;
+    protected $parent;
 
     protected $filters = [];
 
@@ -22,9 +22,12 @@ class Filter
      *
      * @param $model
      */
-    public function __construct($grid)
+    public function __construct($parent)
     {
-        $this->grid = $grid;
+        $this->parent = $parent;
+        if (is_object($parent)) {
+            $this->parent = get_class($parent);
+        }
     }
 
 
@@ -45,7 +48,7 @@ class Filter
 
     public function add(Base $filter)
     {
-        $filter->setBaseName(get_class($this->grid));
+        $filter->setBaseName($this->parent);
         $filter->updateValues();
         $this->filters[$filter->getName()] = $filter;
 

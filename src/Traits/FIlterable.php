@@ -19,4 +19,18 @@ trait Filterable
         return $scope;
     }
 
+    public function scopeFilteredByMultiple(Builder $scope, Filter $filter)
+    {
+        foreach ($filter->filters() as $name => $filter) {
+            if ($name == 'per_page') {
+                continue;
+            }
+            if ( ! is_null($filter->getValue())) {
+                $scope = $filter->query($scope);
+            }
+        }
+
+        return $scope;
+    }
+
 }
