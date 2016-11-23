@@ -6,7 +6,7 @@
 
 @section('contentheader_title')
     {{ trans('backend/{{pluralSnake}}.{{pluralSnake}}') }}
-    @if (Auth::user()->hasRole('SuperAdmin') || Auth::user()->hasPermissionTo('{{pluralSnake}}.write'))
+    @if (has_permission('{{pluralSnake}}.write'))
 	    {!! link_to_route('backend.{{pluralSnake}}.create', trans('backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
