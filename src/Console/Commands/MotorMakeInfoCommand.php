@@ -56,15 +56,27 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         return __DIR__ . '/stubs/info/permissions.stub';
     }
 
+    protected function makeDirectory($directory)
+    {
+        $filesystem = new Filesystem();
+        if ( ! $filesystem->isDirectory($directory)) {
+            $filesystem->makeDirectory($directory, 0755, true);
+        }
+    }
+
     protected function getTargetTestHelperFile()
     {
-        $basePath = ( ! is_null($this->option('path')) ? $this->option('path') . '/../tests' : resource_path() . '/../tests' );
-        return $basePath . '/helpers/test_helper.php';
+        $basePath = ( ! is_null($this->option('path')) ? $this->option('path') . '/../tests/helpers' : resource_path() . '/../tests/helpers' );
+        $this->makeDirectory($basePath);
+
+        return $basePath . '/test_helper.php';
     }
 
     protected function getTargetModelFactoryFile()
     {
         $basePath = ( ! is_null($this->option('path')) ? $this->option('path') . '/../database/factories' : resource_path() . '/../database/factories' );
+        $this->makeDirectory($basePath);
+
         return $basePath . '/ModelFactory.php';
     }
 
