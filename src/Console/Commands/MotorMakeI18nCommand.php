@@ -11,7 +11,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
      *
      * @var string
      */
-    protected $signature = 'motor:make:i18n {name} {locale=en}';
+    protected $signature = 'motor:make:i18n {name} {locale=en} {--path=} {--namespace=}';
 
     /**
      * The console command description.
@@ -22,7 +22,8 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
     
     protected function getTargetPath()
     {
-        return resource_path('lang').'/'.strtolower($this->argument('locale')).'/backend/';
+        $basePath = (!is_null($this->option('path')) ? $this->option('path').'/../resources/lang' : resource_path('lang'));
+        return $basePath.'/'.strtolower($this->argument('locale')).'/backend/';
     }
 
     protected function getTargetFile()

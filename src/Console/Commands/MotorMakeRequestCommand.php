@@ -6,7 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-class MotorMakeRequestCommand extends GeneratorCommand
+class MotorMakeRequestCommand extends MotorMakeControllerCommand
 {
 
     /**
@@ -15,6 +15,8 @@ class MotorMakeRequestCommand extends GeneratorCommand
      * @var string
      */
     protected $name = 'motor:make:request';
+
+    protected $signature = 'motor:make:request {name} {--path=} {--namespace=}';
 
     /**
      * The console command description.

@@ -6,7 +6,7 @@ use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
-class MotorMakeModelCommand extends GeneratorCommand
+class MotorMakeModelCommand extends MotorMakeControllerCommand
 {
 
     /**
@@ -15,6 +15,8 @@ class MotorMakeModelCommand extends GeneratorCommand
      * @var string
      */
     protected $name = 'motor:make:model';
+
+    protected $signature = 'motor:make:model {name} {--path=} {--namespace=}';
 
     /**
      * The console command description.
@@ -50,6 +52,6 @@ class MotorMakeModelCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace;
+        return $rootNamespace.'\Models';
     }
 }

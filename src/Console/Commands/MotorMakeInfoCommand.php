@@ -13,7 +13,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
      *
      * @var string
      */
-    protected $signature = 'motor:make:info {name}';
+    protected $signature = 'motor:make:info {name} {--path=} {--namespace=}';
 
     /**
      * The console command description.
@@ -41,6 +41,16 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         return __DIR__ . '/stubs/info/routemodelbinding.stub';
     }
 
+    protected function getModelFactoryStub()
+    {
+        return __DIR__ . '/stubs/info/modelfactory.stub';
+    }
+
+    protected function getTestHelperStub()
+    {
+        return __DIR__ . '/stubs/info/testhelper.stub';
+    }
+
     /**
      * Execute the console command.
      *
@@ -57,13 +67,25 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $routeModelBinding = file_get_contents($this->getRouteModelBindingStub());
         $routeModelBinding = $this->replaceTemplateVars($routeModelBinding);
 
-        $this->info('Add this to an items array in your app/config/backend/navigation.php');
+        $modelFactory = file_get_contents($this->getModelFactoryStub());
+        $modelFactory = $this->replaceTemplateVars($modelFactory);
+
+        $testHelper = file_get_contents($this->getTestHelperStub());
+        $testHelper = $this->replaceTemplateVars($testHelper);
+
+        $this->info('Add this to an items array in your app/config/motor-backend-navigation.php');
         echo $navigation."\n";
 
-        $this->info('Add this to the backend route group in your app/Http/routes.php');
+        $this->info('Add this to the backend and api route groups in your routes/web.php and routes/api.php');
         echo $route."\n";
 
-        $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php');
+        $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php (or your own service provider)');
         echo $routeModelBinding."\n";
+
+        $this->info('Add this to your database/factories/ModelFactory.php');
+        echo $modelFactory."\n";
+
+        $this->info('Add this to your tests/helpers/test_helper.php (you might need to create the file first)');
+        echo $testHelper."\n";
     }
 }

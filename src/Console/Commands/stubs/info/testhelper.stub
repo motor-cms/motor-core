@@ -1,0 +1,4 @@
+function create_test_{{singularSnake}}($count = 1)
+{
+    return factory({{namespace}}Models\{{singularStudly}}::class, $count)->create();
+}

@@ -5,11 +5,11 @@
 @endsection
 
 @section('contentheader_title')
-    {{ trans('backend/{{pluralSnake}}.new') }}
+    {{ trans('{{packageName}}backend/{{pluralSnake}}.new') }}
     {!! link_to_route('backend.{{pluralSnake}}.index', trans('motor-backend::backend/global.back'), [], ['class' => 'pull-right btn btn-sm btn-danger']) !!}
 @endsection
 
 @section('main-content')
 	@include('motor-backend::errors.list')
-	@include('backend.{{pluralSnake}}.form')
+	@include('{{packageName}}backend.{{pluralSnake}}.form')
 @endsection

@@ -1,0 +1,92 @@
+<?php
+
+namespace DummyNamespace;
+
+use Motor\Backend\Http\Controllers\Controller;
+
+use DummyRootNamespaceModels\DummyModel;
+use DummyRootNamespaceHttp\Requests\Backend\DummyRequest;
+use DummyRootNamespaceServices\DummyService;
+use DummyRootNamespaceTransformers\DummyTransformer;
+
+class DummyClass extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $paginator = DummyService::collection()->getPaginator();
+        $resource = $this->transformPaginator($paginator, DummyTransformer::class);
+
+        return $this->respondWithJson('DummySingularTitle collection read', $resource);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store(DummyRequest $request)
+    {
+        $result = DummyService::create($request)->getResult();
+        $resource = $this->transformItem($result, DummyTransformer::class);
+
+        return $this->respondWithJson('DummySingularTitle created', $resource);
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show(DummyModel $record)
+    {
+        $result = DummyService::show($record)->getResult();
+        $resource = $this->transformItem($result, DummyTransformer::class);
+
+        return $this->respondWithJson('DummySingularTitle read', $resource);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(DummyRequest $request, DummyModel $record)
+    {
+        $result = DummyService::update($record, $request)->getResult();
+        $resource = $this->transformItem($result, DummyTransformer::class);
+
+        return $this->respondWithJson('DummySingularTitle updated', $resource);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DummyModel $record)
+    {
+        $result = DummyService::delete($record)->getResult();
+
+        if ($result) {
+            return $this->respondWithJson('DummySingularTitle deleted', ['success' => true]);
+        }
+        return $this->respondWithJson('DummySingularTitle NOT deleted', ['success' => false]);
+    }
+}

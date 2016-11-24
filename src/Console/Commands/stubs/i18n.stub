@@ -5,8 +5,10 @@ return [
     '{{singularSnake}}' => '{{singularTitle}}',
     'new'     => 'Create {{singularLowercase}}',
     'edit'    => 'Edit {{singularLowercase}}',
-    'save'    => 'Save {{singularLowercase}}'
-    'created' => '{{singularLowercase}} created'
-    'updated' => 'Save {{singularLowercase}} updated'
-    'deleted' => 'Save {{singularLowercase}} deleted'
+    'save'    => 'Save {{singularLowercase}}',
+    'created' => '{{singularTitle}} created',
+    'updated' => '{{singularTitle}} updated',
+    'deleted' => '{{singularTitle}} deleted',
+
+    'name' => 'Name',
 ];

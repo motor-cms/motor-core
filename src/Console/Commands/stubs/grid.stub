@@ -2,7 +2,7 @@
 
 namespace DummyRootNamespaceGrids;
 
-use App\Motor\Grid\Grid;
+use Motor\Backend\Grid\Grid;
 
 class DummyGrid extends Grid
 {

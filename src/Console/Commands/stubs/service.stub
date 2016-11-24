@@ -1,0 +1,12 @@
+<?php
+
+namespace DummyRootNamespaceServices;
+
+use DummyRootNamespaceModels\DummyModel;
+use Motor\Backend\Services\BaseService;
+
+class DummyService extends BaseService
+{
+
+    protected $model = DummyModel::class;
+}

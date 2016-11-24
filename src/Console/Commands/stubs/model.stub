@@ -4,6 +4,7 @@ namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
 use Sofa\Eloquence\Eloquence;
+use Motor\Core\Traits\Filterable;
 //use Culpa\Traits\Blameable;
 //use Culpa\Traits\CreatedBy;
 //use Culpa\Traits\DeletedBy;
@@ -12,6 +13,7 @@ use Sofa\Eloquence\Eloquence;
 class DummyClass extends Model
 {
     use Eloquence;
+	use Filterable;
 //    use Blameable, CreatedBy, UpdatedBy, DeletedBy;
 
     /**

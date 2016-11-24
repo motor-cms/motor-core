@@ -4,6 +4,7 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Motor\Core\Helpers\GeneratorHelper;
 
 abstract class MotorAbstractCommand extends Command
 {
@@ -23,6 +24,15 @@ abstract class MotorAbstractCommand extends Command
         $singularSnake = Str::snake(Str::singular($this->argument('name')));
         $pluralSnake   = Str::snake(Str::plural($this->argument('name')));
 
+        $namespace = ( ! is_null($this->option('namespace')) ? $this->option('namespace') . '\\' : $this->laravel->getNamespace() );
+        $namespace = str_replace('/', '\\', $namespace);
+
+        // Guess package name to prefix the views and i18n location
+        $packageName = '';
+        if (!is_null($this->option('namespace'))) {
+            $packageName = str_replace('/', '-', strtolower($this->option('namespace'))).'::';
+        }
+
         return [
             'singularSnake'     => $singularSnake,
             'pluralSnake'       => $pluralSnake,
@@ -32,6 +42,8 @@ abstract class MotorAbstractCommand extends Command
             'pluralLowercase'   => Str::lower(str_replace('_', ' ', $pluralSnake)),
             'singularStudly'    => Str::studly($singularSnake),
             'pluralStudly'      => Str::studly($pluralSnake),
+            'namespace'         => $namespace,
+            'packageName'       => $packageName,
         ];
     }
 

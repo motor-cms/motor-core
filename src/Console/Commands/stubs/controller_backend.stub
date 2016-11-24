@@ -2,13 +2,15 @@
 
 namespace DummyNamespace;
 
-use DummyRootNamespaceHttp\Requests;
-use DummyRootNamespaceHttp\Controllers\Controller;
-use DummyRootNamespaceDummyModel;
+use Motor\Backend\Http\Controllers\Controller;
+
+use DummyRootNamespaceModels\DummyModel;
 use DummyRootNamespaceHttp\Requests\Backend\DummyRequest;
+use DummyRootNamespaceServices\DummyService;
 use DummyRootNamespaceGrids\DummyGrid;
+use DummyRootNamespaceForms\Backend\DummyForm;
+
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\Backend\DummyForm;
 
 class DummyClass extends Controller
 {
@@ -21,10 +23,13 @@ class DummyClass extends Controller
      */
     public function index()
     {
-        $grid      = new DummyGrid(DummyModel::class);
-        $paginator = $grid->getPaginator();
+        $grid = new DummyGrid(DummyModel::class);
 
-        return view('backend.DummyView.index', compact('paginator', 'grid'));
+        $service = DummyService::collection($grid);
+        $grid->filter = $service->getFilter();
+        $paginator    = $service->getPaginator();
+
+        return view('DummyPackageNamebackend.DummyView.index', compact('paginator', 'grid'));
     }
 
 
@@ -41,7 +46,7 @@ class DummyClass extends Controller
             'enctype' => 'multipart/form-data'
         ]);
 
-        return view('backend.DummyView.create', compact('form'));
+        return view('DummyPackageNamebackend.DummyView.create', compact('form'));
     }
 
 
@@ -61,10 +66,9 @@ class DummyClass extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $record = new DummyModel($this->handleInputValues($form, $request->all()));
-        $record->save();
+        DummyService::createWithForm($request, $form);
 
-        flash()->success(trans('backend/DummyView.created'));
+        flash()->success(trans('DummyPackageNamebackend/DummyView.created'));
 
         return redirect('backend/DummyView');
     }
@@ -99,7 +103,7 @@ class DummyClass extends Controller
             'model'   => $record
         ]);
 
-        return view('backend.DummyView.edit', compact('form'));
+        return view('DummyPackageNamebackend.DummyView.edit', compact('form'));
     }
 
 
@@ -120,9 +124,9 @@ class DummyClass extends Controller
             return redirect()->back()->withErrors($form->getErrors())->withInput();
         }
 
-        $record->update($this->handleInputValues($form, $request->all()));
+        DummyService::updateWithForm($record, $request, $form);
 
-        flash()->success(trans('backend/DummyView.updated'));
+        flash()->success(trans('DummyPackageNamebackend/DummyView.updated'));
 
         return redirect('backend/DummyView');
     }
@@ -137,9 +141,9 @@ class DummyClass extends Controller
      */
     public function destroy(DummyModel $record)
     {
-        $record->delete();
+        DummyService::delete($record);
 
-        flash()->success(trans('backend/DummyView.deleted'));
+        flash()->success(trans('DummyPackageNamebackend/DummyView.deleted'));
 
         return redirect('backend/DummyView');
     }

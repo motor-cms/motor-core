@@ -5,7 +5,7 @@ namespace Motor\Core\Console\Commands;
 use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Support\Str;
 
-class MotorMakeGridCommand extends MotorMakeControllerCommand
+class MotorMakeTransformerCommand extends MotorMakeControllerCommand
 {
 
     /**
@@ -13,18 +13,18 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      *
      * @var string
      */
-    protected $name = 'motor:make:grid';
+    protected $name = 'motor:make:transformer';
 
-    protected $signature = 'motor:make:grid {name} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:transformer {name} {--path=} {--namespace=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new motor grid class';
+    protected $description = 'Create a new motor transformer class';
 
-    protected $type = 'Grid';
+    protected $type = 'Transformer';
 
     /**
      * Get the default namespace for the class.
@@ -34,7 +34,7 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Grids';
+        return $rootNamespace.'\Transformers';
     }
 
 
@@ -45,7 +45,7 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/grid.stub';
+        return __DIR__ . '/stubs/transformer.stub';
     }
 
     /**
@@ -58,18 +58,19 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
     protected function replaceNamespace(&$stub, $name)
     {
         $class = last(explode('/', $this->getNameInput()));
-        $classBase = Str::singular(str_replace('Grid', '', $class));
+
+        $class = Str::singular($class);
 
         $stub = str_replace(
             'DummyRootNamespace', $this->getRootNamespace(), $stub
         );
 
         $stub = str_replace(
-            'DummyGrid', $class, $stub
+            'DummyTransformer', $class, $stub
         );
 
         $stub = str_replace(
-            'DummyView', Str::plural(Str::snake($classBase)), $stub
+            'DummyModel', str_replace('Transformer', '', $class), $stub
         );
 
         return $this;

@@ -5,9 +5,9 @@
 @endsection
 
 @section('contentheader_title')
-    {{ trans('backend/{{pluralSnake}}.{{pluralSnake}}') }}
+    {{ trans('{{packageName}}backend/{{pluralSnake}}.{{pluralSnake}}') }}
     @if (has_permission('{{pluralSnake}}.write'))
-	    {!! link_to_route('backend.{{pluralSnake}}.create', trans('backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
+	    {!! link_to_route('backend.{{pluralSnake}}.create', trans('{{packageName}}backend/{{pluralSnake}}.new'), [], ['class' => 'pull-right btn btn-sm btn-success']) !!}
     @endif
 @endsection
 
