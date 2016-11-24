@@ -1,4 +1,4 @@
-'{{pluralSnake}}' => [ // <-- !!! replace {{pluralSnake}} with integer !!!
+{{randomInteger}} => [ // <-- !!! replace {{randomInteger}} with your own sort position !!!
 	'slug' => '{{pluralSnake}}',
 	'name'  => 'backend/{{pluralSnake}}.{{pluralSnake}}',
 	'icon'  => 'fa fa-plus',

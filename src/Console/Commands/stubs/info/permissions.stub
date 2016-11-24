@@ -1,0 +1,8 @@
+'{{pluralSnake}}'         => [
+	'name'   => '{{packageName}}backend/{{pluralSnake}}.{{pluralSnake}}',
+	'values' => [
+		'read',
+		'write',
+		'delete'
+	]
+],

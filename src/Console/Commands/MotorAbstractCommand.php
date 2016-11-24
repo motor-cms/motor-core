@@ -29,8 +29,8 @@ abstract class MotorAbstractCommand extends Command
 
         // Guess package name to prefix the views and i18n location
         $packageName = '';
-        if (!is_null($this->option('namespace'))) {
-            $packageName = str_replace('/', '-', strtolower($this->option('namespace'))).'::';
+        if ( ! is_null($this->option('namespace'))) {
+            $packageName = str_replace('/', '-', strtolower($this->option('namespace'))) . '::';
         }
 
         return [
@@ -44,6 +44,7 @@ abstract class MotorAbstractCommand extends Command
             'pluralStudly'      => Str::studly($pluralSnake),
             'namespace'         => $namespace,
             'packageName'       => $packageName,
+            'randomInteger'     => rand(101, 999)
         ];
     }
 
