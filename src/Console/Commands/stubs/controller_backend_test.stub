@@ -104,7 +104,7 @@ class Backend{{singularStudly}}Test extends TestCase
     }
 
     /** @test */
-    public function can_click_the_create_button()
+    public function can_click_the_{{singularSnake}}_create_button()
     {
         $this->visit('/backend/{{pluralSnake}}')
             ->click('Create {{singularLowercase}}')
@@ -169,7 +169,7 @@ class Backend{{singularStudly}}Test extends TestCase
     }
 
     /** @test */
-    public function can_paginate_results()
+    public function can_paginate_{{singularSnake}}_results()
     {
         $records = create_test_{{singularSnake}}(100);
         $this->visit('/backend/{{pluralSnake}}')
@@ -180,9 +180,9 @@ class Backend{{singularStudly}}Test extends TestCase
     }
 
     /** @test */
-    public function can_search_results()
+    public function can_search_{{singularSnake}}_results()
     {
-        $records = create_test_{{singularSnake}}(100);
+        $records = create_test_{{singularSnake}}(10);
         $this->visit('/backend/{{pluralSnake}}')
             ->type(substr($records[6]->name, 0, 3), 'search')
             ->press('grid-search-button')

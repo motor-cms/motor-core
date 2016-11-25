@@ -1,5 +1,5 @@
 $factory->define({{namespace}}Models\{{singularStudly}}::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->word.'.'.str_random(20)
+        'name' => $faker->word
     ];
 });

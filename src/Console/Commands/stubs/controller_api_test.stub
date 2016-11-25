@@ -53,14 +53,14 @@ class Api{{singularStudly}}Test extends TestCase
     /**
      * @test
      */
-    public function returns_403_if_not_authenticated()
+    public function returns_403_for_{{singularSnake}}_if_not_authenticated()
     {
         $this->json('GET', '/api/{{pluralSnake}}/1')->seeStatusCode(401)->seeJson([ 'error' => 'Unauthenticated.' ]);
     }
 
 
     /** @test */
-    public function returns_404_for_non_existing_record()
+    public function returns_404_for_non_existing_{{singularSnake}}_record()
     {
         $this->user->givePermissionTo($this->readPermission);
         $this->json('GET', '/api/{{pluralSnake}}/1?api_token=' . $this->user->api_token)->seeStatusCode(404)->seeJson([
@@ -70,7 +70,7 @@ class Api{{singularStudly}}Test extends TestCase
 
 
     /** @test */
-    public function fails_if_trying_to_create_without_payload()
+    public function fails_if_trying_to_create_{{singularSnake}}_without_payload()
     {
         $this->user->givePermissionTo($this->writePermission);
         $this->json('POST', '/api/{{pluralSnake}}?api_token=' . $this->user->api_token)->seeStatusCode(422)->seeJson([
@@ -80,7 +80,7 @@ class Api{{singularStudly}}Test extends TestCase
 
 
     /** @test */
-    public function fails_if_trying_to_create_without_permission()
+    public function fails_if_trying_to_create_{{singularSnake}}_without_permission()
     {
         $this->json('POST', '/api/{{pluralSnake}}?api_token=' . $this->user->api_token)->seeStatusCode(403)->seeJson([
             'error' => "Access denied."
@@ -155,7 +155,7 @@ class Api{{singularStudly}}Test extends TestCase
 
 
     /** @test */
-    public function can_show_a_second_results_page()
+    public function can_show_a_second_{{singularSnake}}_results_page()
     {
         $this->user->givePermissionTo($this->readPermission);
         create_test_{{singularSnake}}(50);
