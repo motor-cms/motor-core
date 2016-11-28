@@ -32,10 +32,17 @@ class MotorSetpackagedevCommand extends Command
         // Load .env
         $env = file(base_path('.env'));
 
+        $envSet = false;
+
         foreach ($env as $key => $line) {
             if (strpos($line, 'MOTOR_PACKAGE_DEVELOPMENT') !== false) {
                 $env[$key] = 'MOTOR_PACKAGE_DEVELOPMENT='.$this->argument('status');
+                $envSet = true;
             }
+        }
+
+        if (!$envSet) {
+            $env[] = 'MOTOR_PACKAGE_DEVELOPMENT='.$this->argument('status');
         }
 
         file_put_contents(base_path('.env'), implode("", $env));

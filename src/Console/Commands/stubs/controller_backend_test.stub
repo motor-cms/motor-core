@@ -5,7 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use {{namespace}}Models\{{singularStudly}};
 
-class Backend{{singularStudly}}Test extends TestCase
+class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
 {
 
     use DatabaseTransactions;
@@ -58,7 +58,7 @@ class Backend{{singularStudly}}Test extends TestCase
     public function can_see_grid_without_{{singularSnake}}()
     {
         $this->visit('/backend/{{pluralSnake}}')
-            ->see('{{pluralTitle}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.{{pluralSnake}}'))
             ->see('No records');
     }
 
@@ -67,7 +67,7 @@ class Backend{{singularStudly}}Test extends TestCase
     {
         $record = create_test_{{singularSnake}}();
         $this->visit('/backend/{{pluralSnake}}')
-            ->see('{{pluralTitle}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.{{pluralSnake}}'))
             ->see($record->name);
     }
 
@@ -77,10 +77,10 @@ class Backend{{singularStudly}}Test extends TestCase
         $record = create_test_{{singularSnake}}();
         $this->visit('/backend/{{pluralSnake}}')
             ->within('table', function(){
-                $this->click('Edit');
+                $this->click(trans('motor-backend::backend/global.edit'));
             })
             ->seePageIs('/backend/{{pluralSnake}}/'.$record->id.'/edit')
-            ->click('back')
+            ->click(trans('motor-backend::backend/global.back'))
             ->seePageIs('/backend/{{pluralSnake}}');
     }
 
@@ -93,10 +93,10 @@ class Backend{{singularStudly}}Test extends TestCase
             ->see($record->name)
             ->type('Updated {{singularTitle}}', 'name')
             ->within('.box-footer', function(){
-                $this->press('Save {{singularLowercase}}');
+                $this->press(trans('{{packageName}}backend/{{pluralSnake}}.save'));
             })
             ->see('{{singularTitle}} updated')
-            ->see('Updated {{singularTitle}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.updated'))
             ->seePageIs('/backend/{{pluralSnake}}');
 
         $record = {{singularStudly}}::find($record->id);
@@ -107,7 +107,7 @@ class Backend{{singularStudly}}Test extends TestCase
     public function can_click_the_{{singularSnake}}_create_button()
     {
         $this->visit('/backend/{{pluralSnake}}')
-            ->click('Create {{singularLowercase}}')
+            ->click(trans('{{packageName}}backend/{{pluralSnake}}.new'))
             ->seePageIs('/backend/{{pluralSnake}}/create');
     }
 
@@ -115,12 +115,12 @@ class Backend{{singularStudly}}Test extends TestCase
     public function can_create_a_new_{{singularSnake}}()
     {
         $this->visit('/backend/{{pluralSnake}}/create')
-            ->see('Create {{singularLowercase}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.new'))
             ->type('Create {{singularTitle}} Name', 'name')
             ->within('.box-footer', function(){
-                $this->press('Save {{singularLowercase}}');
+                $this->press(trans('{{packageName}}backend/{{pluralSnake}}.save'));
             })
-            ->see('{{singularTitle}} created')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.created'))
             ->see('Create {{singularTitle}} Name')
             ->seePageIs('/backend/{{pluralSnake}}');
     }
@@ -129,9 +129,9 @@ class Backend{{singularStudly}}Test extends TestCase
     public function cannot_create_a_new_{{singularSnake}}_with_empty_fields()
     {
         $this->visit('/backend/{{pluralSnake}}/create')
-            ->see('Create {{singularLowercase}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.new'))
             ->within('.box-footer', function(){
-                $this->press('Save {{singularLowercase}}');
+                $this->press(trans('{{packageName}}backend/{{pluralSnake}}.save'));
             })
             ->see('Data missing!')
             ->seePageIs('/backend/{{pluralSnake}}/create');
@@ -142,12 +142,12 @@ class Backend{{singularStudly}}Test extends TestCase
     {
         $record = create_test_{{singularSnake}}();
         $this->visit('/backend/{{pluralSnake}}/'.$record->id.'/edit')
-            ->see('Edit {{singularLowercase}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.edit'))
             ->type('Modified {{singularTitle}} Name', 'name')
             ->within('.box-footer', function(){
-                $this->press('Save {{singularLowercase}}');
+                $this->press(trans('{{packageName}}backend/{{pluralSnake}}.save'));
             })
-            ->see('{{singularTitle}} updated')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.updated'))
             ->see('Modified {{singularTitle}} Name')
             ->seePageIs('/backend/{{pluralSnake}}');
     }
@@ -161,9 +161,10 @@ class Backend{{singularStudly}}Test extends TestCase
 
         $this->visit('/backend/{{pluralSnake}}')
             ->within('table', function(){
-                $this->press('Delete');
+                $this->press(trans('motor-backend::backend/global.delete'));
             })
-            ->seePageIs('/backend/{{pluralSnake}}');
+            ->seePageIs('/backend/{{pluralSnake}}')
+            ->see(trans('{{packageName}}backend/{{pluralSnake}}.deleted'));
 
         $this->assertCount(0, {{singularStudly}}::all());
     }

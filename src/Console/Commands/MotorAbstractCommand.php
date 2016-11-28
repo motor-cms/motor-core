@@ -43,6 +43,7 @@ abstract class MotorAbstractCommand extends Command
             'singularStudly'    => Str::studly($singularSnake),
             'pluralStudly'      => Str::studly($pluralSnake),
             'namespace'         => $namespace,
+            'namespaceNoSlash'  => str_replace('\\', '', $namespace),
             'packageName'       => $packageName,
             'randomInteger'     => rand(101, 999)
         ];

@@ -36,7 +36,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
     {
         $values = $this->getTemplateVars();
 
-        return ucfirst($this->argument('type')) . $values['singularStudly'] . 'Test.php';
+        return $values['namespaceNoSlash'].ucfirst($this->argument('type')) . $values['singularStudly'] . 'Test.php';
     }
 
 
