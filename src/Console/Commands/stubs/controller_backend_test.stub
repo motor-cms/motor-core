@@ -59,7 +59,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
     {
         $this->visit('/backend/{{pluralSnake}}')
             ->see(trans('{{packageName}}backend/{{pluralSnake}}.{{pluralSnake}}'))
-            ->see('No records');
+            ->see(trans('motor-backend::backend/global.no_records'));
     }
 
     /** @test */
@@ -95,8 +95,8 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->within('.box-footer', function(){
                 $this->press(trans('{{packageName}}backend/{{pluralSnake}}.save'));
             })
-            ->see('{{singularTitle}} updated')
             ->see(trans('{{packageName}}backend/{{pluralSnake}}.updated'))
+            ->see('Updated {{singularTitle}}')
             ->seePageIs('/backend/{{pluralSnake}}');
 
         $record = {{singularStudly}}::find($record->id);
