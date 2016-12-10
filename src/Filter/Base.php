@@ -5,6 +5,8 @@ namespace Motor\Core\Filter;
 class Base
 {
 
+    protected $allowNull = false;
+
     protected $name;
 
     protected $field;
@@ -25,6 +27,7 @@ class Base
         $this->name  = $name;
         $this->field = $name;
     }
+
 
     public function isVisible($visible)
     {
@@ -112,8 +115,8 @@ class Base
         }
 
         // Check if the returnValue is allowed from the options array
-        if (isset( $this->options )) {
-            if ( ! isset( $this->options[$returnValue] )) {
+        if (isset($this->options)) {
+            if ( ! isset($this->options[$returnValue])) {
                 return null;
             }
         }
@@ -143,6 +146,20 @@ class Base
     public function query($query)
     {
         return $query;
+    }
+
+
+    public function setAllowNull($allow)
+    {
+        $this->allowNull = $allow;
+
+        return $this;
+    }
+
+
+    public function getAllowNull()
+    {
+        return $this->allowNull;
     }
 
 }

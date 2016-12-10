@@ -25,7 +25,7 @@ trait Filterable
             if ($name == 'per_page') {
                 continue;
             }
-            if ( ! is_null($filter->getValue())) {
+            if ( ! is_null($filter->getValue()) || $filter->getAllowNull() == true) {
                 $scope = $filter->query($scope);
             }
         }
