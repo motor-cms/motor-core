@@ -115,7 +115,7 @@ class Base
         }
 
         // Check if the returnValue is allowed from the options array
-        if (isset($this->options)) {
+        if (!is_null($this->options)) {
             if ( ! isset($this->options[$returnValue])) {
                 return null;
             }

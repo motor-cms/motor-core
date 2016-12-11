@@ -4,6 +4,7 @@ namespace Motor\Core\Filter\Renderers;
 
 class WhereRenderer extends SelectRenderer
 {
+    protected $options = null;
 
     public function render()
     {
