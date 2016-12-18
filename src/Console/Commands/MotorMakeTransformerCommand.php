@@ -15,7 +15,7 @@ class MotorMakeTransformerCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:transformer';
 
-    protected $signature = 'motor:make:transformer {name} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:transformer {name} {--path=} {--namespace=} {--model=}';
 
     /**
      * The console command description.

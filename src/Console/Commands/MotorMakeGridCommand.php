@@ -15,7 +15,7 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:grid';
 
-    protected $signature = 'motor:make:grid {name} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:grid {name} {--path=} {--namespace=} {--model=}';
 
     /**
      * The console command description.

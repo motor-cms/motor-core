@@ -14,7 +14,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
      *
      * @var string
      */
-    protected $signature = 'motor:make:test {name} {type} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:test {name} {type} {--path=} {--namespace=} {--model=}';
 
     /**
      * The console command description.
