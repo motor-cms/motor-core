@@ -24,10 +24,10 @@ class SearchRenderer extends Base
 
     public function query($query)
     {
-        if (method_exists($query, 'search')) {
+        if (method_exists($query->getModel(), 'scopeSearch')) {
             return $query->search($this->getValue());
         } else {
-            // Fallback solution in case the Eloquence trait is not available but we still want to search through the basic columns (see Navigation model in motor-cms for an example)
+            // Fallback solution in case the searchable trait is not available but we still want to search through the basic columns (see Navigation model in motor-cms for an example)
             if (count($this->searchableColumns) == 0) {
                 return $query;
             }

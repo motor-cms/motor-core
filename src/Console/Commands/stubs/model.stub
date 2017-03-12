@@ -3,7 +3,7 @@
 namespace DummyNamespace;
 
 use Illuminate\Database\Eloquent\Model;
-use Sofa\Eloquence\Eloquence;
+use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
 //use Culpa\Traits\Blameable;
 //use Culpa\Traits\CreatedBy;
@@ -12,7 +12,7 @@ use Motor\Core\Traits\Filterable;
 
 class DummyClass extends Model
 {
-    use Eloquence;
+    use Searchable;
 	use Filterable;
 //    use Blameable, CreatedBy, UpdatedBy, DeletedBy;
 
@@ -24,7 +24,7 @@ class DummyClass extends Model
 //    protected $blameable = array('created', 'updated', 'deleted');
 
     /**
-     * Searchable columns for the Eloquence trait
+     * Searchable columns for the searchable trait
      *
      * @var array
      */

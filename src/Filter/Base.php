@@ -139,7 +139,7 @@ class Base
      */
     protected function setSessionValue($value)
     {
-        return session()->set('filters.' . $this->baseName . '.' . $this->name, $value);
+        return session()->put('filters.' . $this->baseName . '.' . $this->name, $value);
     }
 
 
