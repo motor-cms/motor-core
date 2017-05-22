@@ -55,7 +55,7 @@ trait Searchable
                 $bindings = array_merge_recursive($bindings, $binding);
             }
 
-            $builder->select('*');
+            $builder->select($builder->getModel()->getTable().'.*');
             $builder->selectRaw("max(" . implode(' + ', $cases) . ") as relevance");
             $builder->addBinding($bindings['select'], 'select');
 
