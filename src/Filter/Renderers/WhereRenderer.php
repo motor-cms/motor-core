@@ -14,6 +14,6 @@ class WhereRenderer extends SelectRenderer
 
     public function query($query)
     {
-        return $query->where($this->field, $this->operator, $this->getValue());
+        return $query->where($query->getModel()->getTable().'.'.$this->field, $this->operator, $this->getValue());
     }
 }

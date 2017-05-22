@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Builder;
 trait Searchable
 {
 
+    protected $joins = [];
+
     /**
      * full search base on table field and relation fields
      *
@@ -66,7 +68,7 @@ trait Searchable
             }
         }
 
-        $builder->orderBy('relevance', 'DESC')->groupBy('id');
+        $builder->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
 
         return $result;
     }
@@ -92,6 +94,14 @@ trait Searchable
             list($table, $field) = explode('.', $field);
             $where = $where . 'Has';
 
+            if (!in_array($table, $this->joins)) {
+                $builder->join(str_plural($table).' as '.$table, $table.'_id', $table.'.id');
+                $this->joins[] = $table;
+            }
+            //$table = str_plural($table);
+
+            //$builder->with($table);
+
             return $builder->$where($table, function ($query) use ($field, $q, $searchType) {
                 $query->where($field, $searchType, $q);
                 $query->orWhere($field, $searchType, $q);
@@ -103,7 +113,6 @@ trait Searchable
     /**
      * Build case clause from all words for a single column.
      *
-     * @param  \Sofa\Eloquence\Searchable\Column $column
      * @param  array  $words
      * @return array
      */

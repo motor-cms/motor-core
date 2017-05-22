@@ -13,7 +13,7 @@ trait Filterable
         // Get current filter value
         $currentFilter = $filter->get($column);
         if (!is_null($currentFilter) && !is_null($currentFilter->getValue())) {
-            return $scope->where($column, '=', $currentFilter->getValue());
+            return $scope->where($scope->getModel()->getTable().'.'.$column, '=', $currentFilter->getValue());
         }
 
         return $scope;
