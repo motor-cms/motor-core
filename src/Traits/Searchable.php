@@ -68,7 +68,7 @@ trait Searchable
             }
         }
 
-        $builder->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
+        $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
 
         return $result;
     }
@@ -122,7 +122,7 @@ trait Searchable
         // @todo refactor
         $operator = 'LIKE';
         $bindings['select'] = $bindings['where'] = array_map(function ($word) {
-            return $word;
+            return str_replace('*', '', $word);
         }, $words);
         $case = $this->buildEqualsCase($column, $words);
         if (strpos(implode('', $words), '*') !== false) {
@@ -169,7 +169,7 @@ trait Searchable
     /**
      * Build basic search case for 'equals' comparison.
      *
-     * @param  \Sofa\Eloquence\Searchable\Column $column
+     * @param  $column
      * @param  array  $words
      * @return string
      */
