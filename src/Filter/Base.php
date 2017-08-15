@@ -28,10 +28,19 @@ class Base
         $this->field = $name;
     }
 
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
 
     public function isVisible($visible)
     {
         $this->visible = $visible;
+
+        return $this;
     }
 
 

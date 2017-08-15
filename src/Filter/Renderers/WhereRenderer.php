@@ -14,6 +14,10 @@ class WhereRenderer extends SelectRenderer
 
     public function query($query)
     {
-        return $query->where($query->getModel()->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        if ($this->operator == 'IN') {
+            return $query->whereIn($query->getModel()->getTable().'.'.$this->field, $this->getValue());
+        } else {
+            return $query->where($query->getModel()->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        }
     }
 }

@@ -16,7 +16,7 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:model';
 
-    protected $signature = 'motor:make:model {name} {--path=} {--namespace=} {--model=}';
+    protected $signature = 'motor:make:model {name} {--path=} {--namespace=} {--model=} {--parent=}';
 
     /**
      * The console command description.
