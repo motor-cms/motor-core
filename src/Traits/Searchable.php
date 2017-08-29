@@ -68,7 +68,9 @@ trait Searchable
             }
         }
 
-        $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
+        if (!is_null($result)) {
+            $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
+        }
 
         return $result;
     }
