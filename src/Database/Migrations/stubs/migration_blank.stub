@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Culpa\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class {{class}} extends Migration
+class DummyClass extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +13,7 @@ class {{class}} extends Migration
      */
     public function up()
     {
-        {{schema_up}}
+        //
     }
 
     /**
@@ -22,6 +23,6 @@ class {{class}} extends Migration
      */
     public function down()
     {
-        {{schema_down}}
+        //
     }
 }
