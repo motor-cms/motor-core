@@ -11,7 +11,9 @@
       "email": "me@dfox.info"
     }
   ],
-  "require": {},
+  "require": {
+    "dfox288/motor-backend": "0.3.*"
+  },
   "require-dev": {
     "phpunit/phpunit": "4.0.*"
   },

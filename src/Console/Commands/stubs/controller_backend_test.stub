@@ -25,8 +25,8 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
         'clients',
         'permissions',
         'roles',
-        'user_has_permissions',
-        'user_has_roles',
+        'model_has_permissions',
+        'model_has_roles',
         'role_has_permissions',
         'media'
     ];
