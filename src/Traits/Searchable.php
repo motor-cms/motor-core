@@ -37,7 +37,9 @@ trait Searchable
 
         $words = [];
         foreach ($terms as $term) {
-            $words[] = '*'.$term.'*';
+            if (trim($term) != '') {
+                $words[] = '*'.trim($term).'*';
+            }
         }
 
 
