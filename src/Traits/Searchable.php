@@ -35,6 +35,14 @@ trait Searchable
 
         $terms = explode(' ', $q);
 
+        // Filter empty terms
+        foreach ($terms as $termKey => $term) {
+            if (trim($term) == '') {
+                unset($terms[$termKey]);
+            }
+        }
+
+
         $words = [];
         foreach ($terms as $term) {
             if (trim($term) != '') {
