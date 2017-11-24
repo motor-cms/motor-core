@@ -17,7 +17,8 @@ class MotorMakeMigrationCommand extends MigrateMakeCommand
     protected $signature = 'motor:make:migration {name : The name of the migration.}
         {--create= : The table to be created.}
         {--table= : The table to migrate.}
-        {--path= : The location where the migration file should be created.}';
+        {--path= : The location where the migration file should be created.}
+        {--namespace= : The namespace for the migration}';
 
     public function __construct(MigrationCreator $creator, Composer $composer)
     {

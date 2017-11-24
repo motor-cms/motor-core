@@ -14,7 +14,7 @@ class MotorMakeModuleCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'motor:make:module {name} {locale=en} {{--path=} {--namespace=}';
+    protected $signature = 'motor:make:module {name} {locale=en} {--path=} {--namespace=}';
 
     /**
      * The console command description.
