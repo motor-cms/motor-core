@@ -21,6 +21,10 @@ class Base
 
     protected $visible = true;
 
+    protected $emptyOptionString = null;
+
+    protected $optionPrefix = null;
+
 
     public function __construct($name)
     {
@@ -39,6 +43,20 @@ class Base
     public function isVisible($visible)
     {
         $this->visible = $visible;
+
+        return $this;
+    }
+
+    public function setOptionPrefix($prefix)
+    {
+        $this->optionPrefix = $prefix;
+
+        return $this;
+    }
+
+    public function setEmptyOption($string)
+    {
+        $this->emptyOptionString = $string;
 
         return $this;
     }

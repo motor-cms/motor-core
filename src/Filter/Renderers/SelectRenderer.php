@@ -14,9 +14,15 @@ class SelectRenderer extends Base
 
     public function render()
     {
+        if (!is_null($this->optionPrefix)) {
+            foreach ($this->options as $key => $value) {
+                $this->options[$key] = $this->optionPrefix.': '.$value;
+            }
+        }
+
         if ($this->visible) {
             return view('motor-backend::filters.select',
-                [ 'name' => $this->name, 'options' => $this->options, 'value' => $this->getValue() ]);
+                [ 'name' => $this->name, 'options' => $this->options, 'value' => $this->getValue(), 'emptyOptionString' => $this->emptyOptionString]);
         }
 
     }
