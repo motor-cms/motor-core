@@ -16,5 +16,12 @@
       "Motor\\Core\\": "src"
     }
   },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Motor\\Core\\Providers\\MotorServiceProvider"
+      ]
+    }
+  },
   "minimum-stability": "dev"
 }
