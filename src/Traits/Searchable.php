@@ -104,6 +104,11 @@ trait Searchable
             //return $result->orWhere($field, $searchType, $q);
         } else {
             list($table, $field) = explode('.', $field);
+            if ($table  == $builder->getModel()->getTable()) {
+                return $builder->$where($table.'.'.$field, $searchType, $q);
+            }
+
+
             $where = $where . 'Has';
 
             if (!in_array($table, $this->joins)) {
