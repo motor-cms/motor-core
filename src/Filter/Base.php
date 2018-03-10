@@ -13,6 +13,8 @@ class Base
 
     protected $options = null;
 
+    protected $join = null;
+
     protected $baseName;
 
     protected $value = null;
@@ -30,6 +32,16 @@ class Base
     {
         $this->name  = $name;
         $this->field = $name;
+    }
+
+
+    /**
+     * @param $table
+     */
+    public function setJoin($table) {
+        $this->join = $table;
+
+        return $this;
     }
 
     public function setField($field)
