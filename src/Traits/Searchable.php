@@ -146,7 +146,12 @@ trait Searchable
             $leftMatching = [];
             foreach ($words as $key => $word) {
                 if ($this->isLeftMatching($word)) {
-                    $leftMatching[] = sprintf('%s %s ?', $column, $operator);
+                    $columns = explode('.', $column);
+                    foreach ($columns as $key => $c) {
+                        $columns[$key] = '`'.$c.'`';
+                    }
+                    $escapedColumn = implode('.', $columns);
+                    $leftMatching[] = sprintf('%s %s ?', $escapedColumn, $operator);
                     $bindings['select'][] = $bindings['where'][$key] = $this->caseBinding($word) . '%';
                 }
             }
@@ -158,7 +163,12 @@ trait Searchable
             $wildcards = [];
             foreach ($words as $key => $word) {
                 if ($this->isWildcard($word)) {
-                    $wildcards[] = sprintf('%s %s ?', $column, $operator);
+                    $columns = explode('.', $column);
+                    foreach ($columns as $key => $c) {
+                        $columns[$key] = '`'.$c.'`';
+                    }
+                    $escapedColumn = implode('.', $columns);
+                    $wildcards[] = sprintf('%s %s ?', $escapedColumn, $operator);
                     $bindings['select'][] = $bindings['where'][$key] = '%'.$this->caseBinding($word) . '%';
                 }
             }
@@ -192,7 +202,13 @@ trait Searchable
      */
     protected function buildEqualsCase($column, array $words)
     {
-        $equals = implode(' or ', array_fill(0, count($words), sprintf('%s = ?', $column)));
+        $columns = explode('.', $column);
+        foreach ($columns as $key => $c) {
+            $columns[$key] = '`'.$c.'`';
+        }
+        $escapedColumn = implode('.', $columns);
+
+        $equals = implode(' or ', array_fill(0, count($words), sprintf('%s = ?', $escapedColumn)));
         $score = 15;
         return "case when {$equals} then {$score} else 0 end";
     }
