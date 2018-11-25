@@ -15,7 +15,7 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:service';
 
-    protected $signature = 'motor:make:service {name} {--path=} {--namespace=} {--model=} {--parent=}';
+    protected $signature = 'motor:make:service {name} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
 
     /**
      * The console command description.
@@ -45,6 +45,9 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      */
     protected function getStub()
     {
+        if ($this->option('stub_path')) {
+            return $this->option('stub_path');
+        }
         return __DIR__ . '/stubs/service.stub';
     }
 
@@ -68,7 +71,11 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
         );
 
         $stub = str_replace(
-            'DummyModel', str_replace('Service', '', $class), $stub
+            'DummyModel', Str::singular(str_replace('Service', '', $class)), $stub
+        );
+
+        $stub = str_replace(
+            'ComponentNameSingularLowercase', strtolower(Str::singular(str_replace('Component', '', str_replace('Service', '', $class)))), $stub
         );
 
         return $this;

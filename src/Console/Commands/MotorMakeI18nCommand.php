@@ -11,7 +11,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
      *
      * @var string
      */
-    protected $signature = 'motor:make:i18n {name} {locale=en} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:i18n {name} {locale=en} {--path=} {--namespace=} {--prefix=} {--stub_path=}';
 
     /**
      * The console command description.
@@ -22,8 +22,9 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
     
     protected function getTargetPath()
     {
+        $prefix = $this->option('prefix') ? $this->option('prefix') : 'backend';
         $basePath = (!is_null($this->option('path')) ? $this->option('path').'/../resources/lang' : resource_path('lang'));
-        return $basePath.'/'.strtolower($this->argument('locale')).'/backend/';
+        return $basePath.'/'.strtolower($this->argument('locale')).'/'.$prefix.'/';
     }
 
     protected function getTargetFile()
@@ -39,6 +40,9 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
      */
     protected function getStub()
     {
+        if ($this->option('stub_path')) {
+            return $this->option('stub_path');
+        }
         return __DIR__ . '/stubs/i18n.stub';
     }
 

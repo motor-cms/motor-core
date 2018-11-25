@@ -16,7 +16,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      */
     protected $name = 'motor:make:controller';
 
-    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=}';
+    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
 
     /**
      * The console command description.
@@ -47,6 +47,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      */
     protected function getStub()
     {
+        if ($this->option('stub_path')) {
+            return $this->option('stub_path');
+        }
+
         switch ($this->option('type')) {
             case 'default':
                 return __DIR__ . '/stubs/controller_backend.stub';
@@ -68,6 +72,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     {
         $class = last(explode('/', $this->getNameInput()));
         $classBase = Str::singular(str_replace('Controller', '', $class));
+        $componentClassBase = Str::singular(str_replace('Component', '', str_replace('Controller', '', $class)));
         $grid = $classBase.'Grid';
         $request = $classBase.'Request';
         $form = $classBase.'Form';
@@ -117,6 +122,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         );
         $stub = str_replace(
             'DummyView', Str::plural(Str::snake($classBase)), $stub
+        );
+
+        $stub = str_replace(
+            'DummyComponentView', Str::plural(Str::snake($componentClassBase)), $stub
         );
 
         $stub = str_replace(
