@@ -71,6 +71,10 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
         );
 
         $stub = str_replace(
+            'DummyModelPlural', Str::plural(str_replace('Service', '', $class)), $stub
+        );
+
+        $stub = str_replace(
             'DummyModel', Str::singular(str_replace('Service', '', $class)), $stub
         );
 

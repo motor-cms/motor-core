@@ -125,6 +125,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         );
 
         $stub = str_replace(
+            'DummyComponentViewKebab', Str::plural(Str::kebab($componentClassBase)), $stub
+        );
+
+        $stub = str_replace(
             'DummyComponentView', Str::plural(Str::snake($componentClassBase)), $stub
         );
 

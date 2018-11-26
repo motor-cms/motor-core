@@ -24,7 +24,7 @@ abstract class MotorAbstractCommand extends Command
         $singularSnake = Str::snake(Str::singular($this->argument('name')));
         $pluralSnake   = Str::snake(Str::plural($this->argument('name')));
 
-        $namespace = ( ! is_null($this->option('namespace')) ? $this->option('namespace') . '\\' : $this->laravel->getNamespace() );
+        $namespace = (! is_null($this->option('namespace')) ? $this->option('namespace') . '\\' : $this->laravel->getNamespace());
         $namespace = str_replace('/', '\\', $namespace);
 
         // Guess package name to prefix the views and i18n location
@@ -34,8 +34,21 @@ abstract class MotorAbstractCommand extends Command
         }
 
         return [
+            'singularKebabWithoutPrefix' => Str::kebab(Str::singular(str_replace('Component', '',
+                $this->argument('name')))),
+            'pluralKebabWithoutPrefix'   => Str::kebab(Str::plural(str_replace('Component', '',
+                $this->argument('name')))),
+            'singularSnakeWithoutPrefix' => Str::snake(Str::singular(str_replace('Component', '',
+                $this->argument('name')))),
+            'pluralSnakeWithoutPrefix'   => Str::snake(Str::plural(str_replace('Component', '',
+                $this->argument('name')))),
+            'singularTitleWithoutPrefix' => Str::ucfirst(str_replace('_', ' ',
+                (str_replace('Component', '', Str::singular($this->argument('name')))))),
+
             'singularSnake'     => $singularSnake,
             'pluralSnake'       => $pluralSnake,
+            'singularKebab'     => Str::kebab(Str::singular($this->argument('name'))),
+            'pluralKebab'       => Str::kebab(Str::plural($this->argument('name'))),
             'singularTitle'     => Str::ucfirst(str_replace('_', ' ', $singularSnake)),
             'pluralTitle'       => Str::ucfirst(str_replace('_', ' ', $pluralSnake)),
             'singularLowercase' => Str::lower(str_replace('_', ' ', $singularSnake)),

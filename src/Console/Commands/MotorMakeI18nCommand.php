@@ -30,7 +30,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
     protected function getTargetFile()
     {
         $values = $this->getTemplateVars();
-        return $values['pluralSnake'].'.php';
+        return $values['pluralKebab'].'.php';
     }
     
     /**
