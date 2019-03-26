@@ -13,7 +13,7 @@ class MotorMakeViewCommand extends MotorAbstractCommand
      *
      * @var string
      */
-    protected $signature = 'motor:make:view {name} {type} {--path=} {--namespace=}';
+    protected $signature = 'motor:make:view {name} {type} {--path=} {--namespace=} {--stub_path=} {--directory=}';
 
     /**
      * The console command description.
@@ -27,7 +27,9 @@ class MotorMakeViewCommand extends MotorAbstractCommand
         $values = $this->getTemplateVars();
         $basePath = (!is_null($this->option('path')) ? $this->option('path').'/../resources/views' : resource_path('views'));
 
-        return $basePath.'/backend/'.$values['pluralSnake'].'/';
+        $directory = $this->option('directory') ? $this->option('directory') : 'backend';
+
+        return $basePath.'/'.$directory.'/'.$values['pluralSnake'].'/';
     }
 
     protected function getTargetFile()
@@ -42,6 +44,9 @@ class MotorMakeViewCommand extends MotorAbstractCommand
      */
     protected function getStub()
     {
+        if ($this->option('stub_path')) {
+            return $this->option('stub_path');
+        }
         return __DIR__ . '/stubs/views/'.$this->argument('type').'.blade.stub';
     }
 
