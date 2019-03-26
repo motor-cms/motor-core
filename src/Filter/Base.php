@@ -38,11 +38,13 @@ class Base
     /**
      * @param $table
      */
-    public function setJoin($table) {
+    public function setJoin($table)
+    {
         $this->join = $table;
 
         return $this;
     }
+
 
     public function setField($field)
     {
@@ -56,8 +58,14 @@ class Base
     {
         $this->visible = $visible;
 
+        // Don't allow values to be changed if the filter is not visible
+        if (!$visible) {
+            $this->setValue($this->defaultValue);
+        }
+
         return $this;
     }
+
 
     public function setOptionPrefix($prefix)
     {
@@ -65,6 +73,7 @@ class Base
 
         return $this;
     }
+
 
     public function setEmptyOption($string)
     {
@@ -154,13 +163,22 @@ class Base
         }
 
         // Check if the returnValue is allowed from the options array
-        if (!is_null($this->options)) {
+        if ( ! is_null($this->options)) {
             if ( ! isset($this->options[$returnValue])) {
                 return null;
             }
         }
 
         return $returnValue;
+    }
+
+
+    /**
+     * @return null
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
     }
 
 
