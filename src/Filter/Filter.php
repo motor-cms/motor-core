@@ -60,7 +60,7 @@ class Filter
         if (Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))->setOptions([Auth::user()->client_id => Auth::user()->client->name])->setDefaultValue(Auth::user()->client_id)->isVisible(false);
         } else {
-            $clients = config('motor-backend.models.client')::pluck('name', 'id');
+            $clients = config('motor-backend.models.client')::orderBy('name', 'ASC')->pluck('name', 'id');
             $this->add(new SelectRenderer('client_id'))->setOptions($clients);
         }
     }
