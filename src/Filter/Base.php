@@ -27,6 +27,8 @@ class Base
 
     protected $optionPrefix = null;
 
+    protected $operator = null;
+
 
     public function __construct($name)
     {

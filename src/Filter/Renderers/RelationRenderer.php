@@ -2,6 +2,8 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+use Illuminate\Support\Str;
+
 class RelationRenderer extends SelectRenderer
 {
 
@@ -10,7 +12,7 @@ class RelationRenderer extends SelectRenderer
 
     public function query($query)
     {
-        return $query->join($this->join . ' as ' . $this->join, str_singular($query->getModel()->getTable()) . '_id',
+        return $query->join($this->join . ' as ' . $this->join, Str::singular($query->getModel()->getTable()) . '_id',
             $query->getModel()->getTable() . '.id')->where($this->join . '.' . $this->field, $this->getValue());
 
     }

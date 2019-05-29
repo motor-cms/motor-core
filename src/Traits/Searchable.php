@@ -3,6 +3,7 @@
 namespace Motor\Core\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 /**
  * Trait Searchable
@@ -112,7 +113,7 @@ trait Searchable
             $where = $where . 'Has';
 
             if (!in_array($table, $this->joins)) {
-                $builder->join(str_plural($table).' as '.$table, $table.'_id', $table.'.id');
+                $builder->join(Str::plural($table).' as '.$table, $table.'_id', $table.'.id');
                 $this->joins[] = $table;
             }
             //$table = str_plural($table);
@@ -190,7 +191,7 @@ trait Searchable
      */
     protected function isWildcard($word)
     {
-        return ends_with($word, '*') && starts_with($word, '*');
+        return Str::endsWith($word, '*') && Str::startsWith($word, '*');
     }
 
     /**
@@ -222,7 +223,7 @@ trait Searchable
      */
     protected function isLeftMatching($word)
     {
-        return ends_with($word, '*');
+        return Str::endsWith($word, '*');
     }
 
     /**

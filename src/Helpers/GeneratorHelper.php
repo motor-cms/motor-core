@@ -2,6 +2,8 @@
 
 namespace Motor\Core\Helpers;
 
+use Illuminate\Support\Str;
+
 class GeneratorHelper {
 
     /**
@@ -14,7 +16,7 @@ class GeneratorHelper {
     public static function getPath($name, $path, $laravel)
     {
         $userPath = (!is_null($path) ? realpath($path) : $laravel['path']);
-        $name = str_replace_first($laravel->getNamespace(), '', $name);
+        $name = Str::replaceFirst($laravel->getNamespace(), '', $name);
 
         $path = $userPath.'/'.str_replace('\\', '/', $name).'.php';
 
