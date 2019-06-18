@@ -72,7 +72,10 @@ trait Searchable
 
             foreach ($columns as $key => $column) {
                 if ($key == 0) {
-                    $this->performSearch($builder, $searchType, $search, $column, true);
+                    $temporaryResult = $this->performSearch($builder, $searchType, $search, $column, true);
+                    if (count($columns) == 1) {
+                        $result = $temporaryResult;
+                    }
                 } else {
                     $result = $this->performSearch($builder, $searchType, $search, $column);
                 }
