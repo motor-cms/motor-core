@@ -12,9 +12,6 @@ env:
 matrix:
   fast_finish: true
 
-before_install:
-  - phpenv config-rm xdebug.ini || true
-
 install:
   - travis_retry composer install --no-interaction --prefer-dist --no-suggest
 
