@@ -2,8 +2,8 @@
 
 namespace Motor\Core\Filter;
 
+use Illuminate\Support\Facades\Auth;
 use Motor\Core\Filter\Renderers\SelectRenderer;
-use Auth;
 
 class Filter
 {

@@ -2,34 +2,29 @@
 
 namespace Motor\Core\Test;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
+require __DIR__ . '/../vendor/autoload.php';
 
-class TestCase extends BaseTestCase
+use Motor\Core\Providers\MotorServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
+
+abstract class TestCase extends OrchestraTestCase
 {
-    protected function emptyTempDirectory()
+    /**
+     * Load package service provider
+     * @param  \Illuminate\Foundation\Application $app
+     * @return Motor\Core\Providers\MotorServiceProvider
+     */
+    protected function getPackageProviders($app)
     {
-        $tempDirPath = __DIR__.'/temp';
-
-        $files = scandir($tempDirPath);
-
-        foreach ($files as $file) {
-            if (! in_array($file, ['.', '..', '.gitignore'])) {
-                unlink("{$tempDirPath}/{$file}");
-            }
-        }
+        return [MotorServiceProvider::class];
     }
-
-    public function assertMimeType($expectedMimeType, $path)
+    /**
+     * Load package alias
+     * @param  \Illuminate\Foundation\Application $app
+     * @return array
+     */
+    protected function getPackageAliases($app)
     {
-        $actualMimeType = mime_content_type($path);
-
-        $this->assertEquals($expectedMimeType, $actualMimeType, 'MimeType did not match');
-    }
-
-    public function skipIfNotRunningonMacOS()
-    {
-        if (PHP_OS !== 'Darwin') {
-            $this->markTestSkipped('Skipping because not running MacOS');
-        }
-    }
-}
+        return [
+        ];
+    }}

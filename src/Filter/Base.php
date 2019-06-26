@@ -47,6 +47,11 @@ class Base
         return $this;
     }
 
+    public function getJoin()
+    {
+        return $this->join;
+    }
+
 
     public function setField($field)
     {
@@ -55,6 +60,11 @@ class Base
         return $this;
     }
 
+
+    public function getField()
+    {
+        return $this->field;
+    }
 
     public function isVisible($visible)
     {
@@ -68,6 +78,11 @@ class Base
         return $this;
     }
 
+    public function getVisible()
+    {
+        return $this->visible;
+    }
+
 
     public function setOptionPrefix($prefix)
     {
@@ -76,12 +91,21 @@ class Base
         return $this;
     }
 
+    public function getOptionPrefix()
+    {
+        return $this->optionPrefix;
+    }
 
     public function setEmptyOption($string)
     {
         $this->emptyOptionString = $string;
 
         return $this;
+    }
+
+    public function getEmptyOption()
+    {
+        return $this->emptyOptionString;
     }
 
 
@@ -92,6 +116,11 @@ class Base
         return $this;
     }
 
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
 
     public function setOperator($operator = '=')
     {
@@ -100,6 +129,11 @@ class Base
         return $this;
     }
 
+
+    public function getOperator()
+    {
+        return $this->operator;
+    }
 
     public function setDefaultValue($defaultValue)
     {
@@ -145,8 +179,10 @@ class Base
         if ($value == '') {
             $value = null;
         }
-        $this->value = $value;
-        $this->setSessionValue($value);
+        if ($this->getVisible()) {
+            $this->value = $value;
+            $this->setSessionValue($value);
+        }
     }
 
 
