@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/motor-cms/motor-core.svg?branch=master)](https://travis-ci.org/motor-cms/motor-core)
