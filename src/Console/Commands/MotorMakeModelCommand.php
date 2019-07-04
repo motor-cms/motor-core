@@ -2,10 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
-
 class MotorMakeModelCommand extends MotorMakeControllerCommand
 {
 
@@ -16,6 +12,9 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:model';
 
+    /**
+     * @var string
+     */
     protected $signature = 'motor:make:model {name} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
 
     /**
@@ -31,17 +30,19 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
      * @var string
      */
     protected $type = 'Model';
-    
+
+
     /**
      * Get the stub file for the generator.
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         if ($this->option('stub_path')) {
             return $this->option('stub_path');
         }
+
         return __DIR__ . '/stubs/model.stub';
     }
 
@@ -49,12 +50,11 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
-     *
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Models';
+        return $rootNamespace . '\Models';
     }
 }

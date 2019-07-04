@@ -2,11 +2,8 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\Console\FormMakeCommand;
 use Motor\Core\Helpers\GeneratorHelper;
-use Symfony\Component\Console\Input\InputOption;
 
 class MotorMakeFormCommand extends FormMakeCommand
 {
@@ -25,24 +22,26 @@ class MotorMakeFormCommand extends FormMakeCommand
      */
     protected $description = 'Create a new motor form';
 
+
     /**
      * Get the desired class name from the input.
      *
      * @return string
      */
-    protected function getNameInput()
+    protected function getNameInput(): ?string
     {
         return $this->argument('name');
     }
 
+
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string $stub
-     * @param  string $name
-     * @return $this
+     * @param string $stub
+     * @param string $name
+     * @return object
      */
-    protected function replaceNamespace(&$stub, $name)
+    protected function replaceNamespace(&$stub, $name): object
     {
         $namespace = GeneratorHelper::getNamespace($name, $this->option('namespace'), $this->laravel);
 

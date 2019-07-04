@@ -20,27 +20,32 @@ use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
 
 class MotorServiceProvider extends ServiceProvider
 {
+
     /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerCommands();
     }
+
 
     /**
      * Register the application services.
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
     }
 
-    public function registerCommands()
+
+    /**
+     *
+     */
+    public function registerCommands(): void
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -57,7 +62,7 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeServiceCommand::class,
                 MotorMakeTestCommand::class,
                 MotorMakeTransformerCommand::class,
-                MotorSetpackagedevCommand::class
+                MotorSetpackagedevCommand::class,
             ]);
         }
     }

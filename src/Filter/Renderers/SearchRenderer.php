@@ -7,34 +7,47 @@ use Motor\Core\Filter\Base;
 class SearchRenderer extends Base
 {
 
+    /**
+     * @var array
+     */
     protected $searchableColumns = [];
 
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function render()
     {
-        return view('motor-backend::filters.search', [ 'value' => $this->getValue() ]);
+        return view('motor-backend::filters.search', ['value' => $this->getValue()]);
     }
 
 
-    public function setSearchableColumns($columns)
+    /**
+     * @param $columns
+     */
+    public function setSearchableColumns($columns): void
     {
         $this->searchableColumns = $columns;
     }
 
 
-    public function query($query)
+    /**
+     * @param $query
+     * @return object
+     */
+    public function query($query): object
     {
         if (method_exists($query->getModel(), 'scopeSearch')) {
             return $query->search($this->getValue());
         } else {
             // Fallback solution in case the searchable trait is not available but we still want to search through the basic columns (see Navigation model in motor-cms for an example)
-            if (count($this->searchableColumns) == 0) {
+            if (count($this->searchableColumns) === 0) {
                 return $query;
             }
             $searchableColumns = $this->searchableColumns;
             $value             = $this->getValue();
 
-            return $query->orWhere(function ($query) use ($searchableColumns, $value) {
+            return $query->orWhere(static function ($query) use ($searchableColumns, $value) {
                 foreach ($searchableColumns as $column) {
                     $query->where($column, 'LIKE', '%' . $value . '%');
                 }

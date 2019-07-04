@@ -5,7 +5,10 @@ namespace Motor\Core\Test;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 use Motor\Core\Filter\Filter;
+use Motor\Core\Filter\Renderers\PerPageRenderer;
 use Motor\Core\Filter\Renderers\SelectRenderer;
+use Motor\Core\Filter\Renderers\WhereRenderer;
+use Motor\Core\Helpers\GeneratorHelper;
 
 class ExampleTest extends TestCase
 {
@@ -33,10 +36,54 @@ class ExampleTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_the_path()
+    {
+        $namespace = GeneratorHelper::getPath('test', 'src', $this->app);
+        $this->assertEquals(realpath('./').'/src/test.php', $namespace);
+    }
+
+    /** @test */
+    public function it_can_get_the_namespace()
+    {
+        $namespace = GeneratorHelper::getNamespace('Motor\Core', null, $this->app);
+        $this->assertEquals('Motor', $namespace);
+    }
+
+    /** @test */
+    public function it_can_get_the_root_namespace()
+    {
+        $namespace = GeneratorHelper::getRootNamespace(null, $this->app);
+        $this->assertEquals('App\\', $namespace);
+
+        $namespace = GeneratorHelper::getRootNamespace('Motor\Core', $this->app);
+        $this->assertEquals('Motor\Core\\', $namespace);
+    }
+
+    /** @test */
     public function it_can_instantiate_the_filter_class()
     {
         $filter = new Filter(null);
         $this->assertInstanceOf(Filter::class, $filter);
+    }
+
+
+    /** @test */
+    public function it_can_add_a_where_filter()
+    {
+        //  Test name
+        $filter = new WhereRenderer('where');
+        $this->assertEquals('where', $filter->getName());
+    }
+
+    /** @test */
+    public function it_can_add_a_per_page_filter()
+    {
+        //  Test name
+        $filter = new PerPageRenderer('per_page');
+        $filter->setup();
+        $this->assertEquals('per_page', $filter->getName());
+        $this->assertEquals(25, $filter->getDefaultValue());
+        $this->assertEquals([25 => 25, 50 => 50, 100 => 100, 200 => 200], $filter->getOptions());
     }
 
     /** @test */

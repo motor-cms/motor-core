@@ -2,21 +2,18 @@
 
 namespace Motor\Core\Database\Migrations;
 
-use Closure;
-use Illuminate\Support\Str;
-use InvalidArgumentException;
-use Illuminate\Filesystem\Filesystem;
-
 class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
 {
+
     /**
      * Get the migration stub file.
      *
-     * @param  string  $table
-     * @param  bool    $create
+     * @param string|null $table
+     * @param bool        $create
      * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    protected function getStub($table, $create)
+    protected function getStub($table, $create): string
     {
         if (is_null($table)) {
             return $this->files->get(__DIR__ . '/stubs/migration_blank.stub');
@@ -27,7 +24,8 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
         // or modifying existing tables. We'll grab the appropriate stub here.
         else {
             $stub = $create ? 'migration_create.stub' : 'migration_update.stub';
-            return $this->files->get(__DIR__ ."/stubs/{$stub}");
+
+            return $this->files->get(__DIR__ . "/stubs/{$stub}");
         }
     }
 }

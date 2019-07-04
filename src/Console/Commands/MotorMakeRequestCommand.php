@@ -2,10 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
-
 class MotorMakeRequestCommand extends MotorMakeControllerCommand
 {
 
@@ -16,6 +12,9 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:request';
 
+    /**
+     * @var string
+     */
     protected $signature = 'motor:make:request {name} {--path=} {--namespace=} {--model=} {--parent=}';
 
     /**
@@ -31,13 +30,14 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
      * @var string
      */
     protected $type = 'Request';
-    
+
+
     /**
      * Get the stub file for the generator.
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/stubs/request.stub';
     }
@@ -46,12 +46,11 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
-     *
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Http\Requests';
+        return $rootNamespace . '\Http\Requests';
     }
 }

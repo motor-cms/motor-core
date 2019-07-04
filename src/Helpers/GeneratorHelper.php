@@ -4,38 +4,37 @@ namespace Motor\Core\Helpers;
 
 use Illuminate\Support\Str;
 
-class GeneratorHelper {
+class GeneratorHelper
+{
 
     /**
      * Get the destination class path.
      *
-     * @param  string  $name
-     * @param  string  $path
+     * @param string $name
+     * @param string $path
      * @return string
      */
-    public static function getPath($name, $path, $laravel)
+    public static function getPath($name, $path, $laravel): string
     {
-        $userPath = (!is_null($path) ? realpath($path) : $laravel['path']);
-        $name = Str::replaceFirst($laravel->getNamespace(), '', $name);
+        $userPath = (! is_null($path) ? realpath($path) : $laravel['path']);
+        $name     = Str::replaceFirst($laravel->getNamespace(), '', $name);
 
-        $path = $userPath.'/'.str_replace('\\', '/', $name).'.php';
-
-        return $path;
+        return $userPath . '/' . str_replace('\\', '/', $name) . '.php';
     }
+
 
     /**
      * Get the full namespace name for a given class.
      *
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
-    public static function getNamespace($name, $namespace, $laravel)
+    public static function getNamespace($name, $namespace, $laravel): string
     {
-        $namespace = (!is_null($namespace) ? $namespace.'\\' : $laravel->getNamespace());
+        $namespace = (! is_null($namespace) ? $namespace . '\\' : $laravel->getNamespace());
         $namespace = str_replace('/', '\\', $namespace);
 
-        if ($namespace != $laravel->getNamespace())
-        {
+        if ($namespace !== $laravel->getNamespace()) {
             $name = str_replace($laravel->getNamespace(), $namespace, $name);
         }
 
@@ -46,12 +45,11 @@ class GeneratorHelper {
     /**
      * @param $namespace
      * @param $laravel
-     *
-     * @return mixed
+     * @return string
      */
-    public static function getRootNamespace($namespace, $laravel)
+    public static function getRootNamespace($namespace, $laravel): string
     {
-        return (!is_null($namespace) ? str_replace('/', '\\', $namespace).'\\' : $laravel->getNamespace());
+        return (! is_null($namespace) ? str_replace('/', '\\', $namespace) . '\\' : $laravel->getNamespace());
     }
 
 }

@@ -4,12 +4,15 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Motor\Core\Helpers\GeneratorHelper;
 
 abstract class MotorAbstractCommand extends Command
 {
 
-    protected function replaceTemplateVars($stub)
+    /**
+     * @param string $stub
+     * @return string
+     */
+    protected function replaceTemplateVars(string $stub): string
     {
         foreach ($this->getTemplateVars() as $key => $value) {
             $stub = str_replace('{{' . $key . '}}', $value, $stub);
@@ -19,7 +22,10 @@ abstract class MotorAbstractCommand extends Command
     }
 
 
-    protected function getTemplateVars()
+    /**
+     * @return array
+     */
+    protected function getTemplateVars(): array
     {
         $singularSnake = Str::snake(Str::singular($this->argument('name')));
         $pluralSnake   = Str::snake(Str::plural($this->argument('name')));
@@ -34,16 +40,11 @@ abstract class MotorAbstractCommand extends Command
         }
 
         return [
-            'singularKebabWithoutPrefix' => Str::kebab(Str::singular(str_replace('Component', '',
-                $this->argument('name')))),
-            'pluralKebabWithoutPrefix'   => Str::kebab(Str::plural(str_replace('Component', '',
-                $this->argument('name')))),
-            'singularSnakeWithoutPrefix' => Str::snake(Str::singular(str_replace('Component', '',
-                $this->argument('name')))),
-            'pluralSnakeWithoutPrefix'   => Str::snake(Str::plural(str_replace('Component', '',
-                $this->argument('name')))),
-            'singularTitleWithoutPrefix' => Str::ucfirst(str_replace('_', ' ',
-                (str_replace('Component', '', Str::singular($this->argument('name')))))),
+            'singularKebabWithoutPrefix' => Str::kebab(Str::singular(str_replace('Component', '', $this->argument('name')))),
+            'pluralKebabWithoutPrefix'   => Str::kebab(Str::plural(str_replace('Component', '', $this->argument('name')))),
+            'singularSnakeWithoutPrefix' => Str::snake(Str::singular(str_replace('Component', '', $this->argument('name')))),
+            'pluralSnakeWithoutPrefix'   => Str::snake(Str::plural(str_replace('Component', '', $this->argument('name')))),
+            'singularTitleWithoutPrefix' => Str::ucfirst(str_replace('_', ' ', str_replace('Component', '', Str::singular($this->argument('name'))))),
 
             'singularSnake'     => $singularSnake,
             'pluralSnake'       => $pluralSnake,
@@ -58,15 +59,21 @@ abstract class MotorAbstractCommand extends Command
             'namespace'         => $namespace,
             'namespaceNoSlash'  => str_replace('\\', '', $namespace),
             'packageName'       => $packageName,
-            'randomInteger'     => rand(101, 999)
+            'randomInteger'     => rand(101, 999),
         ];
     }
 
 
-    abstract protected function getTargetPath();
+    /**
+     * @return string
+     */
+    abstract protected function getTargetPath(): string;
 
 
-    abstract protected function getTargetFile();
+    /**
+     * @return string
+     */
+    abstract protected function getTargetFile(): string;
 
 
     /**
@@ -74,7 +81,7 @@ abstract class MotorAbstractCommand extends Command
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/stubs/i18n.stub';
     }

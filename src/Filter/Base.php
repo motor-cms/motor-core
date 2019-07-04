@@ -5,31 +5,72 @@ namespace Motor\Core\Filter;
 class Base
 {
 
+    /**
+     * @var bool
+     */
     protected $allowNull = false;
 
+    /**
+     * @var
+     */
     protected $name;
 
+    /**
+     * @var
+     */
     protected $field;
 
+    /**
+     * @var null
+     */
     protected $options = null;
 
+    /**
+     * @var null
+     */
     protected $join = null;
 
+    /**
+     * @var
+     */
     protected $baseName;
 
+    /**
+     * @var null
+     */
     protected $value = null;
 
+    /**
+     * @var null
+     */
     protected $defaultValue = null;
 
+    /**
+     * @var bool
+     */
     protected $visible = true;
 
+    /**
+     * @var null
+     */
     protected $emptyOptionString = null;
 
+    /**
+     * @var null
+     */
     protected $optionPrefix = null;
 
+    /**
+     * @var null
+     */
     protected $operator = null;
 
 
+    /**
+     * Base constructor.
+     *
+     * @param $name
+     */
     public function __construct($name)
     {
         $this->name  = $name;
@@ -39,21 +80,30 @@ class Base
 
     /**
      * @param $table
+     * @return object
      */
-    public function setJoin($table)
+    public function setJoin($table): object
     {
         $this->join = $table;
 
         return $this;
     }
 
-    public function getJoin()
+
+    /**
+     * @return string
+     */
+    public function getJoin(): string
     {
         return $this->join;
     }
 
 
-    public function setField($field)
+    /**
+     * @param $field
+     * @return object
+     */
+    public function setField($field): object
     {
         $this->field = $field;
 
@@ -61,68 +111,109 @@ class Base
     }
 
 
-    public function getField()
+    /**
+     * @return string
+     */
+    public function getField(): string
     {
         return $this->field;
     }
 
-    public function isVisible($visible)
+
+    /**
+     * @param $visible
+     * @return object
+     */
+    public function isVisible($visible): object
     {
         $this->visible = $visible;
 
         // Don't allow values to be changed if the filter is not visible
-        if (!$visible) {
+        if ( ! $visible) {
             $this->setValue($this->defaultValue);
         }
 
         return $this;
     }
 
-    public function getVisible()
+
+    /**
+     * @return bool
+     */
+    public function getVisible(): bool
     {
         return $this->visible;
     }
 
 
-    public function setOptionPrefix($prefix)
+    /**
+     * @param $prefix
+     * @return object
+     */
+    public function setOptionPrefix($prefix): object
     {
         $this->optionPrefix = $prefix;
 
         return $this;
     }
 
-    public function getOptionPrefix()
+
+    /**
+     * @return string
+     */
+    public function getOptionPrefix(): string
     {
         return $this->optionPrefix;
     }
 
-    public function setEmptyOption($string)
+
+    /**
+     * @param $string
+     * @return object
+     */
+    public function setEmptyOption($string): object
     {
         $this->emptyOptionString = $string;
 
         return $this;
     }
 
-    public function getEmptyOption()
+
+    /**
+     * @return string
+     */
+    public function getEmptyOption(): string
     {
         return $this->emptyOptionString;
     }
 
 
-    public function setOptions($options = [])
+    /**
+     * @param array $options
+     * @return object
+     */
+    public function setOptions($options = []): object
     {
         $this->options = $options;
 
         return $this;
     }
 
-    public function getOptions()
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
     {
         return $this->options;
     }
 
 
-    public function setOperator($operator = '=')
+    /**
+     * @param string $operator
+     * @return object
+     */
+    public function setOperator($operator = '='): object
     {
         $this->operator = $operator;
 
@@ -130,12 +221,20 @@ class Base
     }
 
 
-    public function getOperator()
+    /**
+     * @return string
+     */
+    public function getOperator(): string
     {
         return $this->operator;
     }
 
-    public function setDefaultValue($defaultValue)
+
+    /**
+     * @param $defaultValue
+     * @return object
+     */
+    public function setDefaultValue($defaultValue): object
     {
         $this->defaultValue = $defaultValue;
 
@@ -143,7 +242,10 @@ class Base
     }
 
 
-    public function updateValues()
+    /**
+     *
+     */
+    public function updateValues(): void
     {
         $request = request();
 
@@ -156,16 +258,16 @@ class Base
     /**
      * @param $name
      */
-    public function setBaseName($name)
+    public function setBaseName($name): void
     {
         $this->baseName = $name;
     }
 
 
     /**
-     * @param $name
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -174,9 +276,9 @@ class Base
     /**
      * @param $value
      */
-    public function setValue($value)
+    public function setValue($value): void
     {
-        if ($value == '') {
+        if ($value === '') {
             $value = null;
         }
         if ($this->getVisible()) {
@@ -187,9 +289,9 @@ class Base
 
 
     /**
-     * @return mixed|null
+     * @return string|null
      */
-    public function getValue()
+    public function getValue(): ?string
     {
         $returnValue = $this->value;
         if (is_null($this->value)) {
@@ -212,18 +314,18 @@ class Base
 
 
     /**
-     * @return null
+     * @return string|null
      */
-    public function getDefaultValue()
+    public function getDefaultValue(): ?string
     {
         return $this->defaultValue;
     }
 
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    protected function getSessionValue()
+    protected function getSessionValue(): ?string
     {
         return session('filters.' . $this->baseName . '.' . $this->name, null);
     }
@@ -232,19 +334,27 @@ class Base
     /**
      * @param $value
      */
-    protected function setSessionValue($value)
+    protected function setSessionValue($value): void
     {
-        return session()->put('filters.' . $this->baseName . '.' . $this->name, $value);
+        session()->put('filters.' . $this->baseName . '.' . $this->name, $value);
     }
 
 
-    public function query($query)
+    /**
+     * @param $query
+     * @return object
+     */
+    public function query($query): object
     {
         return $query;
     }
 
 
-    public function setAllowNull($allow)
+    /**
+     * @param $allow
+     * @return object
+     */
+    public function setAllowNull($allow): object
     {
         $this->allowNull = $allow;
 
@@ -252,7 +362,10 @@ class Base
     }
 
 
-    public function getAllowNull()
+    /**
+     * @return bool
+     */
+    public function getAllowNull(): bool
     {
         return $this->allowNull;
     }

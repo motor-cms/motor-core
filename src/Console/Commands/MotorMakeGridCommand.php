@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Support\Str;
 
 class MotorMakeGridCommand extends MotorMakeControllerCommand
@@ -15,6 +14,9 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:grid';
 
+    /**
+     * @var string
+     */
     protected $signature = 'motor:make:grid {name} {--path=} {--namespace=} {--model=} {--parent=}';
 
     /**
@@ -24,17 +26,21 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected $description = 'Create a new motor grid class';
 
+    /**
+     * @var string
+     */
     protected $type = 'Grid';
+
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Grids';
+        return $rootNamespace . '\Grids';
     }
 
 
@@ -43,34 +49,29 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/stubs/grid.stub';
     }
 
+
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return $this
+     * @param string $stub
+     * @param string $name
+     * @return object
      */
-    protected function replaceNamespace(&$stub, $name)
+    protected function replaceNamespace(&$stub, $name): object
     {
-        $class = last(explode('/', $this->getNameInput()));
+        $class     = last(explode('/', $this->getNameInput()));
         $classBase = Str::singular(str_replace('Grid', '', $class));
 
-        $stub = str_replace(
-            'DummyRootNamespace', $this->getRootNamespace(), $stub
-        );
+        $stub = str_replace('DummyRootNamespace', $this->getRootNamespace(), $stub);
 
-        $stub = str_replace(
-            'DummyGrid', $class, $stub
-        );
+        $stub = str_replace('DummyGrid', $class, $stub);
 
-        $stub = str_replace(
-            'DummyView', Str::plural(Str::snake($classBase)), $stub
-        );
+        $stub = str_replace('DummyView', Str::plural(Str::snake($classBase)), $stub);
 
         return $this;
     }

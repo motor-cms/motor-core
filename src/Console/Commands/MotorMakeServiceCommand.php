@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Support\Str;
 
 class MotorMakeServiceCommand extends MotorMakeControllerCommand
@@ -15,6 +14,9 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:service';
 
+    /**
+     * @var string
+     */
     protected $signature = 'motor:make:service {name} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
 
     /**
@@ -24,17 +26,19 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      */
     protected $description = 'Create a new motor service class';
 
+    /**
+     * @var string
+     */
     protected $type = 'Service';
 
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string $rootNamespace
-     *
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
         return $rootNamespace . '\Services';
     }
@@ -45,7 +49,7 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         if ($this->option('stub_path')) {
             return $this->option('stub_path');
@@ -58,12 +62,11 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string $stub
-     * @param  string $name
-     *
-     * @return $this
+     * @param string $stub
+     * @param string $name
+     * @return object
      */
-    protected function replaceNamespace(&$stub, $name)
+    protected function replaceNamespace(&$stub, $name): object
     {
         $class = last(explode('/', $this->getNameInput()));
 

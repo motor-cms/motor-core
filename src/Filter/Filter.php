@@ -8,13 +8,25 @@ use Motor\Core\Filter\Renderers\SelectRenderer;
 class Filter
 {
 
+    /**
+     * @var string
+     */
     protected $parent;
 
+    /**
+     * @var array
+     */
     protected $filters = [];
 
+    /**
+     * @var array
+     */
     protected $sortableFields = [];
 
-    protected $sorting = [ 'id', 'ASC' ];
+    /**
+     * @var array
+     */
+    protected $sorting = ['id', 'ASC'];
 
 
     /**
@@ -33,12 +45,11 @@ class Filter
 
     /**
      * @param $name
-     *
-     * @return mixed|null
+     * @return object|null
      */
-    public function get($name)
+    public function get($name): ?object
     {
-        if (isset( $this->filters[$name] )) {
+        if (isset($this->filters[$name])) {
             return $this->filters[$name];
         }
 
@@ -46,7 +57,11 @@ class Filter
     }
 
 
-    public function add(Base $filter)
+    /**
+     * @param Base $filter
+     * @return Base
+     */
+    public function add(Base $filter): Base
     {
         $filter->setBaseName($this->parent);
         $filter->updateValues();
@@ -55,7 +70,11 @@ class Filter
         return $filter;
     }
 
-    public function addClientFilter()
+
+    /**
+     *
+     */
+    public function addClientFilter(): void
     {
         if (Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))->setOptions([Auth::user()->client_id => Auth::user()->client->name])->setDefaultValue(Auth::user()->client_id)->isVisible(false);
@@ -66,7 +85,10 @@ class Filter
     }
 
 
-    public function filters()
+    /**
+     * @return array
+     */
+    public function filters(): array
     {
         return $this->filters;
     }

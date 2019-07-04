@@ -4,20 +4,29 @@ namespace Motor\Core\Filter\Renderers;
 
 class WhereRenderer extends SelectRenderer
 {
+
     protected $options = null;
 
-    public function render()
+
+    /**
+     * @return object|null
+     */
+    public function render(): ?object
     {
         return '';
     }
 
 
-    public function query($query)
+    /**
+     * @param $query
+     * @return object
+     */
+    public function query($query): object
     {
-        if ($this->operator == 'IN') {
-            return $query->whereIn($query->getModel()->getTable().'.'.$this->field, $this->getValue());
+        if ($this->operator === 'IN') {
+            return $query->whereIn($query->getModel()->getTable() . '.' . $this->field, $this->getValue());
         } else {
-            return $query->where($query->getModel()->getTable().'.'.$this->field, $this->operator, $this->getValue());
+            return $query->where($query->getModel()->getTable() . '.' . $this->field, $this->operator, $this->getValue());
         }
     }
 }

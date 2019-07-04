@@ -20,6 +20,13 @@ class MotorMakeMigrationCommand extends MigrateMakeCommand
         {--path= : The location where the migration file should be created.}
         {--namespace= : The namespace for the migration}';
 
+
+    /**
+     * MotorMakeMigrationCommand constructor.
+     *
+     * @param MigrationCreator $creator
+     * @param Composer         $composer
+     */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
         $composer = app()['Motor\Core\Support\Composer'];

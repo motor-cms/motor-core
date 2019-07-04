@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Support\Str;
 
 class MotorMakeTransformerCommand extends MotorMakeControllerCommand
@@ -15,6 +14,9 @@ class MotorMakeTransformerCommand extends MotorMakeControllerCommand
      */
     protected $name = 'motor:make:transformer';
 
+    /**
+     * @var string
+     */
     protected $signature = 'motor:make:transformer {name} {--path=} {--namespace=} {--model=} {--parent=}';
 
     /**
@@ -24,17 +26,21 @@ class MotorMakeTransformerCommand extends MotorMakeControllerCommand
      */
     protected $description = 'Create a new motor transformer class';
 
+    /**
+     * @var string
+     */
     protected $type = 'Transformer';
+
 
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
      * @return string
      */
-    protected function getDefaultNamespace($rootNamespace)
+    protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace.'\Transformers';
+        return $rootNamespace . '\Transformers';
     }
 
 
@@ -43,35 +49,30 @@ class MotorMakeTransformerCommand extends MotorMakeControllerCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/stubs/transformer.stub';
     }
 
+
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return $this
+     * @param string $stub
+     * @param string $name
+     * @return object
      */
-    protected function replaceNamespace(&$stub, $name)
+    protected function replaceNamespace(&$stub, $name): object
     {
         $class = last(explode('/', $this->getNameInput()));
 
         $class = Str::singular($class);
 
-        $stub = str_replace(
-            'DummyRootNamespace', $this->getRootNamespace(), $stub
-        );
+        $stub = str_replace('DummyRootNamespace', $this->getRootNamespace(), $stub);
 
-        $stub = str_replace(
-            'DummyTransformer', $class, $stub
-        );
+        $stub = str_replace('DummyTransformer', $class, $stub);
 
-        $stub = str_replace(
-            'DummyModel', str_replace('Transformer', '', $class), $stub
-        );
+        $stub = str_replace('DummyModel', str_replace('Transformer', '', $class), $stub);
 
         return $this;
     }

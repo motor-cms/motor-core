@@ -2,9 +2,7 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 
 class MotorMakeTestCommand extends MotorAbstractCommand
 {
@@ -24,19 +22,25 @@ class MotorMakeTestCommand extends MotorAbstractCommand
     protected $description = 'Create a new test stub';
 
 
-    protected function getTargetPath()
+    /**
+     * @return string
+     */
+    protected function getTargetPath(): string
     {
-        $basePath = ( ! is_null($this->option('path')) ? $this->option('path') . '/../tests' : resource_path() . '/../tests' );
+        $basePath = (! is_null($this->option('path')) ? $this->option('path') . '/../tests' : resource_path() . '/../tests');
 
         return $basePath . '/integration/controller/' . $this->argument('type') . '/';
     }
 
 
-    protected function getTargetFile()
+    /**
+     * @return string
+     */
+    protected function getTargetFile(): string
     {
         $values = $this->getTemplateVars();
 
-        return $values['namespaceNoSlash'].ucfirst($this->argument('type')) . $values['singularStudly'] . 'Test.php';
+        return $values['namespaceNoSlash'] . ucfirst($this->argument('type')) . $values['singularStudly'] . 'Test.php';
     }
 
 
@@ -45,7 +49,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
      *
      * @return string
      */
-    protected function getStub()
+    protected function getStub(): string
     {
         return __DIR__ . '/stubs/controller_' . $this->argument('type') . '_test.stub';
     }
@@ -54,9 +58,9 @@ class MotorMakeTestCommand extends MotorAbstractCommand
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         // Check target file
         if (file_exists($this->getTargetPath() . $this->getTargetFile())) {
