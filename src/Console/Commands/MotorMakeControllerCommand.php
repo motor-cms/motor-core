@@ -6,6 +6,10 @@ use Illuminate\Routing\Console\ControllerMakeCommand;
 use Illuminate\Support\Str;
 use Motor\Core\Helpers\GeneratorHelper;
 
+/**
+ * Class MotorMakeControllerCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeControllerCommand extends ControllerMakeCommand
 {
 

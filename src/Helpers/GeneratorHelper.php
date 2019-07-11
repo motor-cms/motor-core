@@ -4,6 +4,10 @@ namespace Motor\Core\Helpers;
 
 use Illuminate\Support\Str;
 
+/**
+ * Class GeneratorHelper
+ * @package Motor\Core\Helpers
+ */
 class GeneratorHelper
 {
 

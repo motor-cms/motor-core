@@ -6,6 +6,10 @@ use Illuminate\Database\Console\Migrations\MigrateMakeCommand;
 use Motor\Core\Database\Migrations\MigrationCreator;
 use Motor\Core\Support\Composer;
 
+/**
+ * Class MotorMakeMigrationCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeMigrationCommand extends MigrateMakeCommand
 {
 

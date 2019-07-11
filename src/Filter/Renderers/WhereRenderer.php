@@ -2,6 +2,10 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+/**
+ * Class WhereRenderer
+ * @package Motor\Core\Filter\Renderers
+ */
 class WhereRenderer extends SelectRenderer
 {
 
@@ -9,9 +13,9 @@ class WhereRenderer extends SelectRenderer
 
 
     /**
-     * @return object|null
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
      */
-    public function render(): ?object
+    public function render()
     {
         return '';
     }
@@ -19,6 +23,7 @@ class WhereRenderer extends SelectRenderer
 
     /**
      * @param $query
+     *
      * @return object
      */
     public function query($query): object
@@ -26,7 +31,8 @@ class WhereRenderer extends SelectRenderer
         if ($this->operator === 'IN') {
             return $query->whereIn($query->getModel()->getTable() . '.' . $this->field, $this->getValue());
         } else {
-            return $query->where($query->getModel()->getTable() . '.' . $this->field, $this->operator, $this->getValue());
+            return $query->where($query->getModel()->getTable() . '.' . $this->field, $this->operator,
+                $this->getValue());
         }
     }
 }

@@ -4,6 +4,10 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 
+/**
+ * Class MotorMakeTestCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeTestCommand extends MotorAbstractCommand
 {
 

@@ -5,6 +5,10 @@ namespace Motor\Core\Console\Commands;
 use Kris\LaravelFormBuilder\Console\FormMakeCommand;
 use Motor\Core\Helpers\GeneratorHelper;
 
+/**
+ * Class MotorMakeFormCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeFormCommand extends FormMakeCommand
 {
 

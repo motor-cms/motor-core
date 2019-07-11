@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
+/**
+ * Class MotorMakeModuleCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeModuleCommand extends Command
 {
 

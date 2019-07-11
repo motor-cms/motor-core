@@ -10,6 +10,10 @@ use Motor\Core\Filter\Renderers\SelectRenderer;
 use Motor\Core\Filter\Renderers\WhereRenderer;
 use Motor\Core\Helpers\GeneratorHelper;
 
+/**
+ * Class ExampleTest
+ * @package Motor\Core\Test
+ */
 class ExampleTest extends TestCase
 {
     protected function setUp():void
@@ -31,6 +35,10 @@ class ExampleTest extends TestCase
         $this->setUpHasRun = true;
     }
 
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     */
     protected function getEnvironmentSetUp($app) {
         parent::getEnvironmentSetUp($app);
     }

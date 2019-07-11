@@ -2,6 +2,10 @@
 
 namespace Motor\Core\Console\Commands;
 
+/**
+ * Class MotorMakeModelCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeModelCommand extends MotorMakeControllerCommand
 {
 

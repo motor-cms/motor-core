@@ -2,6 +2,10 @@
 
 namespace Motor\Core\Filter;
 
+/**
+ * Class Base
+ * @package Motor\Core\Filter
+ */
 class Base
 {
 

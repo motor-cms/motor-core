@@ -5,6 +5,10 @@ namespace Motor\Core\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
+/**
+ * Class MotorAbstractCommand
+ * @package Motor\Core\Console\Commands
+ */
 abstract class MotorAbstractCommand extends Command
 {
 

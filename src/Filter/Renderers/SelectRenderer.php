@@ -4,6 +4,10 @@ namespace Motor\Core\Filter\Renderers;
 
 use Motor\Core\Filter\Base;
 
+/**
+ * Class SelectRenderer
+ * @package Motor\Core\Filter\Renderers
+ */
 class SelectRenderer extends Base
 {
 
@@ -21,7 +25,7 @@ class SelectRenderer extends Base
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function render(): ?object
+    public function render()
     {
         if ( ! is_null($this->optionPrefix)) {
             foreach ($this->options as $key => $value) {
@@ -30,13 +34,19 @@ class SelectRenderer extends Base
         }
 
         if ($this->visible) {
-            return view('motor-backend::filters.select', ['name' => $this->name, 'options' => $this->options, 'value' => $this->getValue(), 'emptyOptionString' => $this->emptyOptionString]);
+            return view('motor-backend::filters.select', [
+                'name'              => $this->name,
+                'options'           => $this->options,
+                'value'             => $this->getValue(),
+                'emptyOptionString' => $this->emptyOptionString
+            ]);
         }
     }
 
 
     /**
      * @param $query
+     *
      * @return object
      */
     public function query($query): object

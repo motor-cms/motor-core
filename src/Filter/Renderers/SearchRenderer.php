@@ -4,6 +4,10 @@ namespace Motor\Core\Filter\Renderers;
 
 use Motor\Core\Filter\Base;
 
+/**
+ * Class SearchRenderer
+ * @package Motor\Core\Filter\Renderers
+ */
 class SearchRenderer extends Base
 {
 

@@ -4,6 +4,10 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class MotorSetpackagedevCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorSetpackagedevCommand extends Command
 {
 

@@ -7,6 +7,10 @@ require __DIR__ . '/../vendor/autoload.php';
 use Motor\Core\Providers\MotorServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
+/**
+ * Class TestCase
+ * @package Motor\Core\Test
+ */
 abstract class TestCase extends OrchestraTestCase
 {
     /**

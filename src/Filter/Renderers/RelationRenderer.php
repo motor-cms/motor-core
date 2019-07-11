@@ -4,6 +4,10 @@ namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Support\Str;
 
+/**
+ * Class RelationRenderer
+ * @package Motor\Core\Filter\Renderers
+ */
 class RelationRenderer extends SelectRenderer
 {
 

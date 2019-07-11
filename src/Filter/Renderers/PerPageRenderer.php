@@ -4,6 +4,10 @@ namespace Motor\Core\Filter\Renderers;
 
 use Motor\Core\Filter\Base;
 
+/**
+ * Class PerPageRenderer
+ * @package Motor\Core\Filter\Renderers
+ */
 class PerPageRenderer extends Base
 {
 

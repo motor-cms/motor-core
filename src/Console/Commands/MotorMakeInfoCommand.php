@@ -4,6 +4,10 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 
+/**
+ * Class MotorMakeInfoCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeInfoCommand extends MotorAbstractCommand
 {
 

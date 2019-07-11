@@ -2,6 +2,10 @@
 
 namespace Motor\Core\Database\Migrations;
 
+/**
+ * Class MigrationCreator
+ * @package Motor\Core\Database\Migrations
+ */
 class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
 {
 

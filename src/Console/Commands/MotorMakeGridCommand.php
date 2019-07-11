@@ -4,6 +4,10 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Support\Str;
 
+/**
+ * Class MotorMakeGridCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeGridCommand extends MotorMakeControllerCommand
 {
 

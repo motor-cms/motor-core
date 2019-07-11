@@ -2,6 +2,10 @@
 
 namespace Motor\Core\Support;
 
+/**
+ * Class Composer
+ * @package Motor\Core\Support
+ */
 class Composer extends \Illuminate\Support\Composer
 {
 

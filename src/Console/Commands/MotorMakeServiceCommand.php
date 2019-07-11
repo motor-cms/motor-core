@@ -4,6 +4,10 @@ namespace Motor\Core\Console\Commands;
 
 use Illuminate\Support\Str;
 
+/**
+ * Class MotorMakeServiceCommand
+ * @package Motor\Core\Console\Commands
+ */
 class MotorMakeServiceCommand extends MotorMakeControllerCommand
 {
 
