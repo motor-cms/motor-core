@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
 /**
@@ -18,6 +19,8 @@ class SearchRenderer extends Base
 
 
     /**
+     * Render the filter
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
@@ -27,6 +30,8 @@ class SearchRenderer extends Base
 
 
     /**
+     * Set searchable columns for filter
+     *
      * @param $columns
      */
     public function setSearchableColumns($columns): void
@@ -36,10 +41,12 @@ class SearchRenderer extends Base
 
 
     /**
+     * Run query for the filter
+     *
      * @param $query
      * @return object
      */
-    public function query($query): object
+    public function query(Builder $query): object
     {
         if (method_exists($query->getModel(), 'scopeSearch')) {
             return $query->search($this->getValue());

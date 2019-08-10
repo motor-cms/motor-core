@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
 /**
@@ -23,6 +24,8 @@ class SelectRenderer extends Base
 
 
     /**
+     * Render the filter
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function render()
@@ -45,11 +48,12 @@ class SelectRenderer extends Base
 
 
     /**
-     * @param $query
+     * Run query for the filter
      *
+     * @param $query
      * @return object
      */
-    public function query($query): object
+    public function query(Builder $query): object
     {
         return $query->where($query->getModel()->getTable() . '.' . $this->field, $this->operator, $this->getValue());
     }

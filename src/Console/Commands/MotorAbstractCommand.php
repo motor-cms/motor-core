@@ -13,6 +13,8 @@ abstract class MotorAbstractCommand extends Command
 {
 
     /**
+     * Replace inline template variables for the stub files
+     *
      * @param string $stub
      * @return string
      */
@@ -27,6 +29,8 @@ abstract class MotorAbstractCommand extends Command
 
 
     /**
+     * Do necessary replacement of the stub variables
+     *
      * @return array
      */
     protected function getTemplateVars(): array
@@ -69,12 +73,16 @@ abstract class MotorAbstractCommand extends Command
 
 
     /**
+     * Get path for the newly generated file
+     *
      * @return string
      */
     abstract protected function getTargetPath(): string;
 
 
     /**
+     * Get the file name for the newly generated file
+     *
      * @return string
      */
     abstract protected function getTargetFile(): string;

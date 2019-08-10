@@ -10,7 +10,7 @@ class Composer extends \Illuminate\Support\Composer
 {
 
     /**
-     * Regenerate the Composer autoloader files.
+     * Regenerate the Composer autoloader files for package development
      *
      * @param string $extra
      * @return void

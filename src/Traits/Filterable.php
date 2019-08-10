@@ -14,6 +14,8 @@ trait Filterable
 {
 
     /**
+     * Set up scope
+     *
      * @param Builder $scope
      * @param Filter  $filter
      * @param         $column
@@ -32,6 +34,8 @@ trait Filterable
 
 
     /**
+     * Set up scope for filtering multiple fields in the same query
+     *
      * @param Builder $scope
      * @param Filter  $filter
      * @return Builder

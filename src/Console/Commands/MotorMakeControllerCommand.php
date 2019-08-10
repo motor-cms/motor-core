@@ -67,7 +67,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      *
      * @return string
      */
-    protected function getStub(): string
+    protected function getStub(): ?string
     {
         if ($this->option('stub_path')) {
             return $this->option('stub_path');

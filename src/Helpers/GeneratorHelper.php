@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Helpers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Str;
 
 /**
@@ -14,11 +15,12 @@ class GeneratorHelper
     /**
      * Get the destination class path.
      *
-     * @param string $name
-     * @param string $path
+     * @param $name
+     * @param $path
+     * @param $laravel
      * @return string
      */
-    public static function getPath($name, $path, $laravel): string
+    public static function getPath($name, $path, Application $laravel): string
     {
         $userPath = (! is_null($path) ? realpath($path) : $laravel['path']);
         $name     = Str::replaceFirst($laravel->getNamespace(), '', $name);
@@ -30,10 +32,12 @@ class GeneratorHelper
     /**
      * Get the full namespace name for a given class.
      *
-     * @param string $name
+     * @param $name
+     * @param $namespace
+     * @param $laravel
      * @return string
      */
-    public static function getNamespace($name, $namespace, $laravel): string
+    public static function getNamespace($name, $namespace, Application $laravel): string
     {
         $namespace = (! is_null($namespace) ? $namespace . '\\' : $laravel->getNamespace());
         $namespace = str_replace('/', '\\', $namespace);
@@ -47,11 +51,13 @@ class GeneratorHelper
 
 
     /**
+     * Get root namespace of the application
+     *
      * @param $namespace
      * @param $laravel
      * @return string
      */
-    public static function getRootNamespace($namespace, $laravel): string
+    public static function getRootNamespace($namespace, Application $laravel): string
     {
         return (! is_null($namespace) ? str_replace('/', '\\', $namespace) . '\\' : $laravel->getNamespace());
     }

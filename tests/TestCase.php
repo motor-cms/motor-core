@@ -4,6 +4,7 @@ namespace Motor\Core\Test;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Illuminate\Foundation\Application;
 use Motor\Core\Providers\MotorServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
@@ -15,10 +16,10 @@ abstract class TestCase extends OrchestraTestCase
 {
     /**
      * Load package service provider
-     * @param  \Illuminate\Foundation\Application $app
-     * @return Motor\Core\Providers\MotorServiceProvider
+     * @param Application $app
+     * @return array
      */
-    protected function getPackageProviders($app)
+    protected function getPackageProviders(Application $app)
     {
         return [MotorServiceProvider::class];
     }

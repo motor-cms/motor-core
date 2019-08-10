@@ -37,17 +37,7 @@ class MotorServiceProvider extends ServiceProvider
 
 
     /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-    }
-
-
-    /**
-     *
+     * Register artisan commands
      */
     public function registerCommands(): void
     {

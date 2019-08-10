@@ -18,10 +18,12 @@ class PerPageRenderer extends Base
 
 
     /**
+     * Set up filter with initial values
+     *
      * @param array $options
      * @param int   $defaultValue
      */
-    public function setup($options = [25 => 25, 50 => 50, 100 => 100, 200 => 200], $defaultValue = 25): void
+    public function setup($options = [ 25 => 25, 50 => 50, 100 => 100, 200 => 200 ], $defaultValue = 25): void
     {
         $this->options      = $options;
         $this->defaultValue = $defaultValue;
@@ -29,10 +31,13 @@ class PerPageRenderer extends Base
 
 
     /**
+     * Render the filter
+     *
      * @return string
      */
     public function render(): string
     {
-        return view('motor-backend::filters.select', ['name' => $this->name, 'options' => $this->options, 'value' => $this->getValue()]);
+        return view('motor-backend::filters.select',
+            [ 'name' => $this->name, 'options' => $this->options, 'value' => $this->getValue() ]);
     }
 }

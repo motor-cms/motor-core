@@ -132,6 +132,7 @@ trait Searchable
     /**
      * Build case clause from all words for a single column.
      *
+     * @param       $column
      * @param array $words
      * @return array
      */
@@ -150,12 +151,12 @@ trait Searchable
             foreach ($words as $key => $word) {
                 if ($this->isLeftMatching($word)) {
                     $columns = explode('.', $column);
-                    foreach ($columns as $key => $col) {
-                        $columns[$key] = '`' . $col . '`';
+                    foreach ($columns as $columnKey => $col) {
+                        $columns[$columnKey] = '`' . $col . '`';
                     }
                     $escapedColumn        = implode('.', $columns);
                     $leftMatching[]       = sprintf('%s %s ?', $escapedColumn, $operator);
-                    $bindings['select'][] = $bindings['where'][$key] = $this->caseBinding($word) . '%';
+                    $bindings['select'][] = $bindings['where'][$columnKey] = $this->caseBinding($word) . '%';
                 }
             }
             if (count($leftMatching)) {
@@ -167,12 +168,12 @@ trait Searchable
             foreach ($words as $key => $word) {
                 if ($this->isWildcard($word)) {
                     $columns = explode('.', $column);
-                    foreach ($columns as $key => $col) {
-                        $columns[$key] = '`' . $col . '`';
+                    foreach ($columns as $columnKey => $col) {
+                        $columns[$columnKey] = '`' . $col . '`';
                     }
                     $escapedColumn        = implode('.', $columns);
                     $wildcards[]          = sprintf('%s %s ?', $escapedColumn, $operator);
-                    $bindings['select'][] = $bindings['where'][$key] = '%' . $this->caseBinding($word) . '%';
+                    $bindings['select'][] = $bindings['where'][$columnKey] = '%' . $this->caseBinding($word) . '%';
                 }
             }
             if (count($wildcards)) {
