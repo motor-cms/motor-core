@@ -2,7 +2,7 @@
 
 namespace Motor\Core\Helpers;
 
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Str;
 
 /**
