@@ -333,9 +333,9 @@ class Base
     /**
      * Get current value of filter
      *
-     * @return string|null
+     * @return mixed
      */
-    public function getValue(): ?string
+    public function getValue()
     {
         $returnValue = $this->value;
         if (is_null($this->value)) {
