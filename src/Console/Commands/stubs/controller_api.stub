@@ -9,12 +9,16 @@ use DummyRootNamespaceHttp\Requests\Backend\DummyRequest;
 use DummyRootNamespaceServices\DummyService;
 use DummyRootNamespaceTransformers\DummyTransformer;
 
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
 class DummyClass extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -27,9 +31,8 @@ class DummyClass extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
+     * @param DummyRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(DummyRequest $request)
     {
@@ -43,9 +46,8 @@ class DummyClass extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param DummyModel $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(DummyModel $record)
     {
@@ -59,10 +61,9 @@ class DummyClass extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int                      $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param DummyRequest $request
+     * @param DummyModel        $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(DummyRequest $request, DummyModel $record)
     {
@@ -76,9 +77,8 @@ class DummyClass extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
+     * @param DummyModel $record
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(DummyModel $record)
     {

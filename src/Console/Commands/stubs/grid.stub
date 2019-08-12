@@ -4,6 +4,10 @@ namespace DummyRootNamespaceGrids;
 
 use Motor\Backend\Grid\Grid;
 
+/**
+ * Class DummyGrid
+ * @package DummyRootNamespaceGrids
+ */
 class DummyGrid extends Grid
 {
 

@@ -4,6 +4,10 @@ namespace DummyNamespace;
 
 use Motor\Backend\Http\Requests\Request;
 
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ */
 class DummyClass extends Request
 {
 

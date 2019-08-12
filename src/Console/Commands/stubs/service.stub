@@ -5,6 +5,10 @@ namespace DummyRootNamespaceServices;
 use DummyRootNamespaceModels\DummyModel;
 use Motor\Backend\Services\BaseService;
 
+/**
+ * Class DummyService
+ * @package DummyRootNamespaceServices
+ */
 class DummyService extends BaseService
 {
 

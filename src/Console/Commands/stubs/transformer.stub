@@ -5,6 +5,10 @@ namespace DummyRootNamespaceTransformers;
 use League\Fractal;
 use DummyRootNamespaceModels\DummyModel;
 
+/**
+ * Class DummyTransformer
+ * @package DummyRootNamespaceTransformers
+ */
 class DummyTransformer extends Fractal\TransformerAbstract
 {
     /**
@@ -19,7 +23,6 @@ class DummyTransformer extends Fractal\TransformerAbstract
      * Transform record to array
      *
      * @param DummyModel $record
-     *
      * @return array
      */
     public function transform(DummyModel $record)
