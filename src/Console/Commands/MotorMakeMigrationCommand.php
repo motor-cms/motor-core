@@ -34,6 +34,7 @@ class MotorMakeMigrationCommand extends MigrateMakeCommand
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
+
         $composer = app()['Motor\Core\Support\Composer'];
         parent::__construct($creator, $composer);
     }

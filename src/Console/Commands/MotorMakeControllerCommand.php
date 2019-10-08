@@ -81,6 +81,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
                 return __DIR__ . '/stubs/controller_api.stub';
                 break;
         }
+
+        return '';
     }
 
 
