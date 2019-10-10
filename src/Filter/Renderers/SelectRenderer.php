@@ -30,7 +30,7 @@ class SelectRenderer extends Base
      */
     public function render()
     {
-        if ( ! is_null($this->optionPrefix)) {
+        if (! is_null($this->optionPrefix)) {
             foreach ($this->options as $key => $value) {
                 $this->options[$key] = $this->optionPrefix . ': ' . $value;
             }

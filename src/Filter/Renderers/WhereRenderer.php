@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class WhereRenderer extends SelectRenderer
 {
-
     protected $options = null;
 
 
@@ -36,8 +35,11 @@ class WhereRenderer extends SelectRenderer
         if ($this->operator === 'IN') {
             return $query->whereIn($query->getModel()->getTable() . '.' . $this->field, $this->getValue());
         } else {
-            return $query->where($query->getModel()->getTable() . '.' . $this->field, $this->operator,
-                $this->getValue());
+            return $query->where(
+                $query->getModel()->getTable() . '.' . $this->field,
+                $this->operator,
+                $this->getValue()
+            );
         }
     }
 }

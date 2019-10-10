@@ -61,5 +61,4 @@ class GeneratorHelper
     {
         return (! is_null($namespace) ? str_replace('/', '\\', $namespace) . '\\' : $laravel->getNamespace());
     }
-
 }

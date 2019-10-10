@@ -106,7 +106,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         // Guess package name to prefix the views and i18n location
         $packageName = '';
-        if ( ! is_null($this->option('namespace'))) {
+        if (! is_null($this->option('namespace'))) {
             $packageName = str_replace('/', '-', strtolower($this->option('namespace'))) . '::';
         }
 

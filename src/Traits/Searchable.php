@@ -84,7 +84,7 @@ trait Searchable
             }
         }
 
-        if ( ! is_null($result)) {
+        if (! is_null($result)) {
             $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable() . '.id');
         }
 
@@ -107,7 +107,7 @@ trait Searchable
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-            //return $result->orWhere($field, $searchType, $q);
+        //return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()->getTable()) {
@@ -116,7 +116,7 @@ trait Searchable
 
             $where .= 'Has';
 
-            if ( ! in_array($table, $this->joins)) {
+            if (! in_array($table, $this->joins)) {
                 $builder->join(Str::plural($table) . ' as ' . $table, $table . '_id', $table . '.id');
                 $this->joins[] = $table;
             }

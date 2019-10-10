@@ -39,7 +39,8 @@ class ExampleTest extends TestCase
     /**
      * @param \Illuminate\Foundation\Application $app
      */
-    protected function getEnvironmentSetUp($app) {
+    protected function getEnvironmentSetUp($app)
+    {
         parent::getEnvironmentSetUp($app);
     }
 

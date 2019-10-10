@@ -45,7 +45,7 @@ class MotorSetpackagedevCommand extends Command
             }
         }
 
-        if ( ! $envSet) {
+        if (! $envSet) {
             $env[] = 'MOTOR_PACKAGE_DEVELOPMENT=' . $this->argument('status');
         }
 

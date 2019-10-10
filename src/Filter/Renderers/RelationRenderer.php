@@ -26,7 +26,9 @@ class RelationRenderer extends SelectRenderer
      */
     public function query(Builder $query): object
     {
-        return $query->join($this->join . ' as ' . $this->join, Str::singular($query->getModel()->getTable()) . '_id', $query->getModel()->getTable() . '.id')->where($this->join . '.' . $this->field,
-            $this->getValue());
+        return $query->join($this->join . ' as ' . $this->join, Str::singular($query->getModel()->getTable()) . '_id', $query->getModel()->getTable() . '.id')->where(
+            $this->join . '.' . $this->field,
+            $this->getValue()
+        );
     }
 }

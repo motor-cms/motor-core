@@ -40,10 +40,10 @@ class MotorMakeModuleCommand extends Command
         $table         = Str::plural(Str::snake(class_basename($this->argument('name'))));
 
         $extraoptions = [];
-        if ( ! is_null($this->option('path'))) {
+        if (! is_null($this->option('path'))) {
             $extraoptions['--path'] = $this->option('path');
         }
-        if ( ! is_null($this->option('namespace'))) {
+        if (! is_null($this->option('namespace'))) {
             $extraoptions['--namespace'] = $this->option('namespace');
         }
 
@@ -105,5 +105,4 @@ class MotorMakeModuleCommand extends Command
             ['name', InputArgument::REQUIRED, 'The name of the module'],
         ];
     }
-
 }

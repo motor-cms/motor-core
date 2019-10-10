@@ -32,4 +32,5 @@ abstract class TestCase extends OrchestraTestCase
     {
         return [
         ];
-    }}
+    }
+}

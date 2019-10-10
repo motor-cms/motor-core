@@ -74,7 +74,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
         }
 
         $filesystem = new Filesystem();
-        if ( ! $filesystem->isDirectory($this->getTargetPath())) {
+        if (! $filesystem->isDirectory($this->getTargetPath())) {
             $filesystem->makeDirectory($this->getTargetPath(), 0755, true);
         }
 

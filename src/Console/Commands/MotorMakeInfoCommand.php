@@ -104,7 +104,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
     protected function makeDirectory($directory): void
     {
         $filesystem = new Filesystem();
-        if ( ! $filesystem->isDirectory($directory)) {
+        if (! $filesystem->isDirectory($directory)) {
             $filesystem->makeDirectory($directory, 0755, true);
         }
     }
@@ -173,7 +173,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
 
         $modelFactoryFile = $this->getTargetModelFactoryFile();
 
-        if ( ! file_exists($modelFactoryFile)) {
+        if (! file_exists($modelFactoryFile)) {
             file_put_contents($modelFactoryFile, "<?php\r\n\r\n" . $modelFactory);
             $this->info('Generated database/factories/ModelFactory.php');
         } else {
@@ -190,7 +190,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
 
         $testHelperFile = $this->getTargetTestHelperFile();
 
-        if ( ! file_exists($testHelperFile)) {
+        if (! file_exists($testHelperFile)) {
             file_put_contents($testHelperFile, "<?php\r\n\r\n" . $testHelper);
             $this->info('Generated tests/helpers/test_helper.php');
         } else {

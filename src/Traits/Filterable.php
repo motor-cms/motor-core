@@ -25,7 +25,7 @@ trait Filterable
     {
         // Get current filter value
         $currentFilter = $filter->get($column);
-        if ( ! is_null($currentFilter) && ! is_null($currentFilter->getValue())) {
+        if (! is_null($currentFilter) && ! is_null($currentFilter->getValue())) {
             return $scope->where($scope->getModel()->getTable() . '.' . $column, '=', $currentFilter->getValue());
         }
 
@@ -46,12 +46,11 @@ trait Filterable
             if ($name === 'per_page') {
                 continue;
             }
-            if ( ! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
+            if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
                 $scope = $filter->query($scope);
             }
         }
 
         return $scope;
     }
-
 }

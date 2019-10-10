@@ -145,7 +145,7 @@ class Base
         $this->visible = $visible;
 
         // Don't allow values to be changed if the filter is not visible
-        if ( ! $visible) {
+        if (! $visible) {
             $this->setValue($this->defaultValue);
         }
 
@@ -285,7 +285,7 @@ class Base
     {
         $request = request();
 
-        if ( ! is_null($request->get($this->name))) {
+        if (! is_null($request->get($this->name))) {
             $this->setValue($request->get($this->name));
         }
     }
@@ -347,8 +347,8 @@ class Base
         }
 
         // Check if the returnValue is allowed from the options array
-        if ( ! is_null($this->options)) {
-            if ( ! isset($this->options[$returnValue])) {
+        if (! is_null($this->options)) {
+            if (! isset($this->options[$returnValue])) {
                 return null;
             }
         }
