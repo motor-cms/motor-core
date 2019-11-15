@@ -33,6 +33,20 @@ class MotorServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerCommands();
+        $this->documentation();
+    }
+
+
+    /**
+     * Merge documentation items from configuration file
+     */
+    public function documentation()
+    {
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'motor-core');
+
+        $config = $this->app['config']->get('motor-docs', []);
+        $this->app['config']->set('motor-docs',
+            array_replace_recursive(require __DIR__.'/../../config/motor-docs.php', $config));
     }
 
 
