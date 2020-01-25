@@ -51,7 +51,10 @@ class MotorMakeModuleCommand extends Command
         $this->call('motor:make:model', array_merge(['name' => $classSingular], $extraoptions));
 
         // Create migration
-        $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $extraoptions));
+        // Strip namespace from migration command
+        $migrationOptions = $extraoptions;
+        unset($migrationOptions['--namespace']);
+        $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $migrationOptions));
 
         // Create grid
         $this->call('motor:make:grid', array_merge(['name' => $classSingular . 'Grid'], $extraoptions));
