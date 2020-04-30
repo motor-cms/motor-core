@@ -2,12 +2,26 @@
 
 namespace Motor\Core\Database\Migrations;
 
+use Illuminate\Filesystem\Filesystem;
+
 /**
  * Class MigrationCreator
  * @package Motor\Core\Database\Migrations
  */
 class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
 {
+
+    /**
+     * Create a new migration creator instance.
+     *
+     * @param  \Illuminate\Filesystem\Filesystem  $files
+     * @param  string  $customStubPath
+     * @return void
+     */
+    public function __construct(Filesystem $files, $customStubPath = null)
+    {
+        parent::__construct($files, $customStubPath);
+    }
 
     /**
      * Get the migration stub file.
