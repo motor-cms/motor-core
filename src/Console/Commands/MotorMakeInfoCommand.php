@@ -150,9 +150,6 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $routeModelBinding = file_get_contents($this->getRouteModelBindingStub());
         $routeModelBinding = $this->replaceTemplateVars($routeModelBinding);
 
-        $modelFactory = file_get_contents($this->getModelFactoryStub());
-        $modelFactory = $this->replaceTemplateVars($modelFactory);
-
         $testHelper = file_get_contents($this->getTestHelperStub());
         $testHelper = $this->replaceTemplateVars($testHelper);
 
@@ -170,23 +167,6 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
 
         $this->info('Add this to your app/config/motor-backend-permissions.php file');
         echo $permission . "\n";
-
-        $modelFactoryFile = $this->getTargetModelFactoryFile();
-
-        if (! file_exists($modelFactoryFile)) {
-            file_put_contents($modelFactoryFile, "<?php\r\n\r\n" . $modelFactory);
-            $this->info('Generated database/factories/ModelFactory.php');
-        } else {
-            if (file_exists($modelFactoryFile) && strpos(file_get_contents($modelFactoryFile), $modelFactory) === false) {
-                $existingModelFactoryFile = file_get_contents($modelFactoryFile);
-
-                file_put_contents($modelFactoryFile, $existingModelFactoryFile . "\r\n" . $modelFactory);
-                $this->info('Added new model factory to database/factories/ModelFactory.php');
-            } else {
-                $this->info('Add this to your database/factories/ModelFactory.php (if it doesn\'t exist yet)');
-                echo $modelFactory . "\n";
-            }
-        }
 
         $testHelperFile = $this->getTargetTestHelperFile();
 

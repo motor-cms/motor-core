@@ -49,7 +49,11 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      */
     protected function getNamespace($name): string
     {
-        return GeneratorHelper::getNamespace($name, $this->option('namespace'), $this->laravel);
+        $namespace = $this->option('namespace');
+        if (strrpos($namespace, '\\') === strlen($namespace)) {
+            $namespace = substr($namespace, 0, -1);
+        }
+        return GeneratorHelper::getNamespace($name, $namespace, $this->laravel);
     }
 
 
@@ -58,7 +62,11 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      */
     protected function getRootNamespace(): string
     {
-        return GeneratorHelper::getRootNamespace($this->option('namespace'), $this->laravel);
+        $namespace = GeneratorHelper::getRootNamespace($this->option('namespace'), $this->laravel);
+        if (strrpos($namespace, '\\') === strlen($namespace)) {
+            $namespace = substr($namespace, 0, -1);
+        }
+        return $namespace;
     }
 
 
@@ -107,7 +115,11 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         // Guess package name to prefix the views and i18n location
         $packageName = '';
         if (! is_null($this->option('namespace'))) {
-            $packageName = str_replace('/', '-', strtolower($this->option('namespace'))) . '::';
+            $packageName = str_replace('\\', '/', strtolower($this->option('namespace')));
+            if (strrpos($packageName, '/') !== false) {
+                $packageName = substr($packageName, 0, -1);
+            }
+            $packageName = str_replace('/', '-', $packageName) . '::';
         }
 
         $stub = str_replace('DummyClass', $class, $stub);

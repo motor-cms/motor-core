@@ -4,6 +4,7 @@ namespace Motor\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Motor\Core\Console\Commands\MotorMakeControllerCommand;
+use Motor\Core\Console\Commands\MotorMakeFactoryCommand;
 use Motor\Core\Console\Commands\MotorMakeFormCommand;
 use Motor\Core\Console\Commands\MotorMakeGridCommand;
 use Motor\Core\Console\Commands\MotorMakeI18nCommand;
@@ -12,6 +13,8 @@ use Motor\Core\Console\Commands\MotorMakeMigrationCommand;
 use Motor\Core\Console\Commands\MotorMakeModelCommand;
 use Motor\Core\Console\Commands\MotorMakeModuleCommand;
 use Motor\Core\Console\Commands\MotorMakeRequestCommand;
+use Motor\Core\Console\Commands\MotorMakeResourceCommand;
+use Motor\Core\Console\Commands\MotorMakeSeederCommand;
 use Motor\Core\Console\Commands\MotorMakeServiceCommand;
 use Motor\Core\Console\Commands\MotorMakeTestCommand;
 use Motor\Core\Console\Commands\MotorMakeTransformerCommand;
@@ -63,11 +66,14 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeMigrationCommand::class,
                 MotorMakeControllerCommand::class,
                 MotorMakeRequestCommand::class,
+                MotorMakeSeederCommand::class,
                 MotorMakeGridCommand::class,
                 MotorMakeI18nCommand::class,
                 MotorMakeViewCommand::class,
                 MotorMakeInfoCommand::class,
                 MotorMakeFormCommand::class,
+                MotorMakeResourceCommand::class,
+                MotorMakeFactoryCommand::class,
                 MotorMakeServiceCommand::class,
                 MotorMakeTestCommand::class,
                 MotorMakeTransformerCommand::class,

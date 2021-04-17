@@ -53,6 +53,7 @@ class MotorMakeModuleCommand extends Command
         // Create migration
         // Strip namespace from migration command
         $migrationOptions = $extraoptions;
+        $migrationOptions['--path'] = $migrationOptions['--path'].'/../database/migrations';
         unset($migrationOptions['--namespace']);
         $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $migrationOptions));
 
@@ -73,6 +74,18 @@ class MotorMakeModuleCommand extends Command
 
         // Create transformer
         $this->call('motor:make:transformer', array_merge(['name' => $classSingular . 'Transformer'], $extraoptions));
+
+        // Create resource
+        $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Resoource'], $extraoptions));
+
+        // Create resource
+        $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Collection'], $extraoptions));
+
+        // Create factory
+        $this->call('motor:make:factory', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classSingular], $extraoptions));
+
+        // Create seeder
+        $this->call('motor:make:seeder', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classPlural], $extraoptions));
 
         // Create form
         $this->call('motor:make:form', array_merge(['name' => 'Forms/Backend/' . $classSingular . 'Form'], $extraoptions));

@@ -44,7 +44,11 @@ abstract class MotorAbstractCommand extends Command
         // Guess package name to prefix the views and i18n location
         $packageName = '';
         if (! is_null($this->option('namespace'))) {
-            $packageName = str_replace('/', '-', strtolower($this->option('namespace'))) . '::';
+            $packageName = str_replace('\\', '/', strtolower($this->option('namespace')));
+            if (strrpos($packageName, '/') !== false) {
+                $packageName = substr($packageName, 0, -1);
+            }
+            $packageName = str_replace('/', '-', $packageName) . '::';
         }
 
         return [
