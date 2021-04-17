@@ -76,7 +76,7 @@ class MotorMakeModuleCommand extends Command
         $this->call('motor:make:transformer', array_merge(['name' => $classSingular . 'Transformer'], $extraoptions));
 
         // Create resource
-        $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Resoource'], $extraoptions));
+        $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Resource'], $extraoptions));
 
         // Create resource
         $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Collection'], $extraoptions));

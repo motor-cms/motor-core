@@ -65,6 +65,14 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
     /**
      * @return string
      */
+    protected function getApiRouteStub(): string
+    {
+        return __DIR__ . '/stubs/info/apiroute.stub';
+    }
+
+    /**
+     * @return string
+     */
     protected function getRouteModelBindingStub(): string
     {
         return __DIR__ . '/stubs/info/routemodelbinding.stub';
@@ -147,6 +155,9 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $route = file_get_contents($this->getRouteStub());
         $route = $this->replaceTemplateVars($route);
 
+        $apiRoute = file_get_contents($this->getApiRouteStub());
+        $apiRoute = $this->replaceTemplateVars($apiRoute);
+
         $routeModelBinding = file_get_contents($this->getRouteModelBindingStub());
         $routeModelBinding = $this->replaceTemplateVars($routeModelBinding);
 
@@ -159,8 +170,11 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $this->info('Add this to an items array in your app/config/motor-backend-navigation.php');
         echo $navigation . "\n";
 
-        $this->info('Add this to the backend and api route groups in your routes/web.php and routes/api.php');
+        $this->info('Add this to the backend route groups in your routes/web.php');
         echo $route . "\n";
+
+        $this->info('Add this to the api route groups in your routes/api.php');
+        echo $apiRoute . "\n";
 
         $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php (or your own service provider)');
         echo $routeModelBinding . "\n";

@@ -45,7 +45,7 @@ abstract class MotorAbstractCommand extends Command
         $packageName = '';
         if (! is_null($this->option('namespace'))) {
             $packageName = str_replace('\\', '/', strtolower($this->option('namespace')));
-            if (strrpos($packageName, '/') !== false) {
+            if (strrpos($packageName, '/') === strlen($packageName)) {
                 $packageName = substr($packageName, 0, -1);
             }
             $packageName = str_replace('/', '-', $packageName) . '::';

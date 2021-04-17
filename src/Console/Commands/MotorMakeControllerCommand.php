@@ -110,13 +110,15 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         $request            = $classBase . 'Request';
         $form               = $classBase . 'Form';
         $service            = $classBase . 'Service';
+        $resource           = $classBase . 'Resource';
+        $collection         = $classBase . 'Collection';
         $transformer        = $classBase . 'Transformer';
 
         // Guess package name to prefix the views and i18n location
         $packageName = '';
         if (! is_null($this->option('namespace'))) {
             $packageName = str_replace('\\', '/', strtolower($this->option('namespace')));
-            if (strrpos($packageName, '/') !== false) {
+            if (strrpos($packageName, '/') === strlen($packageName)) {
                 $packageName = substr($packageName, 0, -1);
             }
             $packageName = str_replace('/', '-', $packageName) . '::';
@@ -138,6 +140,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummyService', $service, $stub);
 
+        $stub = str_replace('DummyCollection', $collection, $stub);
+
+        $stub = str_replace('DummyResource', $resource, $stub);
+
         $stub = str_replace('DummyTransformer', $transformer, $stub);
         $stub = str_replace('DummyView', Str::plural(Str::snake($classBase)), $stub);
 
@@ -148,6 +154,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         $stub = str_replace('DummyPluralTitle', Str::ucfirst(str_replace('_', ' ', $classBase)), $stub);
 
         $stub = str_replace('DummySingularTitle', Str::ucfirst(str_replace('_', ' ', $classBase)), $stub);
+
+        $stub = str_replace('DummySingularLowercase', Str::lower(str_replace('_', ' ', $classBase)), $stub);
 
         $stub = str_replace('DummyPackageName', $packageName, $stub);
 
