@@ -81,6 +81,9 @@ class MotorMakeModuleCommand extends Command
         // Create resource
         $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Collection'], $extraoptions));
 
+        // Create policy
+        $this->call('motor:make:policy', array_merge(['--model' => $extraoptions['--namespace'].'\\Models\\'.$classSingular, 'name' => $classSingular.'Policy'], $extraoptions));
+
         // Create factory
         $this->call('motor:make:factory', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classSingular], $extraoptions));
 

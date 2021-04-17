@@ -12,6 +12,7 @@ use Motor\Core\Console\Commands\MotorMakeInfoCommand;
 use Motor\Core\Console\Commands\MotorMakeMigrationCommand;
 use Motor\Core\Console\Commands\MotorMakeModelCommand;
 use Motor\Core\Console\Commands\MotorMakeModuleCommand;
+use Motor\Core\Console\Commands\MotorMakePolicyCommand;
 use Motor\Core\Console\Commands\MotorMakeRequestCommand;
 use Motor\Core\Console\Commands\MotorMakeResourceCommand;
 use Motor\Core\Console\Commands\MotorMakeSeederCommand;
@@ -72,6 +73,7 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeViewCommand::class,
                 MotorMakeInfoCommand::class,
                 MotorMakeFormCommand::class,
+                MotorMakePolicyCommand::class,
                 MotorMakeResourceCommand::class,
                 MotorMakeFactoryCommand::class,
                 MotorMakeServiceCommand::class,
