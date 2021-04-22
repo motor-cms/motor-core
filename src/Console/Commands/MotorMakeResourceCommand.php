@@ -65,6 +65,18 @@ class MotorMakeResourceCommand extends ResourceMakeCommand
     }
 
     /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return $this->collection()
+            ? $this->resolveStubPath('/stubs/resource-collection.stub')
+            : __DIR__ . '/stubs/resource.stub';
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array

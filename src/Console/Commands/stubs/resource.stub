@@ -1,0 +1,30 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+/**
+ * @OA\Schema(
+ *   schema="{{ class }}",
+ *   @OA\Property(
+ *     property="id",
+ *     type="integer",
+ *     example="1"
+ *   )
+ * )
+ */
+
+class {{ class }} extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        return parent::toArray($request);
+    }
+}

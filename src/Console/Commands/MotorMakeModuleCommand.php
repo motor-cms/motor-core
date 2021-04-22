@@ -72,9 +72,6 @@ class MotorMakeModuleCommand extends Command
         // Create service
         $this->call('motor:make:service', array_merge(['name' => $classSingular . 'Service'], $extraoptions));
 
-        // Create transformer
-        $this->call('motor:make:transformer', array_merge(['name' => $classSingular . 'Transformer'], $extraoptions));
-
         // Create resource
         $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Resource'], $extraoptions));
 

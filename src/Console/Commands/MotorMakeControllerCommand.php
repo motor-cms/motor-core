@@ -151,7 +151,9 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummyComponentView', Str::plural(Str::snake($componentClassBase)), $stub);
 
-        $stub = str_replace('DummyPluralTitle', Str::ucfirst(str_replace('_', ' ', $classBase)), $stub);
+        $stub = str_replace('DummyPluralTitle', Str::ucfirst(Str::plural(str_replace('_', ' ', $classBase))), $stub);
+
+        $stub = str_replace('DummyPluralLowercase', Str::lower(Str::plural(str_replace('_', ' ', $classBase))), $stub);
 
         $stub = str_replace('DummySingularTitle', Str::ucfirst(str_replace('_', ' ', $classBase)), $stub);
 
