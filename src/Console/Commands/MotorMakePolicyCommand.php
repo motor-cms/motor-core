@@ -66,6 +66,26 @@ class MotorMakePolicyCommand extends PolicyMakeCommand
     }
 
     /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return __DIR__ . '/stubs/policy.stub';
+    }
+
+    protected function replaceModel($stub, $model) {
+
+        $data = parent::replaceModel($stub, $model);
+
+        $permission = Str::snake(Str::plural(class_basename(trim($model, '\\'))));
+
+        $data = str_replace('{{ permission }}', $permission, $data);
+
+        return $data;
+    }
+    /**
      * Get the console command options.
      *
      * @return array
