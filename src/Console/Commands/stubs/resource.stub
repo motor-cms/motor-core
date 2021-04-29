@@ -2,7 +2,7 @@
 
 namespace {{ namespace }};
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Motor\Backend\Http\Resources\BaseResource;
 
 /**
  * @OA\Schema(
@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * )
  */
 
-class {{ class }} extends JsonResource
+class {{ class }} extends BaseResource
 {
     /**
      * Transform the resource into an array.

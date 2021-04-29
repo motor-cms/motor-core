@@ -72,7 +72,7 @@ class MotorMakeResourceCommand extends ResourceMakeCommand
     protected function getStub()
     {
         return $this->collection()
-            ? $this->resolveStubPath('/stubs/resource-collection.stub')
+            ? __DIR__ . '/stubs/resource-collection.stub'
             : __DIR__ . '/stubs/resource.stub';
     }
 
