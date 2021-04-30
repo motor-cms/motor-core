@@ -18,7 +18,6 @@ use Motor\Core\Console\Commands\MotorMakeResourceCommand;
 use Motor\Core\Console\Commands\MotorMakeSeederCommand;
 use Motor\Core\Console\Commands\MotorMakeServiceCommand;
 use Motor\Core\Console\Commands\MotorMakeTestCommand;
-use Motor\Core\Console\Commands\MotorMakeTransformerCommand;
 use Motor\Core\Console\Commands\MotorMakeViewCommand;
 use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
 
@@ -78,7 +77,6 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeFactoryCommand::class,
                 MotorMakeServiceCommand::class,
                 MotorMakeTestCommand::class,
-                MotorMakeTransformerCommand::class,
                 MotorSetpackagedevCommand::class,
             ]);
         }

@@ -112,7 +112,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         $service            = $classBase . 'Service';
         $resource           = $classBase . 'Resource';
         $collection         = $classBase . 'Collection';
-        $transformer        = $classBase . 'Transformer';
 
         // Guess package name to prefix the views and i18n location
         $packageName = '';
@@ -144,7 +143,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummyResource', $resource, $stub);
 
-        $stub = str_replace('DummyTransformer', $transformer, $stub);
         $stub = str_replace('DummyView', Str::plural(Str::snake($classBase)), $stub);
 
         $stub = str_replace('DummyComponentViewKebab', Str::plural(Str::kebab($componentClassBase)), $stub);
