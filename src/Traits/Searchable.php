@@ -35,6 +35,9 @@ trait Searchable
             return $builder;
         }
 
+        // Remove sql injection possibilities
+        $query = Str::replace('%', $query);
+
         $searchType = 'LIKE';
         $search     = $full_text ? trim($query) : '%' . trim($query) . '%';
 
