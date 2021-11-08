@@ -20,8 +20,8 @@ class PerPageRenderer extends Base
     /**
      * Set up filter with initial values
      *
-     * @param array $options
-     * @param int   $defaultValue
+     * @param int[] $options
+     * @param int $defaultValue
      */
     public function setup($options = [ 25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500 ], $defaultValue = 25): void
     {
