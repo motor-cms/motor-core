@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class WhereRenderer
- * @package Motor\Core\Filter\Renderers
  */
 class WhereRenderer extends SelectRenderer
 {
     protected $options = null;
-
 
     /**
      * Render the filter
@@ -23,7 +21,6 @@ class WhereRenderer extends SelectRenderer
         return '';
     }
 
-
     /**
      * Run query for the filter
      *
@@ -33,10 +30,10 @@ class WhereRenderer extends SelectRenderer
     public function query(Builder $query): object
     {
         if ($this->operator === 'IN') {
-            return $query->whereIn($query->getModel()->getTable() . '.' . $this->field, $this->getValue());
+            return $query->whereIn($query->getModel()->getTable().'.'.$this->field, $this->getValue());
         } else {
             return $query->where(
-                $query->getModel()->getTable() . '.' . $this->field,
+                $query->getModel()->getTable().'.'.$this->field,
                 $this->operator,
                 $this->getValue()
             );

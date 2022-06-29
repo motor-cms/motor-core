@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Foundation\Console\ResourceMakeCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
@@ -72,8 +71,8 @@ class MotorMakeResourceCommand extends ResourceMakeCommand
     protected function getStub()
     {
         return $this->collection()
-            ? __DIR__ . '/stubs/resource-collection.stub'
-            : __DIR__ . '/stubs/resource.stub';
+            ? __DIR__.'/stubs/resource-collection.stub'
+            : __DIR__.'/stubs/resource.stub';
     }
 
     /**

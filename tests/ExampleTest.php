@@ -12,11 +12,10 @@ use Motor\Core\Helpers\GeneratorHelper;
 
 /**
  * Class ExampleTest
- * @package Motor\Core\Test
  */
 class ExampleTest extends TestCase
 {
-    protected function setUp():void
+    protected function setUp(): void
     {
         if (! $this->app) {
             $this->refreshApplication();
@@ -35,9 +34,8 @@ class ExampleTest extends TestCase
         $this->setUpHasRun = true;
     }
 
-
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * @param  \Illuminate\Foundation\Application  $app
      */
     protected function getEnvironmentSetUp($app)
     {
@@ -74,7 +72,6 @@ class ExampleTest extends TestCase
         $filter = new Filter(null);
         $this->assertInstanceOf(Filter::class, $filter);
     }
-
 
     /** @test */
     public function it_can_add_a_where_filter()

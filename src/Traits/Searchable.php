@@ -7,24 +7,20 @@ use Illuminate\Support\Str;
 
 /**
  * Trait Searchable
- *
- * @package Motor\Core\Searchable
  */
 trait Searchable
 {
-
     /**
      * @var array
      */
     protected $joins = [];
 
-
     /**
      * full search base on table field and relation fields
      *
-     * @param Builder $builder
-     * @param         $query
-     * @param bool    $full_text
+     * @param  Builder  $builder
+     * @param    $query
+     * @param  bool  $full_text
      * @return Builder|null
      */
     public function scopeSearch(Builder $builder, $query, $full_text = false): ?Builder
@@ -39,7 +35,7 @@ trait Searchable
         $query = Str::replace('%', '', $query);
 
         $searchType = 'LIKE';
-        $search     = $full_text ? trim($query) : '%' . trim($query) . '%';
+        $search = $full_text ? trim($query) : '%'.trim($query).'%';
 
         $terms = explode(' ', $query);
 
@@ -53,13 +49,13 @@ trait Searchable
         $words = [];
         foreach ($terms as $term) {
             if (trim($term) !== '') {
-                $words[] = '*' . trim($term) . '*';
+                $words[] = '*'.trim($term).'*';
             }
         }
 
         if (count($terms) > 1) {
             $searchType = 'REGEXP';
-            $search     = implode('|', $terms);
+            $search = implode('|', $terms);
         }
 
         $columns = $this->searchableColumns;
@@ -71,8 +67,8 @@ trait Searchable
                 $bindings = array_merge_recursive($bindings, $binding);
             }
 
-            $builder->select($builder->getModel()->getTable() . '.*');
-            $builder->selectRaw("max(" . implode(' + ', $cases) . ") as relevance");
+            $builder->select($builder->getModel()->getTable().'.*');
+            $builder->selectRaw('max('.implode(' + ', $cases).') as relevance');
             $builder->addBinding($bindings['select'], 'select');
 
             foreach ($columns as $key => $column) {
@@ -88,21 +84,20 @@ trait Searchable
         }
 
         if (! is_null($result)) {
-            $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable() . '.id');
+            $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
         }
 
         return $result;
     }
 
-
     /**
      * check if field is for its table or related table and generate the search query
      *
-     * @param Builder $builder
-     * @param         $searchType
-     * @param         $query
-     * @param         $field
-     * @param bool    $first
+     * @param  Builder  $builder
+     * @param    $searchType
+     * @param    $query
+     * @param    $field
+     * @param  bool  $first
      * @return Builder
      */
     public function performSearch(Builder $builder, $searchType, $query, $field, $first = false): Builder
@@ -114,13 +109,13 @@ trait Searchable
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()->getTable()) {
-                return $builder->$where($table . '.' . $field, $searchType, $query);
+                return $builder->$where($table.'.'.$field, $searchType, $query);
             }
 
             $where .= 'Has';
 
             if (! in_array($table, $this->joins)) {
-                $builder->join(Str::plural($table) . ' as ' . $table, $table . '_id', $table . '.id');
+                $builder->join(Str::plural($table).' as '.$table, $table.'_id', $table.'.id');
                 $this->joins[] = $table;
             }
 
@@ -131,69 +126,67 @@ trait Searchable
         }
     }
 
-
     /**
      * Build case clause from all words for a single column.
      *
-     * @param       $column
-     * @param array $words
+     * @param    $column
+     * @param  array  $words
      * @return array
      */
     protected function buildCase($column, array $words): array
     {
         // THIS IS BAD
         // @todo refactor
-        $operator           = 'LIKE';
-        $bindings           = [];
+        $operator = 'LIKE';
+        $bindings = [];
         $bindings['select'] = $bindings['where'] = array_map(static function ($word) {
             return str_replace('*', '', $word);
         }, $words);
-        $case               = $this->buildEqualsCase($column, $words);
+        $case = $this->buildEqualsCase($column, $words);
         if (strpos(implode('', $words), '*') !== false) {
             $leftMatching = [];
             foreach ($words as $key => $word) {
                 if ($this->isLeftMatching($word)) {
                     $columns = explode('.', $column);
                     foreach ($columns as $columnKey => $col) {
-                        $columns[$columnKey] = '`' . $col . '`';
+                        $columns[$columnKey] = '`'.$col.'`';
                     }
-                    $escapedColumn        = implode('.', $columns);
-                    $leftMatching[]       = sprintf('%s %s ?', $escapedColumn, $operator);
-                    $bindings['select'][] = $bindings['where'][$columnKey] = $this->caseBinding($word) . '%';
+                    $escapedColumn = implode('.', $columns);
+                    $leftMatching[] = sprintf('%s %s ?', $escapedColumn, $operator);
+                    $bindings['select'][] = $bindings['where'][$columnKey] = $this->caseBinding($word).'%';
                 }
             }
             if (count($leftMatching)) {
                 $leftMatching = implode(' or ', $leftMatching);
-                $score        = 5;
-                $case         .= " + case when {$leftMatching} then {$score} else 0 end";
+                $score = 5;
+                $case .= " + case when {$leftMatching} then {$score} else 0 end";
             }
             $wildcards = [];
             foreach ($words as $key => $word) {
                 if ($this->isWildcard($word)) {
                     $columns = explode('.', $column);
                     foreach ($columns as $columnKey => $col) {
-                        $columns[$columnKey] = '`' . $col . '`';
+                        $columns[$columnKey] = '`'.$col.'`';
                     }
-                    $escapedColumn        = implode('.', $columns);
-                    $wildcards[]          = sprintf('%s %s ?', $escapedColumn, $operator);
-                    $bindings['select'][] = $bindings['where'][$columnKey] = '%' . $this->caseBinding($word) . '%';
+                    $escapedColumn = implode('.', $columns);
+                    $wildcards[] = sprintf('%s %s ?', $escapedColumn, $operator);
+                    $bindings['select'][] = $bindings['where'][$columnKey] = '%'.$this->caseBinding($word).'%';
                 }
             }
             if (count($wildcards)) {
                 $wildcards = implode(' or ', $wildcards);
-                $score     = 1;
-                $case      .= " + case when {$wildcards} then {$score} else 0 end";
+                $score = 1;
+                $case .= " + case when {$wildcards} then {$score} else 0 end";
             }
         }
 
         return [$case, $bindings];
     }
 
-
     /**
      * Determine whether word starts and ends with wildcards.
      *
-     * @param string $word
+     * @param  string  $word
      * @return bool
      */
     protected function isWildcard($word): bool
@@ -201,33 +194,31 @@ trait Searchable
         return Str::endsWith($word, '*') && Str::startsWith($word, '*');
     }
 
-
     /**
      * Build basic search case for 'equals' comparison.
      *
-     * @param       $column
-     * @param array $words
+     * @param    $column
+     * @param  array  $words
      * @return string
      */
     protected function buildEqualsCase($column, array $words): string
     {
         $columns = explode('.', $column);
         foreach ($columns as $key => $col) {
-            $columns[$key] = '`' . $col . '`';
+            $columns[$key] = '`'.$col.'`';
         }
         $escapedColumn = implode('.', $columns);
 
         $equals = implode(' or ', array_fill(0, count($words), sprintf('%s = ?', $escapedColumn)));
-        $score  = 15;
+        $score = 15;
 
         return "case when {$equals} then {$score} else 0 end";
     }
 
-
     /**
      * Determine whether word ends with wildcard.
      *
-     * @param string $word
+     * @param  string  $word
      * @return bool
      */
     protected function isLeftMatching($word): bool
@@ -235,11 +226,10 @@ trait Searchable
         return Str::endsWith($word, '*');
     }
 
-
     /**
      * Replace '?' with single character SQL wildcards.
      *
-     * @param string $word
+     * @param  string  $word
      * @return string
      */
     protected function caseBinding($word): string

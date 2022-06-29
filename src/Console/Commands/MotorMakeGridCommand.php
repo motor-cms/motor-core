@@ -6,11 +6,9 @@ use Illuminate\Support\Str;
 
 /**
  * Class MotorMakeGridCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeGridCommand extends MotorMakeControllerCommand
 {
-
     /**
      * The console command name.
      *
@@ -35,18 +33,16 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected $type = 'Grid';
 
-
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Grids';
+        return $rootNamespace.'\Grids';
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -55,20 +51,19 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/grid.stub';
+        return __DIR__.'/stubs/grid.stub';
     }
-
 
     /**
      * Replace the namespace for the given stub.
      *
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {
-        $class     = last(explode('/', $this->getNameInput()));
+        $class = last(explode('/', $this->getNameInput()));
         $classBase = Str::singular(str_replace('Grid', '', $class));
 
         $stub = str_replace('DummyRootNamespace', $this->getRootNamespace(), $stub);

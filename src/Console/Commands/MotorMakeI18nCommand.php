@@ -6,11 +6,9 @@ use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class MotorMakeI18nCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeI18nCommand extends MotorAbstractCommand
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -25,18 +23,16 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new i18n file';
 
-
     /**
      * @return string
      */
     protected function getTargetPath(): string
     {
-        $prefix   = $this->option('prefix') ? $this->option('prefix') : 'backend';
-        $basePath = (! is_null($this->option('path')) ? $this->option('path') . '/../resources/lang' : resource_path('lang'));
+        $prefix = $this->option('prefix') ? $this->option('prefix') : 'backend';
+        $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../resources/lang' : resource_path('lang'));
 
-        return $basePath . '/' . strtolower($this->argument('locale')) . '/' . $prefix . '/';
+        return $basePath.'/'.strtolower($this->argument('locale')).'/'.$prefix.'/';
     }
-
 
     /**
      * @return string
@@ -45,9 +41,8 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
     {
         $values = $this->getTemplateVars();
 
-        return $values['pluralKebab'] . '.php';
+        return $values['pluralKebab'].'.php';
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -60,9 +55,8 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
             return $this->option('stub_path');
         }
 
-        return __DIR__ . '/stubs/i18n.stub';
+        return __DIR__.'/stubs/i18n.stub';
     }
-
 
     /**
      * Execute the console command.
@@ -72,7 +66,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
     public function handle(): void
     {
         // Check target file
-        if (file_exists($this->getTargetPath() . $this->getTargetFile())) {
+        if (file_exists($this->getTargetPath().$this->getTargetFile())) {
             $this->error('I18n target file exists');
 
             return;
@@ -85,7 +79,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
 
         $stub = file_get_contents($this->getStub());
         $stub = $this->replaceTemplateVars($stub);
-        file_put_contents($this->getTargetPath() . $this->getTargetFile(), $stub);
+        file_put_contents($this->getTargetPath().$this->getTargetFile(), $stub);
 
         $this->info('I18n file generated');
     }

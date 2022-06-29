@@ -6,11 +6,9 @@ use Illuminate\Support\Str;
 
 /**
  * Class MotorMakeServiceCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeServiceCommand extends MotorMakeControllerCommand
 {
-
     /**
      * The console command name.
      *
@@ -35,18 +33,16 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
      */
     protected $type = 'Service';
 
-
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Services';
+        return $rootNamespace.'\Services';
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -59,15 +55,14 @@ class MotorMakeServiceCommand extends MotorMakeControllerCommand
             return $this->option('stub_path');
         }
 
-        return __DIR__ . '/stubs/service.stub';
+        return __DIR__.'/stubs/service.stub';
     }
-
 
     /**
      * Replace the namespace for the given stub.
      *
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      * @return object
      */
     protected function replaceNamespace(&$stub, $name): object

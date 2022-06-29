@@ -8,11 +8,9 @@ use Motor\Core\Support\Composer;
 
 /**
  * Class MotorMakeMigrationCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeMigrationCommand extends MigrateMakeCommand
 {
-
     /**
      * The console command signature.
      *
@@ -25,12 +23,11 @@ class MotorMakeMigrationCommand extends MigrateMakeCommand
         {--realpath : Indicate any provided migration file paths are pre-resolved absolute paths}
         {--fullpath : Output the full path of the migration}';
 
-
     /**
      * MotorMakeMigrationCommand constructor.
      *
-     * @param MigrationCreator $creator
-     * @param Composer         $composer
+     * @param  MigrationCreator  $creator
+     * @param  Composer  $composer
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {

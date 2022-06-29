@@ -7,16 +7,13 @@ use Motor\Core\Filter\Base;
 
 /**
  * Class SearchRenderer
- * @package Motor\Core\Filter\Renderers
  */
 class SearchRenderer extends Base
 {
-
     /**
      * @var array
      */
     protected $searchableColumns = [];
-
 
     /**
      * Render the filter
@@ -28,7 +25,6 @@ class SearchRenderer extends Base
         return view('motor-backend::filters.search', ['value' => $this->getValue()]);
     }
 
-
     /**
      * Set searchable columns for filter
      *
@@ -38,7 +34,6 @@ class SearchRenderer extends Base
     {
         $this->searchableColumns = $columns;
     }
-
 
     /**
      * Run query for the filter
@@ -56,11 +51,11 @@ class SearchRenderer extends Base
                 return $query;
             }
             $searchableColumns = $this->searchableColumns;
-            $value             = $this->getValue();
+            $value = $this->getValue();
 
             return $query->orWhere(static function ($query) use ($searchableColumns, $value) {
                 foreach ($searchableColumns as $column) {
-                    $query->where($column, 'LIKE', '%' . $value . '%');
+                    $query->where($column, 'LIKE', '%'.$value.'%');
                 }
             });
         }

@@ -23,11 +23,9 @@ use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
 
 /**
  * Class MotorServiceProvider
- * @package Motor\Core\Providers
  */
 class MotorServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -40,7 +38,6 @@ class MotorServiceProvider extends ServiceProvider
         merge_local_config_with_db_configuration_variables('motor-core');
     }
 
-
     /**
      * Merge documentation items from configuration file
      */
@@ -52,7 +49,6 @@ class MotorServiceProvider extends ServiceProvider
         $this->app['config']->set('motor-docs',
             array_replace_recursive(require __DIR__.'/../../config/motor-docs.php', $config));
     }
-
 
     /**
      * Register artisan commands

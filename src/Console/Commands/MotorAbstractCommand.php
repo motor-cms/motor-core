@@ -7,26 +7,23 @@ use Illuminate\Support\Str;
 
 /**
  * Class MotorAbstractCommand
- * @package Motor\Core\Console\Commands
  */
 abstract class MotorAbstractCommand extends Command
 {
-
     /**
      * Replace inline template variables for the stub files
      *
-     * @param string $stub
+     * @param  string  $stub
      * @return string
      */
     protected function replaceTemplateVars(string $stub): string
     {
         foreach ($this->getTemplateVars() as $key => $value) {
-            $stub = str_replace('{{' . $key . '}}', $value, $stub);
+            $stub = str_replace('{{'.$key.'}}', $value, $stub);
         }
 
         return $stub;
     }
-
 
     /**
      * Do necessary replacement of the stub variables
@@ -36,9 +33,9 @@ abstract class MotorAbstractCommand extends Command
     protected function getTemplateVars(): array
     {
         $singularSnake = Str::snake(Str::singular($this->argument('name')));
-        $pluralSnake   = Str::snake(Str::plural($this->argument('name')));
+        $pluralSnake = Str::snake(Str::plural($this->argument('name')));
 
-        $namespace = (! is_null($this->option('namespace')) ? $this->option('namespace') . '\\' : $this->laravel->getNamespace());
+        $namespace = (! is_null($this->option('namespace')) ? $this->option('namespace').'\\' : $this->laravel->getNamespace());
         $namespace = str_replace('/', '\\', $namespace);
 
         // Guess package name to prefix the views and i18n location
@@ -48,7 +45,7 @@ abstract class MotorAbstractCommand extends Command
             if (strrpos($packageName, '/') === strlen($packageName)) {
                 $packageName = substr($packageName, 0, -1);
             }
-            $packageName = str_replace('/', '-', $packageName) . '::';
+            $packageName = str_replace('/', '-', $packageName).'::';
         }
 
         return [
@@ -75,14 +72,12 @@ abstract class MotorAbstractCommand extends Command
         ];
     }
 
-
     /**
      * Get path for the newly generated file
      *
      * @return string
      */
     abstract protected function getTargetPath(): string;
-
 
     /**
      * Get the file name for the newly generated file
@@ -91,7 +86,6 @@ abstract class MotorAbstractCommand extends Command
      */
     abstract protected function getTargetFile(): string;
 
-
     /**
      * Get the stub file for the generator.
      *
@@ -99,6 +93,6 @@ abstract class MotorAbstractCommand extends Command
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/i18n.stub';
+        return __DIR__.'/stubs/i18n.stub';
     }
 }

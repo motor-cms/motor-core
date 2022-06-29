@@ -7,11 +7,9 @@ use Motor\Core\Helpers\GeneratorHelper;
 
 /**
  * Class MotorMakeFormCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeFormCommand extends FormMakeCommand
 {
-
     /**
      * The console command name.
      *
@@ -26,7 +24,6 @@ class MotorMakeFormCommand extends FormMakeCommand
      */
     protected $description = 'Create a new motor form';
 
-
     /**
      * Get the desired class name from the input.
      *
@@ -37,12 +34,11 @@ class MotorMakeFormCommand extends FormMakeCommand
         return $this->argument('name');
     }
 
-
     /**
      * Replace the namespace for the given stub.
      *
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      * @return object
      */
     protected function replaceNamespace(&$stub, $name): object

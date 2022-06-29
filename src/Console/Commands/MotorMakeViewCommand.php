@@ -6,11 +6,9 @@ use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class MotorMakeViewCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeViewCommand extends MotorAbstractCommand
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -25,29 +23,26 @@ class MotorMakeViewCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new view file';
 
-
     /**
      * @return string
      */
     protected function getTargetPath(): string
     {
-        $values   = $this->getTemplateVars();
-        $basePath = (! is_null($this->option('path')) ? $this->option('path') . '/../resources/views' : resource_path('views'));
+        $values = $this->getTemplateVars();
+        $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../resources/views' : resource_path('views'));
 
         $directory = $this->option('directory') ? $this->option('directory') : 'backend';
 
-        return $basePath . '/' . $directory . '/' . $values['pluralSnake'] . '/';
+        return $basePath.'/'.$directory.'/'.$values['pluralSnake'].'/';
     }
-
 
     /**
      * @return string
      */
     protected function getTargetFile(): string
     {
-        return $this->argument('type') . '.blade.php';
+        return $this->argument('type').'.blade.php';
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -60,9 +55,8 @@ class MotorMakeViewCommand extends MotorAbstractCommand
             return $this->option('stub_path');
         }
 
-        return __DIR__ . '/stubs/views/' . $this->argument('type') . '.blade.stub';
+        return __DIR__.'/stubs/views/'.$this->argument('type').'.blade.stub';
     }
-
 
     /**
      * Execute the console command.
@@ -72,8 +66,8 @@ class MotorMakeViewCommand extends MotorAbstractCommand
     public function handle(): void
     {
         // Check target file
-        if (file_exists($this->getTargetPath() . $this->getTargetFile())) {
-            $this->error('View target ' . $this->argument('type') . ' file exists');
+        if (file_exists($this->getTargetPath().$this->getTargetFile())) {
+            $this->error('View target '.$this->argument('type').' file exists');
 
             return;
         }
@@ -85,8 +79,8 @@ class MotorMakeViewCommand extends MotorAbstractCommand
 
         $stub = file_get_contents($this->getStub());
         $stub = $this->replaceTemplateVars($stub);
-        file_put_contents($this->getTargetPath() . $this->getTargetFile(), $stub);
+        file_put_contents($this->getTargetPath().$this->getTargetFile(), $stub);
 
-        $this->info('View file ' . $this->argument('type') . ' generated');
+        $this->info('View file '.$this->argument('type').' generated');
     }
 }

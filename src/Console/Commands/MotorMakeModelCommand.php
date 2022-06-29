@@ -4,11 +4,9 @@ namespace Motor\Core\Console\Commands;
 
 /**
  * Class MotorMakeModelCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeModelCommand extends MotorMakeControllerCommand
 {
-
     /**
      * The console command name.
      *
@@ -35,7 +33,6 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
      */
     protected $type = 'Model';
 
-
     /**
      * Get the stub file for the generator.
      *
@@ -47,18 +44,17 @@ class MotorMakeModelCommand extends MotorMakeControllerCommand
             return $this->option('stub_path');
         }
 
-        return __DIR__ . '/stubs/model.stub';
+        return __DIR__.'/stubs/model.stub';
     }
-
 
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Models';
+        return $rootNamespace.'\Models';
     }
 }
