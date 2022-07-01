@@ -7,8 +7,6 @@ use Motor\Core\Filter\Base;
 
 /**
  * Class SearchRenderer
- *
- * @package Motor\Core\Filter\Renderers
  */
 class SearchRenderer extends Base
 {
@@ -40,7 +38,7 @@ class SearchRenderer extends Base
     /**
      * Run query for the filter
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return object
      */
     public function query(Builder $query): object

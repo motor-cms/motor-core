@@ -6,11 +6,9 @@ use Illuminate\Filesystem\Filesystem;
 
 /**
  * Class MotorMakeTestCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeTestCommand extends MotorAbstractCommand
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -25,17 +23,15 @@ class MotorMakeTestCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new test stub';
 
-
     /**
      * @return string
      */
     protected function getTargetPath(): string
     {
-        $basePath = (! is_null($this->option('path')) ? $this->option('path') . '/../tests' : resource_path() . '/../tests');
+        $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../tests' : resource_path().'/../tests');
 
-        return $basePath . '/integration/controller/' . $this->argument('type') . '/';
+        return $basePath.'/integration/controller/'.$this->argument('type').'/';
     }
-
 
     /**
      * @return string
@@ -44,9 +40,8 @@ class MotorMakeTestCommand extends MotorAbstractCommand
     {
         $values = $this->getTemplateVars();
 
-        return $values['namespaceNoSlash'] . ucfirst($this->argument('type')) . $values['singularStudly'] . 'Test.php';
+        return $values['namespaceNoSlash'].ucfirst($this->argument('type')).$values['singularStudly'].'Test.php';
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -55,9 +50,8 @@ class MotorMakeTestCommand extends MotorAbstractCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/controller_' . $this->argument('type') . '_test.stub';
+        return __DIR__.'/stubs/controller_'.$this->argument('type').'_test.stub';
     }
-
 
     /**
      * Execute the console command.
@@ -67,7 +61,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
     public function handle(): void
     {
         // Check target file
-        if (file_exists($this->getTargetPath() . $this->getTargetFile())) {
+        if (file_exists($this->getTargetPath().$this->getTargetFile())) {
             $this->error('Test target file exists');
 
             return;
@@ -80,8 +74,8 @@ class MotorMakeTestCommand extends MotorAbstractCommand
 
         $stub = file_get_contents($this->getStub());
         $stub = $this->replaceTemplateVars($stub);
-        file_put_contents($this->getTargetPath() . $this->getTargetFile(), $stub);
+        file_put_contents($this->getTargetPath().$this->getTargetFile(), $stub);
 
-        $this->info('Test file for ' . $this->argument('type') . ' generated');
+        $this->info('Test file for '.$this->argument('type').' generated');
     }
 }

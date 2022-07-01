@@ -19,8 +19,6 @@ use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
 
 /**
  * Class MotorServiceProvider
- *
- * @package Motor\Core\Providers
  */
 class MotorServiceProvider extends ServiceProvider
 {

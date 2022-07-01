@@ -2,9 +2,7 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Database\Console\Factories\FactoryMakeCommand;
-use Illuminate\Foundation\Console\ResourceMakeCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -60,7 +58,7 @@ class MotorMakeFactoryCommand extends FactoryMakeCommand
     protected function getPath($name)
     {
         $name = (string) Str::of($name)->replaceFirst($this->rootNamespace(), '')->finish('Factory');
-        $path = $this->option('path') ? $this->option('path') . '/../database' : $this->laravel->databasePath();
+        $path = $this->option('path') ? $this->option('path').'/../database' : $this->laravel->databasePath();
 
         return $path.'/factories/'.str_replace('\\', '/', $name).'.php';
     }

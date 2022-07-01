@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 /**
  * Trait Searchable
- *
- * @package Motor\Core\Searchable
  */
 trait Searchable
 {
@@ -20,9 +18,9 @@ trait Searchable
     /**
      * full search base on table field and relation fields
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @param $query
-     * @param false $full_text
+     * @param  false  $full_text
      * @return \Illuminate\Database\Eloquent\Builder|null
      */
     public function scopeSearch(Builder $builder, $query, $full_text = false): ?Builder
@@ -68,7 +66,7 @@ trait Searchable
 
             $builder->select($builder->getModel()
                                      ->getTable().'.*');
-            $builder->selectRaw("max(".implode(' + ', $cases).") as relevance");
+            $builder->selectRaw('max('.implode(' + ', $cases).') as relevance');
             $builder->addBinding($bindings['select'], 'select');
 
             foreach ($columns as $key => $column) {
@@ -95,11 +93,11 @@ trait Searchable
     /**
      * check if field is for its table or related table and generate the search query
      *
-     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
      * @param $searchType
      * @param $query
      * @param $field
-     * @param false $first
+     * @param  false  $first
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function performSearch(Builder $builder, $searchType, $query, $field, $first = false): Builder
@@ -107,7 +105,7 @@ trait Searchable
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-            //return $result->orWhere($field, $searchType, $q);
+        //return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()
@@ -133,7 +131,7 @@ trait Searchable
      * Build case clause from all words for a single column.
      *
      * @param $column
-     * @param array $words
+     * @param  array  $words
      * @return array
      */
     protected function buildCase($column, array $words): array
@@ -201,7 +199,7 @@ trait Searchable
      * Build basic search case for 'equals' comparison.
      *
      * @param $column
-     * @param array $words
+     * @param  array  $words
      * @return string
      */
     protected function buildEqualsCase($column, array $words): string

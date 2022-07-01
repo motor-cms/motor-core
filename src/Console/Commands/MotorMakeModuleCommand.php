@@ -8,11 +8,9 @@ use Symfony\Component\Console\Input\InputArgument;
 
 /**
  * Class MotorMakeModuleCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeModuleCommand extends Command
 {
-
     /**
      * The name and signature of the console command.
      *
@@ -27,7 +25,6 @@ class MotorMakeModuleCommand extends Command
      */
     protected $description = 'Generate a motor backend module with stubs';
 
-
     /**
      * Execute the console command.
      *
@@ -36,8 +33,8 @@ class MotorMakeModuleCommand extends Command
     public function handle(): void
     {
         $classSingular = Str::singular(Str::studly($this->argument('name')));
-        $classPlural   = Str::plural(Str::studly($this->argument('name')));
-        $table         = Str::plural(Str::snake(class_basename($this->argument('name'))));
+        $classPlural = Str::plural(Str::studly($this->argument('name')));
+        $table = Str::plural(Str::snake(class_basename($this->argument('name'))));
 
         $extraoptions = [];
         if (! is_null($this->option('path'))) {
@@ -58,19 +55,19 @@ class MotorMakeModuleCommand extends Command
         $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $migrationOptions));
 
         // Create grid
-        $this->call('motor:make:grid', array_merge(['name' => $classSingular . 'Grid'], $extraoptions));
+        $this->call('motor:make:grid', array_merge(['name' => $classSingular.'Grid'], $extraoptions));
 
         // Create request
-        $this->call('motor:make:request', array_merge(['name' => 'Backend/' . $classSingular . 'Request'], $extraoptions));
+        $this->call('motor:make:request', array_merge(['name' => 'Backend/'.$classSingular.'Request'], $extraoptions));
 
         // Create controller
-        $this->call('motor:make:controller', array_merge(['name' => 'Backend/' . $classPlural . 'Controller'], $extraoptions));
+        $this->call('motor:make:controller', array_merge(['name' => 'Backend/'.$classPlural.'Controller'], $extraoptions));
 
         // Create controller
-        $this->call('motor:make:controller', array_merge(['name' => 'Api/' . $classPlural . 'Controller', '--type' => 'api'], $extraoptions));
+        $this->call('motor:make:controller', array_merge(['name' => 'Api/'.$classPlural.'Controller', '--type' => 'api'], $extraoptions));
 
         // Create service
-        $this->call('motor:make:service', array_merge(['name' => $classSingular . 'Service'], $extraoptions));
+        $this->call('motor:make:service', array_merge(['name' => $classSingular.'Service'], $extraoptions));
 
         // Create resource
         $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Resource'], $extraoptions));
@@ -88,7 +85,7 @@ class MotorMakeModuleCommand extends Command
         $this->call('motor:make:seeder', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classPlural], $extraoptions));
 
         // Create form
-        $this->call('motor:make:form', array_merge(['name' => 'Forms/Backend/' . $classSingular . 'Form'], $extraoptions));
+        $this->call('motor:make:form', array_merge(['name' => 'Forms/Backend/'.$classSingular.'Form'], $extraoptions));
 
         // Create test for backend controller
         $this->call('motor:make:test', array_merge(['name' => $classSingular, 'type' => 'backend'], $extraoptions));
@@ -108,7 +105,6 @@ class MotorMakeModuleCommand extends Command
         // Display config information
         $this->call('motor:make:info', array_merge(['name' => $classPlural], $extraoptions));
     }
-
 
     /**
      * Get the console command arguments.

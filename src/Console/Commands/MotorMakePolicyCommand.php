@@ -2,9 +2,7 @@
 
 namespace Motor\Core\Console\Commands;
 
-use Illuminate\Console\GeneratorCommand;
 use Illuminate\Foundation\Console\PolicyMakeCommand;
-use Illuminate\Foundation\Console\ResourceMakeCommand;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -72,11 +70,11 @@ class MotorMakePolicyCommand extends PolicyMakeCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/policy.stub';
+        return __DIR__.'/stubs/policy.stub';
     }
 
-    protected function replaceModel($stub, $model) {
-
+    protected function replaceModel($stub, $model)
+    {
         $data = parent::replaceModel($stub, $model);
 
         $permission = Str::snake(Str::plural(class_basename(trim($model, '\\'))));
@@ -85,6 +83,7 @@ class MotorMakePolicyCommand extends PolicyMakeCommand
 
         return $data;
     }
+
     /**
      * Get the console command options.
      *

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class WhereRenderer
- *
- * @package Motor\Core\Filter\Renderers
  */
 class WhereRenderer extends SelectRenderer
 {
@@ -26,7 +24,7 @@ class WhereRenderer extends SelectRenderer
     /**
      * Run query for the filter
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return object
      */
     public function query(Builder $query): object

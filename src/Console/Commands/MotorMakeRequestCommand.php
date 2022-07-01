@@ -4,11 +4,9 @@ namespace Motor\Core\Console\Commands;
 
 /**
  * Class MotorMakeRequestCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeRequestCommand extends MotorMakeControllerCommand
 {
-
     /**
      * The console command name.
      *
@@ -35,7 +33,6 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
      */
     protected $type = 'Request';
 
-
     /**
      * Get the stub file for the generator.
      *
@@ -43,18 +40,17 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
      */
     protected function getStub(): string
     {
-        return __DIR__ . '/stubs/request.stub';
+        return __DIR__.'/stubs/request.stub';
     }
-
 
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
-        return $rootNamespace . '\Http\Requests';
+        return $rootNamespace.'\Http\Requests';
     }
 }

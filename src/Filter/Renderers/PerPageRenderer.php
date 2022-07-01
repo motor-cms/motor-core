@@ -6,29 +6,25 @@ use Motor\Core\Filter\Base;
 
 /**
  * Class PerPageRenderer
- * @package Motor\Core\Filter\Renderers
  */
 class PerPageRenderer extends Base
 {
-
     /**
      * @var array
      */
     protected $options = [];
 
-
     /**
      * Set up filter with initial values
      *
-     * @param int[] $options
-     * @param int $defaultValue
+     * @param  int[]  $options
+     * @param  int  $defaultValue
      */
-    public function setup($options = [ 25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500 ], $defaultValue = 25): void
+    public function setup($options = [25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500], $defaultValue = 25): void
     {
-        $this->options      = $options;
+        $this->options = $options;
         $this->defaultValue = $defaultValue;
     }
-
 
     /**
      * Render the filter
@@ -39,7 +35,7 @@ class PerPageRenderer extends Base
     {
         return view(
             'motor-backend::filters.select',
-            [ 'name' => $this->name, 'options' => $this->options, 'value' => $this->getValue() ]
+            ['name' => $this->name, 'options' => $this->options, 'value' => $this->getValue()]
         );
     }
 }

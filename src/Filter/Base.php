@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class Base
- * @package Motor\Core\Filter
  */
 class Base
 {
-
     /**
      * @var bool
      */
@@ -71,7 +69,6 @@ class Base
      */
     protected $operator = null;
 
-
     /**
      * Base constructor.
      *
@@ -79,10 +76,9 @@ class Base
      */
     public function __construct($name)
     {
-        $this->name  = $name;
+        $this->name = $name;
         $this->field = $name;
     }
-
 
     /**
      * Set join table
@@ -97,7 +93,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Get join table
      *
@@ -107,7 +102,6 @@ class Base
     {
         return $this->join;
     }
-
 
     /**
      * Set field for query
@@ -122,7 +116,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Get field for query
      *
@@ -132,7 +125,6 @@ class Base
     {
         return $this->field;
     }
-
 
     /**
      * Set visibility of the filter
@@ -152,7 +144,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Get visibility setting for filter
      *
@@ -162,7 +153,6 @@ class Base
     {
         return $this->visible;
     }
-
 
     /**
      * Set option prefix
@@ -177,7 +167,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Get option prefix
      *
@@ -187,7 +176,6 @@ class Base
     {
         return $this->optionPrefix;
     }
-
 
     /**
      * Set empty option for a select filter
@@ -202,7 +190,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Get empty option for a select filter
      *
@@ -213,11 +200,10 @@ class Base
         return $this->emptyOptionString;
     }
 
-
     /**
      * Set options for select filter
      *
-     * @param array $options
+     * @param  array  $options
      * @return object
      */
     public function setOptions($options = []): object
@@ -226,7 +212,6 @@ class Base
 
         return $this;
     }
-
 
     /**
      * Get options for select filter
@@ -238,11 +223,10 @@ class Base
         return $this->options;
     }
 
-
     /**
      * Set operator for query
      *
-     * @param string $operator
+     * @param  string  $operator
      * @return object
      */
     public function setOperator($operator = '='): object
@@ -251,7 +235,6 @@ class Base
 
         return $this;
     }
-
 
     /**
      * Get operator for query
@@ -262,7 +245,6 @@ class Base
     {
         return $this->operator;
     }
-
 
     /**
      * Set default value for filter
@@ -277,7 +259,6 @@ class Base
         return $this;
     }
 
-
     /**
      * Update filter values from request
      */
@@ -290,7 +271,6 @@ class Base
         }
     }
 
-
     /**
      * Set base name of filter
      *
@@ -301,7 +281,6 @@ class Base
         $this->baseName = $name;
     }
 
-
     /**
      * Get name of filter
      *
@@ -311,7 +290,6 @@ class Base
     {
         return $this->name;
     }
-
 
     /**
      * Set value of filter
@@ -328,7 +306,6 @@ class Base
             $this->setSessionValue($value);
         }
     }
-
 
     /**
      * Get current value of filter
@@ -356,7 +333,6 @@ class Base
         return $returnValue;
     }
 
-
     /**
      * Get default value for filter
      *
@@ -367,7 +343,6 @@ class Base
         return $this->defaultValue;
     }
 
-
     /**
      * Get session value of filter
      *
@@ -375,9 +350,8 @@ class Base
      */
     protected function getSessionValue(): ?string
     {
-        return session('filters.' . $this->baseName . '.' . $this->name, null);
+        return session('filters.'.$this->baseName.'.'.$this->name, null);
     }
-
 
     /**
      * Set session value of filter
@@ -386,9 +360,8 @@ class Base
      */
     protected function setSessionValue($value): void
     {
-        session()->put('filters.' . $this->baseName . '.' . $this->name, $value);
+        session()->put('filters.'.$this->baseName.'.'.$this->name, $value);
     }
-
 
     /**
      * Get query for filter
@@ -400,7 +373,6 @@ class Base
     {
         return $query;
     }
-
 
     /**
      * Define if null is a valid filter value
@@ -414,7 +386,6 @@ class Base
 
         return $this;
     }
-
 
     /**
      * Get value of allowNull

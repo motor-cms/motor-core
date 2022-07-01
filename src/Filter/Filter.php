@@ -7,11 +7,9 @@ use Motor\Core\Filter\Renderers\SelectRenderer;
 
 /**
  * Class Filter
- * @package Motor\Core\Filter
  */
 class Filter
 {
-
     /**
      * @var string
      */
@@ -30,8 +28,7 @@ class Filter
     /**
      * @var array
      */
-    protected $sorting = [ 'id', 'ASC' ];
-
+    protected $sorting = ['id', 'ASC'];
 
     /**
      * Filter constructor.
@@ -46,7 +43,6 @@ class Filter
         }
     }
 
-
     /**
      * @param $name
      * @return object|null
@@ -60,9 +56,8 @@ class Filter
         return null;
     }
 
-
     /**
-     * @param Base $filter
+     * @param  Base  $filter
      * @return Base
      */
     public function add(Base $filter): Base
@@ -74,7 +69,6 @@ class Filter
         return $filter;
     }
 
-
     /**
      * Add the default client filter
      */
@@ -82,7 +76,7 @@ class Filter
     {
         if (Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))
-                 ->setOptions([ Auth::user()->client_id => Auth::user()->client->name ])
+                 ->setOptions([Auth::user()->client_id => Auth::user()->client->name])
                  ->setDefaultValue(Auth::user()->client_id)
                  ->isVisible(false);
         } else {
@@ -90,7 +84,6 @@ class Filter
             $this->add(new SelectRenderer('client_id'))->setOptions($clients);
         }
     }
-
 
     /**
      * Return array of all currently set filters

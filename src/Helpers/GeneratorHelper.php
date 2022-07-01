@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 /**
  * Class GeneratorHelper
- *
- * @package Motor\Core\Helpers
  */
 class GeneratorHelper
 {
@@ -17,7 +15,7 @@ class GeneratorHelper
      *
      * @param $name
      * @param $path
-     * @param \Illuminate\Contracts\Foundation\Application $laravel
+     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
      * @return string
      */
     public static function getPath($name, $path, Application $laravel): string
@@ -33,7 +31,7 @@ class GeneratorHelper
      *
      * @param $name
      * @param $namespace
-     * @param \Illuminate\Contracts\Foundation\Application $laravel
+     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
      * @return string
      */
     public static function getNamespace($name, $namespace, Application $laravel): string
@@ -52,11 +50,11 @@ class GeneratorHelper
      * Get root namespace of the application
      *
      * @param $namespace
-     * @param \Illuminate\Contracts\Foundation\Application $laravel
+     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
      * @return string
      */
     public static function getRootNamespace($namespace, Application $laravel): string
     {
-        return (! is_null($namespace) ? str_replace('/', '\\', $namespace).'\\' : $laravel->getNamespace());
+        return ! is_null($namespace) ? str_replace('/', '\\', $namespace).'\\' : $laravel->getNamespace();
     }
 }

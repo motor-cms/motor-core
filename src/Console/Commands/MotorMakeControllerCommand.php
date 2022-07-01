@@ -8,11 +8,9 @@ use Motor\Core\Helpers\GeneratorHelper;
 
 /**
  * Class MotorMakeControllerCommand
- * @package Motor\Core\Console\Commands
  */
 class MotorMakeControllerCommand extends ControllerMakeCommand
 {
-
     /**
      * The console command name.
      *
@@ -32,9 +30,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      */
     protected $description = 'Create a new motor controller class';
 
-
     /**
-     * @param string $name
+     * @param  string  $name
      * @return string
      */
     protected function getPath($name): string
@@ -42,9 +39,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         return GeneratorHelper::getPath($name, $this->option('path'), $this->laravel);
     }
 
-
     /**
-     * @param string $name
+     * @param  string  $name
      * @return string
      */
     protected function getNamespace($name): string
@@ -53,9 +49,9 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         if (strrpos($namespace, '\\') === strlen($namespace)) {
             $namespace = substr($namespace, 0, -1);
         }
+
         return GeneratorHelper::getNamespace($name, $namespace, $this->laravel);
     }
-
 
     /**
      * @return string
@@ -66,9 +62,9 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         if (strrpos($namespace, '\\') === strlen($namespace)) {
             $namespace = substr($namespace, 0, -1);
         }
+
         return $namespace;
     }
-
 
     /**
      * Get the stub file for the generator.
@@ -83,35 +79,34 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         switch ($this->option('type')) {
             case 'default':
-                return __DIR__ . '/stubs/controller_backend.stub';
+                return __DIR__.'/stubs/controller_backend.stub';
                 break;
             case 'api':
-                return __DIR__ . '/stubs/controller_api.stub';
+                return __DIR__.'/stubs/controller_api.stub';
                 break;
         }
 
         return '';
     }
 
-
     /**
      * Replace the namespace for the given stub.
      *
-     * @param string $stub
-     * @param string $name
+     * @param  string  $stub
+     * @param  string  $name
      * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {
-        $class              = last(explode('/', $this->getNameInput()));
-        $classBase          = Str::singular(str_replace('Controller', '', $class));
+        $class = last(explode('/', $this->getNameInput()));
+        $classBase = Str::singular(str_replace('Controller', '', $class));
         $componentClassBase = Str::singular(str_replace('Component', '', str_replace('Controller', '', $class)));
-        $grid               = $classBase . 'Grid';
-        $request            = $classBase . 'Request';
-        $form               = $classBase . 'Form';
-        $service            = $classBase . 'Service';
-        $resource           = $classBase . 'Resource';
-        $collection         = $classBase . 'Collection';
+        $grid = $classBase.'Grid';
+        $request = $classBase.'Request';
+        $form = $classBase.'Form';
+        $service = $classBase.'Service';
+        $resource = $classBase.'Resource';
+        $collection = $classBase.'Collection';
 
         // Guess package name to prefix the views and i18n location
         $packageName = '';
@@ -120,7 +115,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
             if (strrpos($packageName, '/') === strlen($packageName)) {
                 $packageName = substr($packageName, 0, -1);
             }
-            $packageName = str_replace('/', '-', $packageName) . '::';
+            $packageName = str_replace('/', '-', $packageName).'::';
         }
 
         $stub = str_replace('DummyClass', $class, $stub);
