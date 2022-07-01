@@ -16,6 +16,7 @@ use Motor\Core\Console\Commands\MotorMakeSeederCommand;
 use Motor\Core\Console\Commands\MotorMakeServiceCommand;
 use Motor\Core\Console\Commands\MotorMakeTestCommand;
 use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
+use Motor\Core\Console\Commands\GenerateDocsCommand;
 
 /**
  * Class MotorServiceProvider
@@ -66,6 +67,7 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeServiceCommand::class,
                 MotorMakeTestCommand::class,
                 MotorSetpackagedevCommand::class,
+                GenerateDocsCommand::class
             ]);
         }
     }
