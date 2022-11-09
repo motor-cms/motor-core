@@ -1,0 +1,45 @@
+{
+  "name": "motor-cms/motor-core",
+  "description": "Motor base package",
+  "license": "MIT",
+  "keywords": [
+    "motor"
+  ],
+  "authors": [
+    {
+      "name": "Reza Esmaili",
+      "email": "me@dfox.info"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "laravel/framework": "^9.0",
+    "laravel/tinker": "^2.0"
+  },
+  "require-dev": {
+    "spatie/laravel-ignition": "^1.0",
+    "fakerphp/faker": "^1.0",
+    "mockery/mockery": "^1.0",
+    "nunomaduro/collision": "^6.1",
+    "phpunit/phpunit": "^9.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Motor\\Core\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Motor\\Core\\Test\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Motor\\Core\\Providers\\MotorServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
