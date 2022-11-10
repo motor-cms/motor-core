@@ -3,6 +3,7 @@
 namespace Motor\Core\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -36,12 +37,21 @@ class MotorMakeModuleCommand extends Command
         $classPlural = Str::plural(Str::studly($this->argument('name')));
         $table = Str::plural(Str::snake(class_basename($this->argument('name'))));
 
-        $extraoptions = [];
+        $extraoptions = ['--path' => 'app', '--namespace' => null];
+
         if (! is_null($this->option('path'))) {
             $extraoptions['--path'] = $this->option('path');
         }
         if (! is_null($this->option('namespace'))) {
-            $extraoptions['--namespace'] = $this->option('namespace');
+            ////$extraoptions['--namespace'] = $this->option('namespace') . (str_ends_with($this->option('namespace'), '\\') ? '' : '\\') ;
+            //$extraoptions['--namespace'] = $this->option('namespace');
+            $extraoptions['--namespace'] = (str_ends_with($this->option('namespace'), '\\') ? substr($this->option('namespace'), 0, -1) : $this->option('namespace'));
+        }
+
+        // FIXME: evil hack to tell laravel that the models are inside a Models directory even if the directory does not exist
+        if (!is_dir(app_path('Models'))) {
+            $filesystem = new Filesystem();
+            $filesystem->makeDirectory(app_path('Models'), 0755, true);
         }
 
         // Create model
@@ -50,18 +60,16 @@ class MotorMakeModuleCommand extends Command
         // Create migration
         // Strip namespace from migration command
         $migrationOptions = $extraoptions;
+
         $migrationOptions['--path'] = $migrationOptions['--path'].'/../database/migrations';
         unset($migrationOptions['--namespace']);
         $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $migrationOptions));
 
-        // Create grid
-        $this->call('motor:make:grid', array_merge(['name' => $classSingular.'Grid'], $extraoptions));
+        // Create POST request
+        $this->call('motor:make:request', array_merge(['name' => 'Api/'.$classSingular.'PostRequest'], $extraoptions));
 
-        // Create request
-        $this->call('motor:make:request', array_merge(['name' => 'Backend/'.$classSingular.'Request'], $extraoptions));
-
-        // Create controller
-        $this->call('motor:make:controller', array_merge(['name' => 'Backend/'.$classPlural.'Controller'], $extraoptions));
+        // Create PATCH request
+        $this->call('motor:make:request', array_merge(['name' => 'Api/'.$classSingular.'PatchRequest'], $extraoptions));
 
         // Create controller
         $this->call('motor:make:controller', array_merge(['name' => 'Api/'.$classPlural.'Controller', '--type' => 'api'], $extraoptions));
@@ -76,31 +84,13 @@ class MotorMakeModuleCommand extends Command
         $this->call('motor:make:resource', array_merge(['name' => $classSingular.'Collection'], $extraoptions));
 
         // Create policy
-        $this->call('motor:make:policy', array_merge(['--model' => $extraoptions['--namespace'].'\\Models\\'.$classSingular, 'name' => $classSingular.'Policy'], $extraoptions));
+        $this->call('motor:make:policy', array_merge(['--model' => $classSingular, 'name' => $classSingular.'Policy'], $extraoptions));
 
         // Create factory
-        $this->call('motor:make:factory', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classSingular], $extraoptions));
+        $this->call('motor:make:factory', array_merge(['--model' => $classSingular, 'name' => $classSingular], $extraoptions));
 
         // Create seeder
-        $this->call('motor:make:seeder', array_merge(['--model' => '/Models/'.$classSingular, 'name' => $classPlural], $extraoptions));
-
-        // Create form
-        $this->call('motor:make:form', array_merge(['name' => 'Forms/Backend/'.$classSingular.'Form'], $extraoptions));
-
-        // Create test for backend controller
-        $this->call('motor:make:test', array_merge(['name' => $classSingular, 'type' => 'backend'], $extraoptions));
-
-        // Create test for api controller
-        $this->call('motor:make:test', array_merge(['name' => $classSingular, 'type' => 'api'], $extraoptions));
-
-        // Create i18n file
-        $this->call('motor:make:i18n', array_merge(['name' => $classPlural, 'locale' => $this->argument('locale')], $extraoptions));
-
-        // Create view files
-        $this->call('motor:make:view', array_merge(['name' => $classPlural, 'type' => 'create'], $extraoptions));
-        $this->call('motor:make:view', array_merge(['name' => $classPlural, 'type' => 'edit'], $extraoptions));
-        $this->call('motor:make:view', array_merge(['name' => $classPlural, 'type' => 'index'], $extraoptions));
-        $this->call('motor:make:view', array_merge(['name' => $classPlural, 'type' => 'form'], $extraoptions));
+        $this->call('motor:make:seeder', array_merge(['--model' => $classSingular, 'name' => $classPlural], $extraoptions));
 
         // Display config information
         $this->call('motor:make:info', array_merge(['name' => $classPlural], $extraoptions));

@@ -3,7 +3,7 @@
 namespace DummyRootNamespaceServices;
 
 use DummyRootNamespaceModels\DummyModel;
-use Motor\Backend\Services\BaseService;
+use Motor\Admin\Services\BaseService;
 
 /**
  * Class DummyService
@@ -11,6 +11,5 @@ use Motor\Backend\Services\BaseService;
  */
 class DummyService extends BaseService
 {
-
     protected $model = DummyModel::class;
 }

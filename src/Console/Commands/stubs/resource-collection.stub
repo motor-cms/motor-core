@@ -2,8 +2,13 @@
 
 namespace {{ namespace }};
 
-use Motor\Backend\Http\Resources\BaseCollection;
+use Motor\Admin\Http\Resources\BaseCollection;
 
+/**
+ * Class DummyClass
+ * @package DummyNamespace
+ *
+ */
 class {{ class }} extends BaseCollection
 {
     /**
@@ -12,7 +17,7 @@ class {{ class }} extends BaseCollection
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return parent::toArray($request);
     }

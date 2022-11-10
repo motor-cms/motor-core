@@ -2,13 +2,14 @@
 
 namespace DummyNamespace;
 
-use Motor\Backend\Http\Controllers\ApiController;
-
-use DummyRootNamespaceModels\DummyModel;
-use DummyRootNamespaceHttp\Requests\Backend\DummyRequest;
-use DummyRootNamespaceServices\DummyService;
-use DummyRootNamespaceHttp\Resources\DummyResource;
+use Illuminate\Http\JsonResponse;
+use Motor\Admin\Http\Controllers\ApiController;
+use DummyRootNamespaceHttp\Requests\Api\DummyPatchRequest;
+use DummyRootNamespaceHttp\Requests\Api\DummyPostRequest;
 use DummyRootNamespaceHttp\Resources\DummyCollection;
+use DummyRootNamespaceHttp\Resources\DummyResource;
+use DummyRootNamespaceModels\DummyModel;
+use DummyRootNamespaceServices\DummyService;
 
 /**
  * Class DummyClass
@@ -17,6 +18,8 @@ use DummyRootNamespaceHttp\Resources\DummyCollection;
 class DummyClass extends ApiController
 {
 
+    protected string $model = DummyModel::class;
+
     protected string $modelResource = 'DummySingularLowercase';
 
     /**
@@ -24,13 +27,12 @@ class DummyClass extends ApiController
      *   tags={"DummyClass"},
      *   path="/api/DummyPluralLowercase",
      *   summary="Get DummySingularLowercase collection",
+     *   security={ {"sanctum": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(type="string"),
-     *     in="query",
-     *     allowReserved=true,
-     *     name="api_token",
-     *     parameter="api_token",
-     *     description="Personal api_token of the user"
+     *     in="header",
+     *     name="Accept",
+     *     example="application/json"
      *   ),
      *   @OA\Response(
      *     response=200,
@@ -67,9 +69,11 @@ class DummyClass extends ApiController
      *
      * @return DummyCollection
      */
-    public function index()
+    public function index(): DummyCollection
     {
-        $paginator = DummyService::collection()->getPaginator();
+        $paginator = DummyService::collection()
+                                  ->getPaginator();
+
         return (new DummyCollection($paginator))->additional(['message' => 'DummySingularTitle collection read']);
     }
 
@@ -79,15 +83,14 @@ class DummyClass extends ApiController
      *   path="/api/DummyPluralLowercase",
      *   summary="Create new DummySingularLowercase",
      *   @OA\RequestBody(
-     *     @OA\JsonContent(ref="#/components/schemas/DummyRequest")
+     *     @OA\JsonContent(ref="#/components/schemas/DummyPostRequest")
      *   ),
+     *   security={ {"sanctum": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(type="string"),
-     *     in="query",
-     *     allowReserved=true,
-     *     name="api_token",
-     *     parameter="api_token",
-     *     description="Personal api_token of the user"
+     *     in="header",
+     *     name="Accept",
+     *     example="application/json"
      *   ),
      *   @OA\Response(
      *     response=200,
@@ -119,13 +122,17 @@ class DummyClass extends ApiController
      *
      * Store a newly created resource in storage.
      *
-     * @param DummyRequest $request
+     * @param DummyPostRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(DummyRequest $request)
+    public function store(DummyPostRequest $request): JsonResponse
     {
-        $result = DummyService::create($request)->getResult();
-        return (new DummyResource($result))->additional(['message' => 'DummySingularTitle created'])->response()->setStatusCode(201);
+        $result = DummyService::create($request)
+                               ->getResult();
+
+        return (new DummyResource($result))->additional(['message' => 'DummySingularTitle created'])
+                                            ->response()
+                                            ->setStatusCode(201);
     }
 
 
@@ -134,13 +141,12 @@ class DummyClass extends ApiController
      *   tags={"DummyClass"},
      *   path="/api/DummyPluralLowercase/{DummySingularLowercase}",
      *   summary="Get single DummySingularLowercase",
+     *   security={ {"sanctum": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(type="string"),
-     *     in="query",
-     *     allowReserved=true,
-     *     name="api_token",
-     *     parameter="api_token",
-     *     description="Personal api_token of the user"
+     *     in="header",
+     *     name="Accept",
+     *     example="application/json"
      *   ),
      *   @OA\Parameter(
      *     @OA\Schema(type="integer"),
@@ -182,9 +188,10 @@ class DummyClass extends ApiController
      * @param DummyModel $record
      * @return DummyResource
      */
-    public function show(DummyModel $record)
+    public function show(DummyModel $record): DummyResource
     {
-        $result = DummyService::show($record)->getResult();
+        $result = DummyService::show($record)
+                              ->getResult();
         return (new DummyResource($result))->additional(['message' => 'DummySingularTitle read']);
     }
 
@@ -195,15 +202,14 @@ class DummyClass extends ApiController
      *   path="/api/DummyPluralLowercase/{DummySingularLowercase}",
      *   summary="Update an existing DummySingularLowercase",
      *   @OA\RequestBody(
-     *     @OA\JsonContent(ref="#/components/schemas/DummyRequest")
+     *     @OA\JsonContent(ref="#/components/schemas/DummyPatchRequest")
      *   ),
+     *   security={ {"sanctum": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(type="string"),
-     *     in="query",
-     *     allowReserved=true,
-     *     name="api_token",
-     *     parameter="api_token",
-     *     description="Personal api_token of the user"
+     *     in="header",
+     *     name="Accept",
+     *     example="application/json"
      *   ),
      *   @OA\Parameter(
      *     @OA\Schema(type="integer"),
@@ -242,13 +248,14 @@ class DummyClass extends ApiController
      *
      * Update the specified resource in storage.
      *
-     * @param DummyRequest $request
+     * @param DummyPatchRequest $request
      * @param DummyModel        $record
      * @return DummyResource
      */
-    public function update(DummyRequest $request, DummyModel $record)
+    public function update(DummyPatchRequest $request, DummyModel $record): DummyResource
     {
-        $result = DummyService::update($record, $request)->getResult();
+        $result = DummyService::update($record, $request)
+                              ->getResult();
         return (new DummyResource($result))->additional(['message' => 'DummySingularTitle updated']);
     }
 
@@ -258,13 +265,12 @@ class DummyClass extends ApiController
      *   tags={"DummyClass"},
      *   path="/api/DummyPluralLowercase/{DummySingularLowercase}",
      *   summary="Delete a DummySingularLowercase",
+     *   security={ {"sanctum": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(type="string"),
-     *     in="query",
-     *     allowReserved=true,
-     *     name="api_token",
-     *     parameter="api_token",
-     *     description="Personal api_token of the user"
+     *     in="header",
+     *     name="Accept",
+     *     example="application/json"
      *   ),
      *   @OA\Parameter(
      *     @OA\Schema(type="integer"),
@@ -312,9 +318,10 @@ class DummyClass extends ApiController
      * @param DummyModel $record
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(DummyModel $record)
+    public function destroy(DummyModel $record): JsonResponse
     {
-        $result = DummyService::delete($record)->getResult();
+        $result = DummyService::delete($record)
+                              ->getResult();
 
         if ($result) {
             return response()->json(['message' => 'DummySingularTitle deleted']);

@@ -2,33 +2,31 @@
 
 namespace DummyNamespace;
 
-use Motor\Backend\Http\Requests\Request;
+use Motor\Admin\Http\Requests\Request;
 
 /**
  * Class DummyClass
  * @package DummyNamespace
+ *
+ * @OA\Schema(
+ *   schema="DummyClass",
+ *   @OA\Property(
+ *     property="name",
+ *     type="string",
+ *     example="Example data"
+ *   ),
+ *   required={"name"},
+ * )
  */
 class DummyClass extends Request
 {
-
-    /**
-     * @OA\Schema(
-     *   schema="DummyClass",
-     *   @OA\Property(
-     *     property="name",
-     *     type="string",
-     *     example="Example data"
-     *   ),
-     *   required={"name"},
-     * )
-     */
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -39,7 +37,7 @@ class DummyClass extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
 

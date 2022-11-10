@@ -1,10 +1,10 @@
 <?php
 
 use Culpa\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
 use Culpa\Facades\Schema;
+use Illuminate\Database\Migrations\Migration;
 
-class DummyClass extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class DummyClass extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('{{ table }}', function (Blueprint $table) {
+            //
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class DummyClass extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('{{ table }}', function (Blueprint $table) {
+            //
+        });
     }
-}
+};

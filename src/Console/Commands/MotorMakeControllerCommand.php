@@ -31,7 +31,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     protected $description = 'Create a new motor controller class';
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function getPath($name): string
@@ -40,7 +40,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      * @return string
      */
     protected function getNamespace($name): string
@@ -92,18 +92,16 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     /**
      * Replace the namespace for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
      * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {
         $class = last(explode('/', $this->getNameInput()));
         $classBase = Str::singular(str_replace('Controller', '', $class));
-        $componentClassBase = Str::singular(str_replace('Component', '', str_replace('Controller', '', $class)));
-        $grid = $classBase.'Grid';
-        $request = $classBase.'Request';
-        $form = $classBase.'Form';
+        $postRequest = $classBase.'PostRequest';
+        $patchRequest = $classBase.'PatchRequest';
         $service = $classBase.'Service';
         $resource = $classBase.'Resource';
         $collection = $classBase.'Collection';
@@ -124,25 +122,17 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummyRootNamespace', $this->getRootNamespace(), $stub);
 
-        $stub = str_replace('DummyRequest', $request, $stub);
+        $stub = str_replace('DummyPostRequest', $postRequest, $stub);
 
-        $stub = str_replace('DummyForm', $form, $stub);
+        $stub = str_replace('DummyPatchRequest', $patchRequest, $stub);
 
         $stub = str_replace('DummyModel', $classBase, $stub);
-
-        $stub = str_replace('DummyGrid', $grid, $stub);
 
         $stub = str_replace('DummyService', $service, $stub);
 
         $stub = str_replace('DummyCollection', $collection, $stub);
 
         $stub = str_replace('DummyResource', $resource, $stub);
-
-        $stub = str_replace('DummyView', Str::plural(Str::snake($classBase)), $stub);
-
-        $stub = str_replace('DummyComponentViewKebab', Str::plural(Str::kebab($componentClassBase)), $stub);
-
-        $stub = str_replace('DummyComponentView', Str::plural(Str::snake($componentClassBase)), $stub);
 
         $stub = str_replace('DummyPluralTitle', Str::ucfirst(Str::plural(str_replace('_', ' ', $classBase))), $stub);
 

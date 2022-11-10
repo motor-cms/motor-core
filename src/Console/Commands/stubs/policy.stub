@@ -13,7 +13,7 @@ class {{ class }}
     /**
      * Perform pre-authorization checks.
      *
-     * @param \Motor\Backend\Models\User $user
+     * @param  \{{ namespacedUserModel }}  $user
      * @param string $ability
      * @return void|bool
      */
@@ -28,9 +28,9 @@ class {{ class }}
      * Determine whether the user can view any models.
      *
      * @param  \{{ namespacedUserModel }}  $user
-     * @return mixed
+     * @return bool
      */
-    public function viewAny({{ user }} $user)
+    public function viewAny({{ user }} $user): bool
     {
         return $user->hasPermissionTo('{{ permission }}.read');
     }
@@ -40,9 +40,9 @@ class {{ class }}
      *
      * @param  \{{ namespacedUserModel }}  $user
      * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return mixed
+     * @return bool
      */
-    public function view({{ user }} $user, {{ model }} ${{ modelVariable }})
+    public function view({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
     {
         return $user->hasPermissionTo('{{ permission }}.read');
     }
@@ -51,9 +51,9 @@ class {{ class }}
      * Determine whether the user can create models.
      *
      * @param  \{{ namespacedUserModel }}  $user
-     * @return mixed
+     * @return bool
      */
-    public function create({{ user }} $user)
+    public function create({{ user }} $user): bool
     {
         return $user->hasPermissionTo('{{ permission }}.write');
     }
@@ -63,9 +63,9 @@ class {{ class }}
      *
      * @param  \{{ namespacedUserModel }}  $user
      * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return mixed
+     * @return bool
      */
-    public function update({{ user }} $user, {{ model }} ${{ modelVariable }})
+    public function update({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
     {
         return $user->hasPermissionTo('{{ permission }}.write');
     }
@@ -75,9 +75,9 @@ class {{ class }}
      *
      * @param  \{{ namespacedUserModel }}  $user
      * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return mixed
+     * @return bool
      */
-    public function delete({{ user }} $user, {{ model }} ${{ modelVariable }})
+    public function delete({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
     {
         return $user->hasPermissionTo('{{ permission }}.delete');
     }
@@ -87,11 +87,11 @@ class {{ class }}
      *
      * @param  \{{ namespacedUserModel }}  $user
      * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return mixed
+     * @return bool
      */
-    public function restore({{ user }} $user, {{ model }} ${{ modelVariable }})
+    public function restore({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
     {
-        //
+        return $user->hasPermissionTo('{{ permission }}.write');
     }
 
     /**
@@ -99,10 +99,10 @@ class {{ class }}
      *
      * @param  \{{ namespacedUserModel }}  $user
      * @param  \{{ namespacedModel }}  ${{ modelVariable }}
-     * @return mixed
+     * @return bool
      */
-    public function forceDelete({{ user }} $user, {{ model }} ${{ modelVariable }})
+    public function forceDelete({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
     {
-        //
+        return $user->hasPermissionTo('{{ permission }}.delete');
     }
 }
