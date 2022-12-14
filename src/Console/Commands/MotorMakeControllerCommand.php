@@ -21,7 +21,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     /**
      * @var string
      */
-    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
+    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=} {--creatable=}';
 
     /**
      * The console command description.

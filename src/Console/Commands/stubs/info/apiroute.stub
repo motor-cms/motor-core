@@ -1,1 +1,1 @@
-Route::apiResource('{{pluralSnake}}', '{{pluralStudly}}Controller');
+Route::apiResource('{{pluralSnake}}', {{pluralStudly}}Controller::class);

@@ -147,7 +147,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $permission = file_get_contents($this->getPermissionStub());
         $permission = $this->replaceTemplateVars($permission);
 
-        $this->info('Add this to an items array in your app/config/motor-admin-navigation.php');
+        $this->info('Add this to an items array in your config/motor-admin-navigation.php (either in app or on your package path)');
         echo $navigation."\n";
 
         $this->info('Add this to the api route groups in your routes/api.php');
@@ -156,7 +156,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php (or your own service provider)');
         echo $routeModelBinding."\n";
 
-        $this->info('Add this to your app/config/motor-admin-permissions.php file');
+        $this->info('Add this to your config/motor-admin-permissions.php file (either in app or on your package path)');
         echo $permission."\n";
     }
 }

@@ -17,7 +17,7 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
     /**
      * @var string
      */
-    protected $signature = 'motor:make:request {name} {--path=} {--namespace=} {--model=} {--parent=}';
+    protected $signature = 'motor:make:request {name} {--path=} {--namespace=} {--model=} {--parent=} {--creatable=}';
 
     /**
      * The console command description.
