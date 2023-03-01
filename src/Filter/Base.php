@@ -295,8 +295,9 @@ class Base
      * Set value of filter
      *
      * @param $value
+     * @return $this
      */
-    public function setValue($value): void
+    public function setValue($value): object
     {
         if ($value === '') {
             $value = null;
@@ -305,6 +306,7 @@ class Base
             $this->value = $value;
             $this->setSessionValue($value);
         }
+        return $this;
     }
 
     /**
