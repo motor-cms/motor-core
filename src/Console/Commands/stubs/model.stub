@@ -2,11 +2,7 @@
 
 namespace DummyNamespace;
 
-//use Culpa\Traits\Blameable;
-//use Culpa\Traits\CreatedBy;
-//use Culpa\Traits\DeletedBy;
-//use Culpa\Traits\UpdatedBy;
-
+//use RichanFongdasen\EloquentBlameable\BlameableTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -21,14 +17,7 @@ class DummyClass extends Model
 	use Filterable;
     use HasFactory;
 
-//    use Blameable, CreatedBy, UpdatedBy, DeletedBy;
-
-//    /**
-//     * Columns for the Blameable trait
-//     *
-//     * @var array
-//     */
-//    protected array $blameable = ['created', 'updated', 'deleted'];
+//    use BlameableTrait;
 
     /**
      * Searchable columns for the searchable trait
