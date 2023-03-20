@@ -5,23 +5,14 @@ namespace DummyNamespace;
 use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
-//use Culpa\Traits\Blameable;
-//use Culpa\Traits\CreatedBy;
-//use Culpa\Traits\DeletedBy;
-//use Culpa\Traits\UpdatedBy;
+//use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class DummyClass extends Model
 {
     use Searchable;
 	use Filterable;
-//    use Blameable, CreatedBy, UpdatedBy, DeletedBy;
+    //use BlameableTrait;
 
-    /**
-     * Columns for the Blameable trait
-     *
-     * @var array
-     */
-//    protected $blameable = array('created', 'updated', 'deleted');
 
     /**
      * Searchable columns for the searchable trait

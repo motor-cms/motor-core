@@ -1,8 +1,7 @@
 <?php
 
-use Culpa\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Culpa\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
 
 class DummyClass extends Migration
 {
