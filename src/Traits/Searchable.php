@@ -2,7 +2,9 @@
 
 namespace Motor\Core\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 /**
@@ -236,5 +238,108 @@ trait Searchable
     protected function caseBinding($word): string
     {
         return str_replace('?', '_', str_replace('*', '', $word));
+    }
+    /**
+     * Checks if the given field name is searchable
+     * @param string $field
+     * @return bool
+     */
+    private function isFieldSearchable(string $field): bool
+    {
+        static $columns;
+        if (!isset($columns)) {
+            $columns = [];
+        }
+        $id = sprintf('%s-%s', $this->getTable(), $this->getConnectionName());
+        if (!isset($columns[$id])) {
+            $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
+        }
+        return in_array($field, $columns[$id]);
+    }
+
+    /**
+     * Applies the relevant where calls
+     * from the given search query
+     * @param Builder $query
+     * @param array $searchQuery
+     * @return Builder
+     */
+    public static function applySearchQuery(Builder $query, array $searchQuery): Builder
+    {
+        $instance = new self();
+        $dates = $instance->getDates();
+
+        /**
+         * Helper function to apply a group of
+         * AND-WHERE queries to the given builder
+         * @param $query
+         * @param $group
+         * @return mixed
+         */
+        $applyGroup = function($query, $group) use ($dates){
+            foreach ($group as $search) {
+                $value = $search['value'];
+                if (in_array($search['field'], $dates)) {
+                    $value = new Carbon(strtotime($value));
+                }
+                $query = $query->where($search['field'], strtoupper($search['operation']), $value);
+            }
+            return $query;
+        };
+
+        // Basic Search
+        if (isset($searchQuery['search']) && !is_null($searchQuery['search'])) {
+            $query = $applyGroup($query, $searchQuery['search']);
+
+        } // OR Search Fields
+        elseif (isset($searchQuery['queries']) && !is_null($searchQuery['queries'])) {
+            foreach ($searchQuery['queries'] as $group) {
+                $query = $query->orWhere(function($q) use ($group, $applyGroup){
+                    $applyGroup($q, $group);
+                });
+            }
+        }
+        return $query;
+    }
+
+    /**
+     * Validates the given search data and returns
+     * the validated fields
+     * @param Request $request
+     * @return array
+     */
+    public static function validateSearchQuery(Request $request): array
+    {
+        $instance = new self();
+
+        $fieldSearchable = function($field, $value, $fail) use ($instance){
+            if (!$instance->isFieldSearchable($value)) {
+                $fail(sprintf('%s is not a searchable field', $value));
+            }
+        };
+
+        return $request->validate([
+            'per_page' => 'numeric',
+            'page' => 'numeric',
+
+            // Basic Search
+            'search' => 'required_without:queries|array',
+            'search.*.field' => [
+                'required',
+                $fieldSearchable
+            ],
+            'search.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
+            'search.*.value' => 'present',
+
+            // OR Search Fields
+            'queries' => 'required_without:search|array',
+            'queries.*' => 'array',
+            'queries.*.*.field' => [
+                'required',
+                $fieldSearchable
+            ],
+            'queries.*.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
+            'queries.*.*.value' => 'present'
+        ]);
     }
 }
