@@ -280,9 +280,11 @@ trait Searchable
             foreach ($group as $search) {
                 $value = $search['value'];
                 if (in_array($search['field'], $dates)) {
-                    $value = new Carbon(strtotime($value));
+                    $value = new Carbon($value);
+                    $query = $query->whereDate($search['field'], strtoupper($search['operation']), $value);
+                } else {
+                    $query = $query->where($search['field'], strtoupper($search['operation']), $value);
                 }
-                $query = $query->where($search['field'], strtoupper($search['operation']), $value);
             }
             return $query;
         };
