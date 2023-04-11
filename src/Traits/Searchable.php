@@ -6,12 +6,14 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable as ScoutSearch;
 
 /**
  * Trait Searchable
  */
 trait Searchable
 {
+    //use ScoutSearch;
     /**
      * @var array
      */
