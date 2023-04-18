@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Traits;
 
-use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Filter;
 
 /**
@@ -33,11 +32,11 @@ trait Filterable
     /**
      * Set up scope for filtering multiple fields in the same query
      *
-     * @param  Builder  $scope
-     * @param  Filter  $filter
-     * @return Builder
+     * @param \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope
+     * @param \Motor\Core\Filter\Filter $filter
+     * @return \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
      */
-    public function scopeFilteredByMultiple(Builder $scope, Filter $filter): Builder
+    public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder | \Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder | \Laravel\Scout\Builder
     {
         foreach ($filter->filters() as $name => $filter) {
             if ($name === 'per_page') {

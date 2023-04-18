@@ -43,6 +43,12 @@ class SearchRenderer extends Base
      */
     public function query(Builder $query): object
     {
+        // If we're using scout
+        // FIXME: try to find a better method of finding out if we're using scout or not
+        if (method_exists($query->getModel(), 'getScoutModelsByIds')) {
+            return $query->getModel()::search($this->getValue());
+        }
+
         if (method_exists($query->getModel(), 'scopeSearch')) {
             return $query->search($this->getValue());
         } else {
