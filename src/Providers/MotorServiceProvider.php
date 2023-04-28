@@ -3,6 +3,7 @@
 namespace Motor\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Motor\Core\Console\Commands\GenerateDocsCommand;
 use Motor\Core\Console\Commands\MotorMakeControllerCommand;
 use Motor\Core\Console\Commands\MotorMakeFactoryCommand;
 use Motor\Core\Console\Commands\MotorMakeInfoCommand;
@@ -16,7 +17,6 @@ use Motor\Core\Console\Commands\MotorMakeSeederCommand;
 use Motor\Core\Console\Commands\MotorMakeServiceCommand;
 use Motor\Core\Console\Commands\MotorMakeTestCommand;
 use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
-use Motor\Core\Console\Commands\GenerateDocsCommand;
 
 /**
  * Class MotorServiceProvider
@@ -67,7 +67,7 @@ class MotorServiceProvider extends ServiceProvider
                 MotorMakeServiceCommand::class,
                 MotorMakeTestCommand::class,
                 MotorSetpackagedevCommand::class,
-                GenerateDocsCommand::class
+                GenerateDocsCommand::class,
             ]);
         }
     }

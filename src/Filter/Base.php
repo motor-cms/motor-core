@@ -14,14 +14,8 @@ class Base
      */
     protected $allowNull = false;
 
-    /**
-     * @var
-     */
     protected $name;
 
-    /**
-     * @var
-     */
     protected $field;
 
     /**
@@ -34,9 +28,6 @@ class Base
      */
     protected $join = null;
 
-    /**
-     * @var
-     */
     protected $baseName;
 
     /**
@@ -71,8 +62,6 @@ class Base
 
     /**
      * Base constructor.
-     *
-     * @param $name
      */
     public function __construct($name)
     {
@@ -82,9 +71,6 @@ class Base
 
     /**
      * Set join table
-     *
-     * @param $table
-     * @return object
      */
     public function setJoin($table): object
     {
@@ -95,8 +81,6 @@ class Base
 
     /**
      * Get join table
-     *
-     * @return string
      */
     public function getJoin(): string
     {
@@ -105,9 +89,6 @@ class Base
 
     /**
      * Set field for query
-     *
-     * @param $field
-     * @return object
      */
     public function setField($field): object
     {
@@ -118,8 +99,6 @@ class Base
 
     /**
      * Get field for query
-     *
-     * @return string
      */
     public function getField(): string
     {
@@ -128,9 +107,6 @@ class Base
 
     /**
      * Set visibility of the filter
-     *
-     * @param $visible
-     * @return object
      */
     public function isVisible($visible): object
     {
@@ -146,8 +122,6 @@ class Base
 
     /**
      * Get visibility setting for filter
-     *
-     * @return bool
      */
     public function getVisible(): bool
     {
@@ -156,9 +130,6 @@ class Base
 
     /**
      * Set option prefix
-     *
-     * @param $prefix
-     * @return object
      */
     public function setOptionPrefix($prefix): object
     {
@@ -169,8 +140,6 @@ class Base
 
     /**
      * Get option prefix
-     *
-     * @return string
      */
     public function getOptionPrefix(): string
     {
@@ -179,9 +148,6 @@ class Base
 
     /**
      * Set empty option for a select filter
-     *
-     * @param $string
-     * @return object
      */
     public function setEmptyOption($string): object
     {
@@ -192,8 +158,6 @@ class Base
 
     /**
      * Get empty option for a select filter
-     *
-     * @return string
      */
     public function getEmptyOption(): string
     {
@@ -204,7 +168,6 @@ class Base
      * Set options for select filter
      *
      * @param  array  $options
-     * @return object
      */
     public function setOptions($options = []): object
     {
@@ -215,8 +178,6 @@ class Base
 
     /**
      * Get options for select filter
-     *
-     * @return array
      */
     public function getOptions(): array
     {
@@ -227,7 +188,6 @@ class Base
      * Set operator for query
      *
      * @param  string  $operator
-     * @return object
      */
     public function setOperator($operator = '='): object
     {
@@ -238,8 +198,6 @@ class Base
 
     /**
      * Get operator for query
-     *
-     * @return string
      */
     public function getOperator(): string
     {
@@ -248,9 +206,6 @@ class Base
 
     /**
      * Set default value for filter
-     *
-     * @param $defaultValue
-     * @return object
      */
     public function setDefaultValue($defaultValue): object
     {
@@ -273,8 +228,6 @@ class Base
 
     /**
      * Set base name of filter
-     *
-     * @param $name
      */
     public function setBaseName($name): void
     {
@@ -283,8 +236,6 @@ class Base
 
     /**
      * Get name of filter
-     *
-     * @return string
      */
     public function getName(): string
     {
@@ -293,8 +244,6 @@ class Base
 
     /**
      * Set value of filter
-     *
-     * @param $value
      */
     public function setValue($value): void
     {
@@ -335,8 +284,6 @@ class Base
 
     /**
      * Get default value for filter
-     *
-     * @return string|null
      */
     public function getDefaultValue(): ?string
     {
@@ -345,8 +292,6 @@ class Base
 
     /**
      * Get session value of filter
-     *
-     * @return string|null
      */
     protected function getSessionValue(): ?string
     {
@@ -355,8 +300,6 @@ class Base
 
     /**
      * Set session value of filter
-     *
-     * @param $value
      */
     protected function setSessionValue($value): void
     {
@@ -365,9 +308,6 @@ class Base
 
     /**
      * Get query for filter
-     *
-     * @param $query
-     * @return object
      */
     public function query(Builder $query): object
     {
@@ -376,9 +316,6 @@ class Base
 
     /**
      * Define if null is a valid filter value
-     *
-     * @param $allow
-     * @return object
      */
     public function setAllowNull($allow): object
     {
@@ -389,8 +326,6 @@ class Base
 
     /**
      * Get value of allowNull
-     *
-     * @return bool
      */
     public function getAllowNull(): bool
     {

@@ -17,9 +17,6 @@ class RelationRenderer extends SelectRenderer
 
     /**
      * Run query for the filter
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return object
      */
     public function query(Builder $query): object
     {

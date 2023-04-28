@@ -27,8 +27,6 @@ class SearchRenderer extends Base
 
     /**
      * Set searchable columns for filter
-     *
-     * @param $columns
      */
     public function setSearchableColumns($columns): void
     {
@@ -37,9 +35,6 @@ class SearchRenderer extends Base
 
     /**
      * Run query for the filter
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return object
      */
     public function query(Builder $query): object
     {

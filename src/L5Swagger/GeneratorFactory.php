@@ -21,8 +21,6 @@ class GeneratorFactory
     /**
      * Make Generator Instance.
      *
-     * @param  string  $documentation
-     * @return Generator
      *
      * @throws L5SwaggerException
      */

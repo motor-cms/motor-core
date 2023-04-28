@@ -31,8 +31,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     protected $description = 'Create a new motor controller class';
 
     /**
-     * @param string $name
-     * @return string
+     * @param  string  $name
      */
     protected function getPath($name): string
     {
@@ -40,8 +39,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     }
 
     /**
-     * @param string $name
-     * @return string
+     * @param  string  $name
      */
     protected function getNamespace($name): string
     {
@@ -53,9 +51,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         return GeneratorHelper::getNamespace($name, $namespace, $this->laravel);
     }
 
-    /**
-     * @return string
-     */
     protected function getRootNamespace(): string
     {
         $namespace = GeneratorHelper::getRootNamespace($this->option('namespace'), $this->laravel);
@@ -92,9 +87,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     /**
      * Replace the namespace for the given stub.
      *
-     * @param string $stub
-     * @param string $name
-     * @return object
+     * @param  string  $stub
+     * @param  string  $name
      */
     protected function replaceNamespace(&$stub, $name): object
     {

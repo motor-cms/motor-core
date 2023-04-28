@@ -12,11 +12,6 @@ class GeneratorHelper
 {
     /**
      * Get the destination class path.
-     *
-     * @param $name
-     * @param $path
-     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
-     * @return string
      */
     public static function getPath($name, $path, Application $laravel): string
     {
@@ -28,11 +23,6 @@ class GeneratorHelper
 
     /**
      * Get the full namespace name for a given class.
-     *
-     * @param $name
-     * @param $namespace
-     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
-     * @return string
      */
     public static function getNamespace($name, $namespace, Application $laravel): string
     {
@@ -48,10 +38,6 @@ class GeneratorHelper
 
     /**
      * Get root namespace of the application
-     *
-     * @param $namespace
-     * @param  \Illuminate\Contracts\Foundation\Application  $laravel
-     * @return string
      */
     public static function getRootNamespace($namespace, Application $laravel): string
     {

@@ -23,18 +23,15 @@ class WhereRenderer extends SelectRenderer
 
     /**
      * Run query for the filter
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return object
      */
     public function query(Builder $query): object
     {
         if ($this->operator === 'IN') {
             return $query->whereIn($query->getModel()
-                                         ->getTable().'.'.$this->field, $this->getValue());
+                ->getTable().'.'.$this->field, $this->getValue());
         } else {
             return $query->where($query->getModel()
-                                       ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+                ->getTable().'.'.$this->field, $this->operator, $this->getValue());
         }
     }
 }

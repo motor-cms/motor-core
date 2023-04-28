@@ -28,8 +28,6 @@ class MotorMakeModuleCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -49,7 +47,7 @@ class MotorMakeModuleCommand extends Command
         }
 
         // FIXME: evil hack to tell laravel that the models are inside a Models directory even if the directory does not exist
-        if (!is_dir(app_path('Models'))) {
+        if (! is_dir(app_path('Models'))) {
             $filesystem = new Filesystem();
             $filesystem->makeDirectory(app_path('Models'), 0755, true);
         }
@@ -98,8 +96,6 @@ class MotorMakeModuleCommand extends Command
 
     /**
      * Get the console command arguments.
-     *
-     * @return array
      */
     protected function getArguments(): array
     {

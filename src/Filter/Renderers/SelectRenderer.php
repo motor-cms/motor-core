@@ -45,13 +45,10 @@ class SelectRenderer extends Base
 
     /**
      * Run query for the filter
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return object
      */
     public function query(Builder $query): object
     {
         return $query->where($query->getModel()
-                                   ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+            ->getTable().'.'.$this->field, $this->operator, $this->getValue());
     }
 }

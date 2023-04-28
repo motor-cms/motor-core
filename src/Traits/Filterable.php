@@ -11,11 +11,6 @@ trait Filterable
 {
     /**
      * Set up scope
-     *
-     * @param  Builder  $scope
-     * @param  Filter  $filter
-     * @param    $column
-     * @return Builder
      */
     public function scopeFilteredBy(Builder $scope, Filter $filter, $column): Builder
     {
@@ -23,7 +18,7 @@ trait Filterable
         $currentFilter = $filter->get($column);
         if (! is_null($currentFilter) && ! is_null($currentFilter->getValue())) {
             return $scope->where($scope->getModel()
-                                       ->getTable().'.'.$column, '=', $currentFilter->getValue());
+                ->getTable().'.'.$column, '=', $currentFilter->getValue());
         }
 
         return $scope;
@@ -31,12 +26,8 @@ trait Filterable
 
     /**
      * Set up scope for filtering multiple fields in the same query
-     *
-     * @param \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope
-     * @param \Motor\Core\Filter\Filter $filter
-     * @return \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
      */
-    public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder | \Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder | \Laravel\Scout\Builder
+    public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
     {
         foreach ($filter->filters() as $name => $filter) {
             if ($name === 'per_page') {

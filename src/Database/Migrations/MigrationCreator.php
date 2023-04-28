@@ -12,7 +12,6 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
     /**
      * Create a new migration creator instance.
      *
-     * @param  \Illuminate\Filesystem\Filesystem  $files
      * @param  string  $customStubPath
      * @return void
      */
@@ -26,7 +25,6 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
      *
      * @param  string|null  $table
      * @param  bool  $create
-     * @return string
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
