@@ -136,6 +136,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummySingularLowercase', Str::snake(str_replace('_', ' ', $classBase)), $stub);
 
+        $stub = str_replace('DummySingularCamelCase', Str::camel($classBase), $stub);
+
+        $stub = str_replace('RootNamespaceSnakeCase', Str::snake(str_replace("\\", '_', $this->getRootNamespace())), $stub);
+
         $stub = str_replace('DummyPackageName', $packageName, $stub);
 
         return $this;

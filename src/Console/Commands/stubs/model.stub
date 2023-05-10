@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Traits\Filterable;
-use Motor\Core\Traits\Searchable;
+use Laravel\Scout\Searchable;
 use Kra8\Snowflake\HasShortflakePrimary;
 
 use Database\Factories\DummyClassFactory;
@@ -22,12 +22,12 @@ class DummyClass extends Model
 //    use BlameableTrait;
 
     /**
-     * Searchable columns for the searchable trait
-     *
-     * @var array
+     * Get the name of the index associated with the model.
      */
-    protected $searchableColumns = [
-    ];
+    public function searchableAs(): string
+    {
+        return 'RootNamespaceSnakeCaseDummyPluralLowercase_index';
+    }
 
     /**
      * The attributes that are mass assignable.

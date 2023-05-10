@@ -185,12 +185,12 @@ class DummyClass extends ApiController
      *
      * Display the specified resource.
      *
-     * @param DummyModel $record
+     * @param DummyModel $DummySingularCamelCase
      * @return DummyResource
      */
-    public function show(DummyModel $record): DummyResource
+    public function show(DummyModel $DummySingularCamelCase): DummyResource
     {
-        $result = DummyService::show($record)
+        $result = DummyService::show($DummySingularCamelCase)
                               ->getResult();
         return (new DummyResource($result))->additional(['message' => 'DummySingularTitle read']);
     }
@@ -249,12 +249,12 @@ class DummyClass extends ApiController
      * Update the specified resource in storage.
      *
      * @param DummyPatchRequest $request
-     * @param DummyModel        $record
+     * @param DummyModel        $DummySingularCamelCase
      * @return DummyResource
      */
-    public function update(DummyPatchRequest $request, DummyModel $record): DummyResource
+    public function update(DummyPatchRequest $request, DummyModel $DummySingularCamelCase): DummyResource
     {
-        $result = DummyService::update($record, $request)
+        $result = DummyService::update($DummySingularCamelCase, $request)
                               ->getResult();
         return (new DummyResource($result))->additional(['message' => 'DummySingularTitle updated']);
     }
@@ -315,12 +315,12 @@ class DummyClass extends ApiController
      *
      * Remove the specified resource from storage.
      *
-     * @param DummyModel $record
+     * @param DummyModel $DummySingularCamelCase
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(DummyModel $record): JsonResponse
+    public function destroy(DummyModel $DummySingularCamelCase): JsonResponse
     {
-        $result = DummyService::delete($record)
+        $result = DummyService::delete($DummySingularCamelCase)
                               ->getResult();
 
         if ($result) {
