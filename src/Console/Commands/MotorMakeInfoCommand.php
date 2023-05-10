@@ -53,6 +53,11 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         return __DIR__.'/stubs/info/routemodelbinding.stub';
     }
 
+    protected function getMeilisearchStub(): string
+    {
+        return __DIR__.'/stubs/info/meilisearch.stub';
+    }
+
     protected function getModelFactoryStub(): string
     {
         return __DIR__.'/stubs/info/modelfactory.stub';
@@ -106,6 +111,9 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $routeModelBinding = file_get_contents($this->getRouteModelBindingStub());
         $routeModelBinding = $this->replaceTemplateVars($routeModelBinding);
 
+        $meilisearch = file_get_contents($this->getMeilisearchStub());
+        $meilisearch = $this->replaceTemplateVars($meilisearch);
+
         $permission = file_get_contents($this->getPermissionStub());
         $permission = $this->replaceTemplateVars($permission);
 
@@ -116,7 +124,11 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         echo $apiRoute."\n";
 
         $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php (or your own service provider)');
+        $this->info('(This is no longer necessary, but you can still do it if you want)');
         echo $routeModelBinding."\n";
+
+        $this->info('Add this to the config/scout.php file and adapt to suit your search needs');
+        echo $meilisearch."\n";
 
         $this->info('Add this to your config/motor-admin-permissions.php file (either in app or on your package path)');
         echo $permission."\n";
