@@ -16,7 +16,8 @@
     "laravel/framework": "^10.0",
     "laravel/tinker": "^2.0",
     "spatie/ray" : "^1.37.1",
-    "laravel/scout": "^10.0.2"
+    "laravel/scout": "^10.0.2",
+    "meilisearch/meilisearch-php": "^1.1.1"
   },
   "require-dev": {
     "spatie/laravel-ignition": "^2.0",
