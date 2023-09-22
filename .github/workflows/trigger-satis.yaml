@@ -5,7 +5,9 @@ on:
   push:
     tags:
       - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
-    branches: [ main ]
+    branches:
+      - main
+      - "2.0"
 
 jobs:
   build:
