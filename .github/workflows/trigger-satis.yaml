@@ -1,0 +1,19 @@
+name: Trigger satis build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Invoke build hook for satis
+        uses: zzzze/webhook-trigger@master
+        with:
+          data: "{\"event_type\":\"build\"}"
+          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          options: "-H \"Authorization: token ${{ secrets.ACCESS_TOKEN }}\""
