@@ -12,7 +12,7 @@ class Composer extends \Illuminate\Support\Composer
      *
      * @param  string  $extra
      */
-    public function dumpAutoloads($extra = ''): void
+    public function dumpAutoloads($extra = '', $composerBinary = null): void
     {
         $prefix = (env('MOTOR_PACKAGE_DEVELOPMENT') ? $prefix = 'COMPOSER=composer-dev.json ' : '');
         $process = $this->getProcess([$prefix.trim($this->findComposer()[0].' dump-autoload '.$extra)]);
