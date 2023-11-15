@@ -3,6 +3,7 @@
 namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 use Motor\Core\Filter\Base;
 
 /**
@@ -46,9 +47,13 @@ class SelectRenderer extends Base
     /**
      * Run query for the filter
      */
-    public function query(Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        return $query->where($query->getModel()
-            ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        if ($query instanceof Builder) {
+            return $query->where($query->getModel()
+                                       ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        }
+
+        return $query->where($this->name, $this->getValue());
     }
 }

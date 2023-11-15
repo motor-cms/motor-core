@@ -24,7 +24,7 @@ class WhereRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
         if ($this->operator === 'IN') {
             return $query->whereIn($query->getModel()
