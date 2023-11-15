@@ -18,11 +18,14 @@ class RelationRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        return $query->join($this->join.' as '.$this->join, Str::singular($query->getModel()->getTable()).'_id', $query->getModel()->getTable().'.id')->where(
-            $this->join.'.'.$this->field,
-            $this->getValue()
-        );
+        if ($query instanceof Builder) {
+            return $query->join($this->join.' as '.$this->join, Str::singular($query->getModel()->getTable()).'_id', $query->getModel()->getTable().'.id')->where(
+                $this->join.'.'.$this->field,
+                $this->getValue()
+            );
+        }
+        return $query->where('categories', $this->getValue());
     }
 }
