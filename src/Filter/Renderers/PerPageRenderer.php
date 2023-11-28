@@ -20,7 +20,7 @@ class PerPageRenderer extends Base
      * @param  int[]  $options
      * @param  int  $defaultValue
      */
-    public function setup($options = [25 => 25, 50 => 50, 100 => 100, 200 => 200, 500 => 500], $defaultValue = 25): void
+    public function setup($options = [16 => 16, 25 => 25, 32 => 32, 48 => 48, 50 => 50, 64 => 64, 100 => 100, 200 => 200, 500 => 500], $defaultValue = 25): void
     {
         $this->options = $options;
         $this->defaultValue = $defaultValue;
