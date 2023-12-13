@@ -36,8 +36,6 @@ trait Filterable
             }
             if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
                 $scope = $filter->query($scope);
-
-                ds($scope);
             }
         }
 
