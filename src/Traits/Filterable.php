@@ -30,11 +30,14 @@ trait Filterable
     public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
     {
         foreach ($filter->filters() as $name => $filter) {
+
             if ($name === 'per_page') {
                 continue;
             }
             if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
                 $scope = $filter->query($scope);
+
+                ds($scope);
             }
         }
 

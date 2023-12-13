@@ -26,12 +26,21 @@ class WhereRenderer extends SelectRenderer
      */
     public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        if ($this->operator === 'IN') {
-            return $query->whereIn($query->getModel()
-                ->getTable().'.'.$this->field, $this->getValue());
+        if ($query instanceof Builder) {
+            $field = $query->getModel()->getTable().'.'.$this->field;
         } else {
-            return $query->where($query->getModel()
-                ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+            $field = $this->field;
+        }
+
+        if ($this->operator === 'IN') {
+            return $query->whereIn($field, $this->getValue());
+        } else {
+            if ($query instanceof Builder) {
+                return $query->where($field, $this->operator, $this->getValue());
+            } else {
+                // Scout cannot use operators other than '=' and needs to use integers for booleans
+                return $query->where($field, (int)$this->getValue());
+            }
         }
     }
 }
