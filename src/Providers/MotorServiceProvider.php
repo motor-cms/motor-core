@@ -34,6 +34,11 @@ class MotorServiceProvider extends ServiceProvider
         $this->registerCommands();
         $this->documentation();
         merge_local_config_with_db_configuration_variables('motor-core');
+
+        if (! $this->app->routesAreCached()) {
+            require __DIR__.'/../../routes/web.php';
+        }
+
     }
 
     /**
