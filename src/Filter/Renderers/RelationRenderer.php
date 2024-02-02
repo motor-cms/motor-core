@@ -31,9 +31,8 @@ class RelationRenderer extends SelectRenderer
      */
     public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        $relationField = $this->relationField ?? Str::singular($query->getModel()->getTable()).'_id';
-
-        if ($query instanceof Builder) {
+        if ($query instanceof \Illuminate\Database\Eloquent\Builder) {
+            $relationField = $this->relationField ?? Str::singular($query->getModel()->getTable()).'_id';
             return $query->join($this->join.' as '.$this->join, $relationField, $query->getModel()->getTable().'.id')->where(
                 $this->join.'.'.$this->field,
                 $this->getValue()
