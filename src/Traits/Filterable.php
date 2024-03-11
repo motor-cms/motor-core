@@ -34,6 +34,16 @@ trait Filterable
             if ($name === 'per_page') {
                 continue;
             }
+
+            // Force using scout
+            if ($name === 'search' && is_null($filter->getValue())) {
+                // If we're using scout
+                // FIXME: try to find a better method of finding out if we're using scout or not
+                if (method_exists($scope->getModel(), 'getScoutModelsByIds')) {
+                    $scope = $scope->getModel()::search($filter->getValue());
+                }
+            }
+
             if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
                 $scope = $filter->query($scope);
             }
