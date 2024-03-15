@@ -39,7 +39,17 @@ class WhereRenderer extends SelectRenderer
                 return $query->where($field, $this->operator, $this->getValue());
             } else {
                 // Scout cannot use operators other than '=' and needs to use integers for booleans
-                return $query->where($field, (int)$this->getValue());
+                if (is_null($this->getValue() || is_numeric($this->getValue()))) {
+                    $value = (int) $this->getValue();
+                } else {
+                    $value = $this->getValue();
+                }
+
+                if ($this->operator === '!=') {
+                    return $query->whereNotIn($field, [$value, $this->getValue()]);
+                }
+
+                return $query->where($field, $value);
             }
         }
     }
