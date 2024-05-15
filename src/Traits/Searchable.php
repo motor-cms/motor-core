@@ -41,6 +41,14 @@ trait Searchable
 
         // Filter empty terms
         foreach ($terms as $termKey => $term) {
+            $terms[$termKey] = str_replace('"', '', $term);
+            // Filter parentheses
+            $terms[$termKey] = str_replace('(', '', $terms[$termKey]);
+            $terms[$termKey] = str_replace(')', '', $terms[$termKey]);
+        }
+
+        // Filter empty terms
+        foreach ($terms as $termKey => $term) {
             if (trim($term) === '') {
                 unset($terms[$termKey]);
             }
