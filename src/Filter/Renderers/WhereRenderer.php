@@ -49,7 +49,7 @@ class WhereRenderer extends SelectRenderer
                 }
 
                 if ($this->operator === '!=') {
-                    return $query->whereNotIn($field, [$value, $this->getValue()]);
+                    return $query->whereNotIn($field, [addslashes($value), addslashes($this->getValue())]);
                 }
 
                 // Fixme: this should not be necessary but somehow it is...
