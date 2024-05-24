@@ -18,7 +18,6 @@ class SortRenderer extends Base
     {
         if ($this->getValue()) {
             $value = explode(":",$this->getValue());
-            $test = ["tset"];
             if(count($value) > 1) {
                 return $query->orderBy($value[0], $value[1]);
             } else {
