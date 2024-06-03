@@ -50,7 +50,9 @@ class MotorMakeModuleCommand extends Command
         // Create migration
         // Strip namespace from migration command
         $migrationOptions = $extraoptions;
-        $migrationOptions['--path'] = $migrationOptions['--path'].'/../database/migrations';
+        if (isset($migrationOptions['--path'] )) {
+            $migrationOptions['--path'] = $migrationOptions['--path'].'/../database/migrations';
+        }
         unset($migrationOptions['--namespace']);
         $this->call('motor:make:migration', array_merge(['name' => "create_{$table}_table", '--create' => $table], $migrationOptions));
 
