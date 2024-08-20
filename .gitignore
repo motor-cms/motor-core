@@ -5,3 +5,4 @@ docs
 vendor
 .phpunit.result.cache
 coverage.xml
+version.sh
