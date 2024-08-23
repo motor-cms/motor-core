@@ -12,18 +12,20 @@
         }
     ],
     "require": {
-        "php": "^8.2",
-        "laravel/framework": "^10.0",
-        "laravel/tinker": "^2.0",
-        "laravel/scout": "^10.0.2",
-        "meilisearch/meilisearch-php": "^1.1.1",
-        "fakerphp/faker": "^1.0"
+        "php": "^8.3",
+        "laravel/framework": "^11.0",
+        "laravel/tinker": "^2.9",
+        "meilisearch/meilisearch-php": "^1.9"
     },
     "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.13",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^8.0",
         "spatie/laravel-ignition": "^2.0",
-        "mockery/mockery": "^1.0",
-        "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^10.0"
+        "pestphp/pest": "^2.35",
+        "barryvdh/laravel-ide-helper": "^3.1",
+        "itsgoingd/clockwork": "^5.2"
     },
     "autoload": {
         "psr-4": {
@@ -43,5 +45,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true,
+            "pestphp/pest-plugin": true
+        }
+    }
 }

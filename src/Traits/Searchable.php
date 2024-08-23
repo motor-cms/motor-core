@@ -227,9 +227,11 @@ trait Searchable
             $columns = [];
         }
         $id = sprintf('%s-%s', $this->getTable(), $this->getConnectionName());
-        if (! isset($columns[$id])) {
-            $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
-        }
+
+        // No longer necessary as we do not depend on Doctrine in Laravel 11 anymore
+        //if (! isset($columns[$id])) {
+        //    $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
+        //}
 
         return in_array($field, $columns[$id]);
     }
