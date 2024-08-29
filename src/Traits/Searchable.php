@@ -83,7 +83,7 @@ trait Searchable
         }
 
         if (! is_null($result)) {
-            $result->orderBy('relevance', 'DESC')
+            $result->orderByDesc('relevance')
                 ->groupBy($builder->getModel()
                     ->getTable().'.id');
         }

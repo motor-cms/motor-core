@@ -73,7 +73,7 @@ class Filter
                 ->setDefaultValue(Auth::user()->client_id)
                 ->isVisible(false);
         } else {
-            $clients = config('motor-admin.models.client')::orderBy('name', 'ASC')->pluck('name', 'id');
+            $clients = config('motor-admin.models.client')::orderBy('name')->pluck('name', 'id');
             $this->add(new SelectRenderer('client_id'))->setOptions($clients);
         }
     }
