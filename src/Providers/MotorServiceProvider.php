@@ -36,9 +36,8 @@ class MotorServiceProvider extends ServiceProvider
         merge_local_config_with_db_configuration_variables('motor-core');
 
         if (! $this->app->routesAreCached()) {
-            require __DIR__.'/../../routes/web.php';
+            require __DIR__ . '/../../routes/web.php';
         }
-
     }
 
     /**
@@ -46,10 +45,10 @@ class MotorServiceProvider extends ServiceProvider
      */
     public function documentation()
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'motor-core');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'motor-core');
 
         $config = $this->app['config']->get('motor-docs', []);
-        $this->app['config']->set('motor-docs', array_replace_recursive(require __DIR__.'/../../config/motor-docs.php', $config));
+        $this->app['config']->set('motor-docs', array_merge_recursive(require __DIR__ . '/../../config/motor-docs.php', $config));
     }
 
     /**
