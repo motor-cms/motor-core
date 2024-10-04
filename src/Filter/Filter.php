@@ -74,7 +74,7 @@ class Filter
      */
     public function addClientFilter(): void
     {
-        if (Auth::user()->client_id > 0) {
+        if (Auth::user() && Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))
                  ->setOptions([Auth::user()->client_id => Auth::user()->client->name])
                  ->setDefaultValue(Auth::user()->client_id)
