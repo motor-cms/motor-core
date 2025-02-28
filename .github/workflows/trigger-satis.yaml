@@ -7,15 +7,18 @@ on:
       - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
     branches:
       - main
-      - "2.0"
+      - develop
+      - staging
+      - production
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Invoke build hook for satis
-        uses: zzzze/webhook-trigger@master
+      - name: Trigger satis build
+        uses: fjogeleit/http-request-action@v1
         with:
-          data: "{\"event_type\":\"build\"}"
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
-          options: "-H \"Authorization: token ${{ secrets.ACCESS_TOKEN }}\""
+          url: ${{ secrets.SATIS_WEBHOOK_URL }}?package=motor-cms/motor-core
+          method: 'GET'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
