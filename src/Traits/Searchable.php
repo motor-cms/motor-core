@@ -101,7 +101,7 @@ trait Searchable
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-        //return $result->orWhere($field, $searchType, $q);
+            //return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()
@@ -242,15 +242,15 @@ trait Searchable
      */
     public static function applySearchQuery(Builder $query, array $searchQuery): Builder
     {
-        $instance = new self();
+        $instance = new self;
         $dates = $instance->getDates();
 
         /**
          * Helper function to apply a group of
          * AND-WHERE queries to the given builder
          *
-         * @param $query
-         * @param $group
+         * @param  $query
+         * @param  $group
          * @return mixed
          */
         $applyGroup = function ($query, $group) use ($dates) {
@@ -289,7 +289,7 @@ trait Searchable
      */
     public static function validateSearchQuery(Request $request): array
     {
-        $instance = new self();
+        $instance = new self;
 
         $fieldSearchable = function ($field, $value, $fail) use ($instance) {
             if (! $instance->isFieldSearchable($value)) {

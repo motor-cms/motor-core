@@ -75,7 +75,7 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
 
     protected function makeDirectory($directory): void
     {
-        $filesystem = new Filesystem();
+        $filesystem = new Filesystem;
         if (! $filesystem->isDirectory($directory)) {
             $filesystem->makeDirectory($directory, 0755, true);
         }

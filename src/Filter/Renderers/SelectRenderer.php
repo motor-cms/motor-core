@@ -3,7 +3,6 @@
 namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 use Motor\Core\Filter\Base;
 
 /**
@@ -51,7 +50,7 @@ class SelectRenderer extends Base
     {
         if ($query instanceof Builder) {
             return $query->where($query->getModel()
-                                       ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+                ->getTable().'.'.$this->field, $this->operator, $this->getValue());
         }
 
         return $query->where($this->name, $this->getValue());

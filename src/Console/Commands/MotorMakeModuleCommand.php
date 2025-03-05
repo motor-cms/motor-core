@@ -48,7 +48,7 @@ class MotorMakeModuleCommand extends Command
 
         // FIXME: evil hack to tell laravel that the models are inside a Models directory even if the directory does not exist
         if (! is_dir(app_path('Models'))) {
-            $filesystem = new Filesystem();
+            $filesystem = new Filesystem;
             $filesystem->makeDirectory(app_path('Models'), 0755, true);
         }
 

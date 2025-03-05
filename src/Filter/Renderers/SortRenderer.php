@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Filter\Renderers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
 class SortRenderer extends Base
@@ -14,11 +13,11 @@ class SortRenderer extends Base
         return '';
     }
 
-    public function query(\Illuminate\Database\Eloquent\Builder | \Laravel\Scout\Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
         if ($this->getValue()) {
-            $value = explode(":",$this->getValue());
-            if(count($value) > 1) {
+            $value = explode(':', $this->getValue());
+            if (count($value) > 1) {
                 return $query->orderBy($value[0], $value[1]);
             } else {
                 return $query->orderBy($value[0]);
