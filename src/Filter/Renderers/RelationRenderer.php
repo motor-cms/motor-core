@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Filter\Renderers;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 /**
@@ -33,11 +32,13 @@ class RelationRenderer extends SelectRenderer
     {
         if ($query instanceof \Illuminate\Database\Eloquent\Builder) {
             $relationField = $this->relationField ?? Str::singular($query->getModel()->getTable()).'_id';
+
             return $query->join($this->join.' as '.$this->join, $relationField, $query->getModel()->getTable().'.id')->where(
                 $this->join.'.'.$this->field,
                 $this->getValue()
             );
         }
+
         return $query->where('categories', $this->getValue());
     }
 }

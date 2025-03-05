@@ -63,8 +63,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): ?string
     {
@@ -138,7 +136,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummySingularCamelCase', Str::camel($classBase), $stub);
 
-        $stub = str_replace('RootNamespaceSnakeCase', Str::snake(str_replace("\\", '_', $this->getRootNamespace())), $stub);
+        $stub = str_replace('RootNamespaceSnakeCase', Str::snake(str_replace('\\', '_', $this->getRootNamespace())), $stub);
 
         $stub = str_replace('DummyPackageName', $packageName, $stub);
 
