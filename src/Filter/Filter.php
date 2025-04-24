@@ -32,8 +32,6 @@ class Filter
 
     /**
      * Filter constructor.
-     *
-     * @param $parent
      */
     public function __construct($parent)
     {
@@ -44,7 +42,6 @@ class Filter
     }
 
     /**
-     * @param $name
      * @return object|null
      */
     public function get($name): ?Base
@@ -56,10 +53,6 @@ class Filter
         return null;
     }
 
-    /**
-     * @param  Base  $filter
-     * @return Base
-     */
     public function add(Base $filter): Base
     {
         $filter->setBaseName($this->parent);
@@ -76,10 +69,10 @@ class Filter
     {
         if (Auth::user() && Auth::user()->client_id > 0) {
             $this->add(new SelectRenderer('client_id'))
-                 ->setOptions([Auth::user()->client_id => Auth::user()->client->name])
-                 ->setDefaultValue(Auth::user()->client_id)
-                 ->setValue(Auth::user()->client_id)
-                 ->isVisible(false);
+                ->setOptions([Auth::user()->client_id => Auth::user()->client->name])
+                ->setDefaultValue(Auth::user()->client_id)
+                ->setValue(Auth::user()->client_id)
+                ->isVisible(false);
         } else {
             $clients = config('motor-backend.models.client')::orderBy('name', 'ASC')->pluck('name', 'id');
             $this->add(new SelectRenderer('client_id'))->setOptions($clients);
@@ -88,8 +81,6 @@ class Filter
 
     /**
      * Return array of all currently set filters
-     *
-     * @return array
      */
     public function filters(): array
     {

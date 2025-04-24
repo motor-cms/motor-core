@@ -23,9 +23,6 @@ class MotorMakeTestCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new test stub';
 
-    /**
-     * @return string
-     */
     protected function getTargetPath(): string
     {
         $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../tests' : resource_path().'/../tests');
@@ -33,9 +30,6 @@ class MotorMakeTestCommand extends MotorAbstractCommand
         return $basePath.'/integration/controller/'.$this->argument('type').'/';
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetFile(): string
     {
         $values = $this->getTemplateVars();
@@ -45,8 +39,6 @@ class MotorMakeTestCommand extends MotorAbstractCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -55,8 +47,6 @@ class MotorMakeTestCommand extends MotorAbstractCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -67,7 +57,7 @@ class MotorMakeTestCommand extends MotorAbstractCommand
             return;
         }
 
-        $filesystem = new Filesystem();
+        $filesystem = new Filesystem;
         if (! $filesystem->isDirectory($this->getTargetPath())) {
             $filesystem->makeDirectory($this->getTargetPath(), 0755, true);
         }

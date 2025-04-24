@@ -23,9 +23,6 @@ class WhereRenderer extends SelectRenderer
 
     /**
      * Run query for the filter
-     *
-     * @param $query
-     * @return object
      */
     public function query(Builder $query): object
     {

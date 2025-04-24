@@ -23,92 +23,59 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
      */
     protected $description = 'Display config information according to the given name';
 
-    /**
-     * @return string
-     */
     protected function getTargetPath(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetFile(): string
     {
         return '';
     }
 
-    /**
-     * @return string
-     */
     protected function getNavigationStub(): string
     {
         return __DIR__.'/stubs/info/navigation.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getRouteStub(): string
     {
         return __DIR__.'/stubs/info/route.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getApiRouteStub(): string
     {
         return __DIR__.'/stubs/info/apiroute.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getRouteModelBindingStub(): string
     {
         return __DIR__.'/stubs/info/routemodelbinding.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getModelFactoryStub(): string
     {
         return __DIR__.'/stubs/info/modelfactory.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getTestHelperStub(): string
     {
         return __DIR__.'/stubs/info/testhelper.stub';
     }
 
-    /**
-     * @return string
-     */
     protected function getPermissionStub(): string
     {
         return __DIR__.'/stubs/info/permissions.stub';
     }
 
-    /**
-     * @param $directory
-     */
     protected function makeDirectory($directory): void
     {
-        $filesystem = new Filesystem();
+        $filesystem = new Filesystem;
         if (! $filesystem->isDirectory($directory)) {
             $filesystem->makeDirectory($directory, 0755, true);
         }
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetTestHelperFile(): string
     {
         $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../tests/helpers' : resource_path().'/../tests/helpers');
@@ -117,9 +84,6 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         return $basePath.'/test_helper.php';
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetModelFactoryFile(): string
     {
         $basePath = (! is_null($this->option('path')) ? $this->option('path').'/../database/factories' : resource_path().'/../database/factories');
@@ -130,8 +94,6 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {

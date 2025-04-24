@@ -35,8 +35,6 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -47,7 +45,6 @@ class MotorMakeRequestCommand extends MotorMakeControllerCommand
      * Get the default namespace for the class.
      *
      * @param  string  $rootNamespace
-     * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {

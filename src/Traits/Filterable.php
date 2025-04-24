@@ -12,11 +12,6 @@ trait Filterable
 {
     /**
      * Set up scope
-     *
-     * @param  Builder  $scope
-     * @param  Filter  $filter
-     * @param    $column
-     * @return Builder
      */
     public function scopeFilteredBy(Builder $scope, Filter $filter, $column): Builder
     {
@@ -31,10 +26,6 @@ trait Filterable
 
     /**
      * Set up scope for filtering multiple fields in the same query
-     *
-     * @param  Builder  $scope
-     * @param  Filter  $filter
-     * @return Builder
      */
     public function scopeFilteredByMultiple(Builder $scope, Filter $filter): Builder
     {

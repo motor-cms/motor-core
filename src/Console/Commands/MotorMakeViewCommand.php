@@ -23,9 +23,6 @@ class MotorMakeViewCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new view file';
 
-    /**
-     * @return string
-     */
     protected function getTargetPath(): string
     {
         $values = $this->getTemplateVars();
@@ -36,9 +33,6 @@ class MotorMakeViewCommand extends MotorAbstractCommand
         return $basePath.'/'.$directory.'/'.$values['pluralSnake'].'/';
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetFile(): string
     {
         return $this->argument('type').'.blade.php';
@@ -46,8 +40,6 @@ class MotorMakeViewCommand extends MotorAbstractCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -60,8 +52,6 @@ class MotorMakeViewCommand extends MotorAbstractCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -72,7 +62,7 @@ class MotorMakeViewCommand extends MotorAbstractCommand
             return;
         }
 
-        $filesystem = new Filesystem();
+        $filesystem = new Filesystem;
         if (! $filesystem->isDirectory($this->getTargetPath())) {
             $filesystem->makeDirectory($this->getTargetPath(), 0755, true);
         }

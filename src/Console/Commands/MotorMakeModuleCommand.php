@@ -27,8 +27,6 @@ class MotorMakeModuleCommand extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -108,8 +106,6 @@ class MotorMakeModuleCommand extends Command
 
     /**
      * Get the console command arguments.
-     *
-     * @return array
      */
     protected function getArguments(): array
     {

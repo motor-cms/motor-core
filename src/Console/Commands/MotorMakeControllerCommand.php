@@ -32,7 +32,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
     /**
      * @param  string  $name
-     * @return string
      */
     protected function getPath($name): string
     {
@@ -41,7 +40,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
     /**
      * @param  string  $name
-     * @return string
      */
     protected function getNamespace($name): string
     {
@@ -53,9 +51,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         return GeneratorHelper::getNamespace($name, $namespace, $this->laravel);
     }
 
-    /**
-     * @return string
-     */
     protected function getRootNamespace(): string
     {
         $namespace = GeneratorHelper::getRootNamespace($this->option('namespace'), $this->laravel);
@@ -68,8 +63,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): ?string
     {
@@ -94,7 +87,6 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
      *
      * @param  string  $stub
      * @param  string  $name
-     * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {

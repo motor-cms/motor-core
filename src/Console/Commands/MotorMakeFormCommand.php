@@ -26,8 +26,6 @@ class MotorMakeFormCommand extends FormMakeCommand
 
     /**
      * Get the desired class name from the input.
-     *
-     * @return string
      */
     protected function getNameInput(): ?string
     {
@@ -39,7 +37,6 @@ class MotorMakeFormCommand extends FormMakeCommand
      *
      * @param  string  $stub
      * @param  string  $name
-     * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {

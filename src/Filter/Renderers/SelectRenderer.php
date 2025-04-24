@@ -35,9 +35,9 @@ class SelectRenderer extends Base
 
         if ($this->visible) {
             return view('motor-backend::filters.select', [
-                'name'              => $this->name,
-                'options'           => $this->options,
-                'value'             => $this->getValue(),
+                'name' => $this->name,
+                'options' => $this->options,
+                'value' => $this->getValue(),
                 'emptyOptionString' => $this->emptyOptionString,
             ]);
         }
@@ -45,9 +45,6 @@ class SelectRenderer extends Base
 
     /**
      * Run query for the filter
-     *
-     * @param $query
-     * @return object
      */
     public function query(Builder $query): object
     {

@@ -25,9 +25,6 @@ class MotorMakeMigrationCommand extends MigrateMakeCommand
 
     /**
      * MotorMakeMigrationCommand constructor.
-     *
-     * @param  MigrationCreator  $creator
-     * @param  Composer  $composer
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {

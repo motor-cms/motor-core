@@ -28,8 +28,6 @@ class PerPageRenderer extends Base
 
     /**
      * Render the filter
-     *
-     * @return string
      */
     public function render(): string
     {

@@ -37,7 +37,6 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      * Get the default namespace for the class.
      *
      * @param  string  $rootNamespace
-     * @return string
      */
     protected function getDefaultNamespace($rootNamespace): string
     {
@@ -46,8 +45,6 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -59,7 +56,6 @@ class MotorMakeGridCommand extends MotorMakeControllerCommand
      *
      * @param  string  $stub
      * @param  string  $name
-     * @return object
      */
     protected function replaceNamespace(&$stub, $name): object
     {

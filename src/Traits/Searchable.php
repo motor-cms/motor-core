@@ -18,10 +18,7 @@ trait Searchable
     /**
      * full search base on table field and relation fields
      *
-     * @param  Builder  $builder
-     * @param    $query
      * @param  bool  $full_text
-     * @return Builder|null
      */
     public function scopeSearch(Builder $builder, $query, $full_text = false): ?Builder
     {
@@ -63,7 +60,7 @@ trait Searchable
         if (isset($columns) && count($columns) > 0) {
             $cases = $bindings = [];
             foreach ($columns as $column) {
-                list($cases[], $binding) = $this->buildCase($column, $words);
+                [$cases[], $binding] = $this->buildCase($column, $words);
                 $bindings = array_merge_recursive($bindings, $binding);
             }
 
@@ -93,19 +90,14 @@ trait Searchable
     /**
      * check if field is for its table or related table and generate the search query
      *
-     * @param  Builder  $builder
-     * @param    $searchType
-     * @param    $query
-     * @param    $field
      * @param  bool  $first
-     * @return Builder
      */
     public function performSearch(Builder $builder, $searchType, $query, $field, $first = false): Builder
     {
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-        //return $result->orWhere($field, $searchType, $q);
+            // return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()->getTable()) {
@@ -128,10 +120,6 @@ trait Searchable
 
     /**
      * Build case clause from all words for a single column.
-     *
-     * @param    $column
-     * @param  array  $words
-     * @return array
      */
     protected function buildCase($column, array $words): array
     {
@@ -187,7 +175,6 @@ trait Searchable
      * Determine whether word starts and ends with wildcards.
      *
      * @param  string  $word
-     * @return bool
      */
     protected function isWildcard($word): bool
     {
@@ -196,10 +183,6 @@ trait Searchable
 
     /**
      * Build basic search case for 'equals' comparison.
-     *
-     * @param    $column
-     * @param  array  $words
-     * @return string
      */
     protected function buildEqualsCase($column, array $words): string
     {
@@ -219,7 +202,6 @@ trait Searchable
      * Determine whether word ends with wildcard.
      *
      * @param  string  $word
-     * @return bool
      */
     protected function isLeftMatching($word): bool
     {
@@ -230,7 +212,6 @@ trait Searchable
      * Replace '?' with single character SQL wildcards.
      *
      * @param  string  $word
-     * @return string
      */
     protected function caseBinding($word): string
     {

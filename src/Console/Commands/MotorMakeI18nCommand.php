@@ -23,9 +23,6 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
      */
     protected $description = 'Create a new i18n file';
 
-    /**
-     * @return string
-     */
     protected function getTargetPath(): string
     {
         $prefix = $this->option('prefix') ? $this->option('prefix') : 'backend';
@@ -34,9 +31,6 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
         return $basePath.'/'.strtolower($this->argument('locale')).'/'.$prefix.'/';
     }
 
-    /**
-     * @return string
-     */
     protected function getTargetFile(): string
     {
         $values = $this->getTemplateVars();
@@ -46,8 +40,6 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
 
     /**
      * Get the stub file for the generator.
-     *
-     * @return string
      */
     protected function getStub(): string
     {
@@ -60,8 +52,6 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
 
     /**
      * Execute the console command.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -72,7 +62,7 @@ class MotorMakeI18nCommand extends MotorAbstractCommand
             return;
         }
 
-        $filesystem = new Filesystem();
+        $filesystem = new Filesystem;
         if (! $filesystem->isDirectory($this->getTargetPath())) {
             $filesystem->makeDirectory($this->getTargetPath(), 0755, true);
         }
