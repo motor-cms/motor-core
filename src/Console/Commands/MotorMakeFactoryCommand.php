@@ -46,7 +46,7 @@ class MotorMakeFactoryCommand extends FactoryMakeCommand
      */
     protected function rootNamespace()
     {
-        return $this->option('namespace') ? $this->option('namespace') : $this->laravel->getNamespace();
+        return $this->option('namespace') ? $this->option('namespace').'\\' : $this->laravel->getNamespace();
     }
 
     /**

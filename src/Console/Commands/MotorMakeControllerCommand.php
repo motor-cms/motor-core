@@ -21,7 +21,7 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     /**
      * @var string
      */
-    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=}';
+    protected $signature = 'motor:make:controller {name} {--type=default} {--path=} {--namespace=} {--model=} {--parent=} {--stub_path=} {--creatable=}';
 
     /**
      * The console command description.
@@ -92,10 +92,8 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
     {
         $class = last(explode('/', $this->getNameInput()));
         $classBase = Str::singular(str_replace('Controller', '', $class));
-        $componentClassBase = Str::singular(str_replace('Component', '', str_replace('Controller', '', $class)));
-        $grid = $classBase.'Grid';
-        $request = $classBase.'Request';
-        $form = $classBase.'Form';
+        $postRequest = $classBase.'PostRequest';
+        $patchRequest = $classBase.'PatchRequest';
         $service = $classBase.'Service';
         $resource = $classBase.'Resource';
         $collection = $classBase.'Collection';
@@ -116,25 +114,17 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
 
         $stub = str_replace('DummyRootNamespace', $this->getRootNamespace(), $stub);
 
-        $stub = str_replace('DummyRequest', $request, $stub);
+        $stub = str_replace('DummyPostRequest', $postRequest, $stub);
 
-        $stub = str_replace('DummyForm', $form, $stub);
+        $stub = str_replace('DummyPatchRequest', $patchRequest, $stub);
 
         $stub = str_replace('DummyModel', $classBase, $stub);
-
-        $stub = str_replace('DummyGrid', $grid, $stub);
 
         $stub = str_replace('DummyService', $service, $stub);
 
         $stub = str_replace('DummyCollection', $collection, $stub);
 
         $stub = str_replace('DummyResource', $resource, $stub);
-
-        $stub = str_replace('DummyView', Str::plural(Str::snake($classBase)), $stub);
-
-        $stub = str_replace('DummyComponentViewKebab', Str::plural(Str::kebab($componentClassBase)), $stub);
-
-        $stub = str_replace('DummyComponentView', Str::plural(Str::snake($componentClassBase)), $stub);
 
         $stub = str_replace('DummyPluralTitle', Str::ucfirst(Str::plural(str_replace('_', ' ', $classBase))), $stub);
 
@@ -143,6 +133,10 @@ class MotorMakeControllerCommand extends ControllerMakeCommand
         $stub = str_replace('DummySingularTitle', Str::ucfirst(str_replace('_', ' ', $classBase)), $stub);
 
         $stub = str_replace('DummySingularLowercase', Str::snake(str_replace('_', ' ', $classBase)), $stub);
+
+        $stub = str_replace('DummySingularCamelCase', Str::camel($classBase), $stub);
+
+        $stub = str_replace('RootNamespaceSnakeCase', Str::snake(str_replace('\\', '_', $this->getRootNamespace())), $stub);
 
         $stub = str_replace('DummyPackageName', $packageName, $stub);
 

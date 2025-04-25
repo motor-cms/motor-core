@@ -23,7 +23,7 @@ class SelectRenderer extends Base
     /**
      * Render the filter
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
      */
     public function render()
     {
@@ -35,9 +35,9 @@ class SelectRenderer extends Base
 
         if ($this->visible) {
             return view('motor-backend::filters.select', [
-                'name' => $this->name,
-                'options' => $this->options,
-                'value' => $this->getValue(),
+                'name'              => $this->name,
+                'options'           => $this->options,
+                'value'             => $this->getValue(),
                 'emptyOptionString' => $this->emptyOptionString,
             ]);
         }
@@ -46,8 +46,13 @@ class SelectRenderer extends Base
     /**
      * Run query for the filter
      */
-    public function query(Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        return $query->where($query->getModel()->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        if ($query instanceof Builder) {
+            return $query->where($query->getModel()
+                ->getTable().'.'.$this->field, $this->operator, $this->getValue());
+        }
+
+        return $query->where($this->name, $this->getValue());
     }
 }

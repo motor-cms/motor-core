@@ -53,6 +53,11 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         return __DIR__.'/stubs/info/routemodelbinding.stub';
     }
 
+    protected function getMeilisearchStub(): string
+    {
+        return __DIR__.'/stubs/info/meilisearch.stub';
+    }
+
     protected function getModelFactoryStub(): string
     {
         return __DIR__.'/stubs/info/modelfactory.stub';
@@ -100,51 +105,32 @@ class MotorMakeInfoCommand extends MotorAbstractCommand
         $navigation = file_get_contents($this->getNavigationStub());
         $navigation = $this->replaceTemplateVars($navigation);
 
-        $route = file_get_contents($this->getRouteStub());
-        $route = $this->replaceTemplateVars($route);
-
         $apiRoute = file_get_contents($this->getApiRouteStub());
         $apiRoute = $this->replaceTemplateVars($apiRoute);
 
         $routeModelBinding = file_get_contents($this->getRouteModelBindingStub());
         $routeModelBinding = $this->replaceTemplateVars($routeModelBinding);
 
-        $testHelper = file_get_contents($this->getTestHelperStub());
-        $testHelper = $this->replaceTemplateVars($testHelper);
+        $meilisearch = file_get_contents($this->getMeilisearchStub());
+        $meilisearch = $this->replaceTemplateVars($meilisearch);
 
         $permission = file_get_contents($this->getPermissionStub());
         $permission = $this->replaceTemplateVars($permission);
 
-        $this->info('Add this to an items array in your app/config/motor-backend-navigation.php');
+        $this->info('Add this to an items array in your config/motor-admin-navigation.php (either in app or on your package path)');
         echo $navigation."\n";
-
-        $this->info('Add this to the backend route groups in your routes/web.php');
-        echo $route."\n";
 
         $this->info('Add this to the api route groups in your routes/api.php');
         echo $apiRoute."\n";
 
         $this->info('Add this to the boot method in your app/Providers/RouteServiceProvider.php (or your own service provider)');
+        $this->info('(This is no longer necessary, but you can still do it if you want)');
         echo $routeModelBinding."\n";
 
-        $this->info('Add this to your app/config/motor-backend-permissions.php file');
+        $this->info('Add this to the config/scout.php file and adapt to suit your search needs');
+        echo $meilisearch."\n";
+
+        $this->info('Add this to your config/motor-admin-permissions.php file (either in app or on your package path)');
         echo $permission."\n";
-
-        $testHelperFile = $this->getTargetTestHelperFile();
-
-        if (! file_exists($testHelperFile)) {
-            file_put_contents($testHelperFile, "<?php\r\n\r\n".$testHelper);
-            $this->info('Generated tests/helpers/test_helper.php');
-        } else {
-            if (file_exists($testHelperFile) && strpos(file_get_contents($testHelperFile), $testHelper) === false) {
-                $existingTestHelperFile = file_get_contents($testHelperFile);
-
-                file_put_contents($testHelperFile, $existingTestHelperFile."\r\n".$testHelper);
-                $this->info('Added new test helper to tests/helpers/test_helper.php');
-            } else {
-                $this->info('Add this to your tests/helpers/test_helper.php (if it doesn\'t exist yet)');
-                echo $testHelper."\n";
-            }
-        }
     }
 }

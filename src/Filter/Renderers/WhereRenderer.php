@@ -14,7 +14,7 @@ class WhereRenderer extends SelectRenderer
     /**
      * Render the filter
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|string
+     * @return string
      */
     public function render()
     {
@@ -24,16 +24,41 @@ class WhereRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
     {
-        if ($this->operator === 'IN') {
-            return $query->whereIn($query->getModel()->getTable().'.'.$this->field, $this->getValue());
+        if ($query instanceof Builder) {
+            $field = $query->getModel()->getTable().'.'.$this->field;
         } else {
-            return $query->where(
-                $query->getModel()->getTable().'.'.$this->field,
-                $this->operator,
-                $this->getValue()
-            );
+            $field = $this->field;
+        }
+
+        if ($this->operator === 'IN') {
+            return $query->whereIn($field, $this->getValue());
+        } else {
+            if ($query instanceof Builder) {
+                return $query->where($field, $this->operator, $this->getValue());
+            } else {
+
+                // Scout cannot use operators other than '=' and needs to use integers for booleans
+                if (is_null($this->getValue() || is_numeric($this->getValue()))) {
+                    $value = (int) $this->getValue();
+                } elseif ($this->getValue() === true) {
+                    $value = 1;
+                } else {
+                    $value = $this->getValue();
+                }
+
+                if ($this->operator === '!=') {
+                    return $query->whereNotIn($field, [addslashes($value), addslashes($this->getValue())]);
+                }
+
+                // Fixme: this should not be necessary but somehow it is...
+                if (is_null($value)) {
+                    $value = (int) $value;
+                }
+
+                return $query->where($field, $value);
+            }
         }
     }
 }

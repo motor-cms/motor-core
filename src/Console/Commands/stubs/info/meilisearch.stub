@@ -1,0 +1,10 @@
+    'meilisearch' => [
+        'index-settings' => [
+		// START REPLACING HERE
+		{{namespaceNoSlash}}\Models\{{singularTitle}}::class => [
+			'filterableAttributes' => [], // ['client_id'],
+			'sortableAttributes'=> ['{{pluralLowercase}}.id', 'id', 'created_at', 'updated_at'],
+		],
+		// STOP REPLACING HERE
+        ],
+    ],

@@ -40,16 +40,6 @@ class MotorMakeSeederCommand extends SeederMakeCommand
     }
 
     /**
-     * Get the root namespace for the class.
-     *
-     * @return string
-     */
-    protected function rootNamespace()
-    {
-        return $this->option('namespace') ? $this->option('namespace') : $this->laravel->getNamespace();
-    }
-
-    /**
      * Get the destination class path.
      *
      * @param  string  $name

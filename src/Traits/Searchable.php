@@ -2,14 +2,18 @@
 
 namespace Motor\Core\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable as ScoutSearch;
 
 /**
  * Trait Searchable
  */
 trait Searchable
 {
+    //use ScoutSearch;
     /**
      * @var array
      */
@@ -64,7 +68,8 @@ trait Searchable
                 $bindings = array_merge_recursive($bindings, $binding);
             }
 
-            $builder->select($builder->getModel()->getTable().'.*');
+            $builder->select($builder->getModel()
+                ->getTable().'.*');
             $builder->selectRaw('max('.implode(' + ', $cases).') as relevance');
             $builder->addBinding($bindings['select'], 'select');
 
@@ -81,7 +86,9 @@ trait Searchable
         }
 
         if (! is_null($result)) {
-            $result->orderBy('relevance', 'DESC')->groupBy($builder->getModel()->getTable().'.id');
+            $result->orderByDesc('relevance')
+                ->groupBy($builder->getModel()
+                    ->getTable().'.id');
         }
 
         return $result;
@@ -97,10 +104,11 @@ trait Searchable
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-            // return $result->orWhere($field, $searchType, $q);
+            //return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
-            if ($table === $builder->getModel()->getTable()) {
+            if ($table === $builder->getModel()
+                ->getTable()) {
                 return $builder->$where($table.'.'.$field, $searchType, $query);
             }
 
@@ -173,8 +181,11 @@ trait Searchable
 
     /**
      * Determine whether word starts and ends with wildcards.
+<<<<<<< HEAD
      *
      * @param  string  $word
+=======
+>>>>>>> origin/production
      */
     protected function isWildcard($word): bool
     {
@@ -200,8 +211,11 @@ trait Searchable
 
     /**
      * Determine whether word ends with wildcard.
+<<<<<<< HEAD
      *
      * @param  string  $word
+=======
+>>>>>>> origin/production
      */
     protected function isLeftMatching($word): bool
     {
@@ -210,11 +224,119 @@ trait Searchable
 
     /**
      * Replace '?' with single character SQL wildcards.
+<<<<<<< HEAD
      *
      * @param  string  $word
+=======
+>>>>>>> origin/production
      */
     protected function caseBinding($word): string
     {
         return str_replace('?', '_', str_replace('*', '', $word));
+    }
+
+    /**
+     * Checks if the given field name is searchable
+     */
+    private function isFieldSearchable(string $field): bool
+    {
+        static $columns;
+        if (! isset($columns)) {
+            $columns = [];
+        }
+        $id = sprintf('%s-%s', $this->getTable(), $this->getConnectionName());
+
+        // No longer necessary as we do not depend on Doctrine in Laravel 11 anymore
+        //if (! isset($columns[$id])) {
+        //    $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
+        //}
+
+        return in_array($field, $columns[$id]);
+    }
+
+    /**
+     * Applies the relevant where calls
+     * from the given search query
+     */
+    public static function applySearchQuery(Builder $query, array $searchQuery): Builder
+    {
+        $instance = new self;
+        $dates = $instance->getDates();
+
+        /**
+         * Helper function to apply a group of
+         * AND-WHERE queries to the given builder
+         *
+         * @param  $query
+         * @param  $group
+         * @return mixed
+         */
+        $applyGroup = function ($query, $group) use ($dates) {
+            foreach ($group as $search) {
+                $value = $search['value'];
+                if (in_array($search['field'], $dates)) {
+                    $value = new Carbon($value);
+                    $query = $query->whereDate($search['field'], strtoupper($search['operation']), $value);
+                } else {
+                    $query = $query->where($search['field'], strtoupper($search['operation']), $value);
+                }
+            }
+
+            return $query;
+        };
+
+        // Basic Search
+        if (isset($searchQuery['search']) && ! is_null($searchQuery['search'])) {
+            $query = $applyGroup($query, $searchQuery['search']);
+
+        } // OR Search Fields
+        elseif (isset($searchQuery['queries']) && ! is_null($searchQuery['queries'])) {
+            foreach ($searchQuery['queries'] as $group) {
+                $query = $query->orWhere(function ($q) use ($group, $applyGroup) {
+                    $applyGroup($q, $group);
+                });
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * Validates the given search data and returns
+     * the validated fields
+     */
+    public static function validateSearchQuery(Request $request): array
+    {
+        $instance = new self;
+
+        $fieldSearchable = function ($field, $value, $fail) use ($instance) {
+            if (! $instance->isFieldSearchable($value)) {
+                $fail(sprintf('%s is not a searchable field', $value));
+            }
+        };
+
+        return $request->validate([
+            'per_page' => 'numeric',
+            'page' => 'numeric',
+
+            // Basic Search
+            'search' => 'required_without:queries|array',
+            'search.*.field' => [
+                'required',
+                $fieldSearchable,
+            ],
+            'search.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
+            'search.*.value' => 'present',
+
+            // OR Search Fields
+            'queries' => 'required_without:search|array',
+            'queries.*' => 'array',
+            'queries.*.*.field' => [
+                'required',
+                $fieldSearchable,
+            ],
+            'queries.*.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
+            'queries.*.*.value' => 'present',
+        ]);
     }
 }

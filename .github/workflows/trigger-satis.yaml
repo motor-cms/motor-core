@@ -1,0 +1,24 @@
+name: Trigger satis build
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
+    branches:
+      - main
+      - develop
+      - staging
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger satis build
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.SATIS_WEBHOOK_URL }}?package=motor-cms/motor-core
+          method: 'GET'
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}

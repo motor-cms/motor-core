@@ -2,15 +2,25 @@
 
 namespace DummyNamespace;
 
-use Illuminate\Database\Eloquent\Model;
-use Motor\Core\Traits\Searchable;
-use Motor\Core\Traits\Filterable;
 //use RichanFongdasen\EloquentBlameable\BlameableTrait;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Motor\Core\Traits\Filterable;
+<<<<<<< HEAD
+//use RichanFongdasen\EloquentBlameable\BlameableTrait;
+=======
+use Laravel\Scout\Searchable;
+use Kra8\Snowflake\HasShortflakePrimary;
+
+use Database\Factories\DummyClassFactory;
+>>>>>>> origin/production
 
 class DummyClass extends Model
 {
     use Searchable;
 	use Filterable;
+<<<<<<< HEAD
     //use BlameableTrait;
 
 
@@ -21,6 +31,20 @@ class DummyClass extends Model
      */
     protected $searchableColumns = [
     ];
+=======
+    use HasFactory;
+    use HasShortflakePrimary;
+
+//    use BlameableTrait;
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs(): string
+    {
+        return 'RootNamespaceSnakeCaseDummyPluralLowercase_index';
+    }
+>>>>>>> origin/production
 
     /**
      * The attributes that are mass assignable.
@@ -29,4 +53,12 @@ class DummyClass extends Model
      */
     protected $fillable = [
     ];
+
+    /**
+     * @return \Database\Factories\DummyClassFactory
+     */
+    protected static function newFactory(): DummyClassFactory
+    {
+        return DummyClassFactory::new();
+    }
 }
