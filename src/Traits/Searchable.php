@@ -181,11 +181,8 @@ trait Searchable
 
     /**
      * Determine whether word starts and ends with wildcards.
-<<<<<<< HEAD
      *
      * @param  string  $word
-=======
->>>>>>> origin/production
      */
     protected function isWildcard($word): bool
     {
@@ -211,11 +208,8 @@ trait Searchable
 
     /**
      * Determine whether word ends with wildcard.
-<<<<<<< HEAD
      *
      * @param  string  $word
-=======
->>>>>>> origin/production
      */
     protected function isLeftMatching($word): bool
     {
@@ -224,11 +218,8 @@ trait Searchable
 
     /**
      * Replace '?' with single character SQL wildcards.
-<<<<<<< HEAD
      *
      * @param  string  $word
-=======
->>>>>>> origin/production
      */
     protected function caseBinding($word): string
     {
