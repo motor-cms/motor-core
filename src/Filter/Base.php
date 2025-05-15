@@ -252,7 +252,7 @@ class Base
         }
         if ($this->getVisible()) {
             $this->value = $value;
-            $this->setSessionValue($value);
+            //$this->setSessionValue($value);
         }
     }
 
@@ -264,13 +264,13 @@ class Base
     public function getValue()
     {
         $returnValue = $this->value;
-        if (is_null($this->value)) {
-            $returnValue = $this->getSessionValue();
-            $this->value = $returnValue;
-            if (is_null($this->value)) {
-                $returnValue = $this->defaultValue;
-            }
-        }
+        //if (is_null($this->value)) {
+        //    $returnValue = $this->getSessionValue();
+        //    $this->value = $returnValue;
+        //    if (is_null($this->value)) {
+        //        $returnValue = $this->defaultValue;
+        //    }
+        //}
 
         // Check if the returnValue is allowed from the options array
         if (! is_null($this->options)) {
