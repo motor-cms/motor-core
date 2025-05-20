@@ -41,7 +41,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Motor\\Core\\Providers\\MotorServiceProvider"
+                "Motor\\Core\\Providers\\MotorServiceProvider",
+                "Motor\\Core\\Providers\\AwsS3AssumedRoleStorageProvider"
             ]
         }
     },
