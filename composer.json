@@ -42,7 +42,7 @@
         "laravel": {
             "providers": [
                 "Motor\\Core\\Providers\\MotorServiceProvider",
-                "Motor\\Core\\Providers\\AwsS3AssumedRoleStorageProvider"
+                "Motor\\Core\\Providers\\AwsS3NoCredentialsServiceProvider"
             ]
         }
     },
