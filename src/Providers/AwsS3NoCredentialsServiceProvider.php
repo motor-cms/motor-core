@@ -20,6 +20,7 @@ class AwsS3NoCredentialsServiceProvider extends ServiceProvider
                 'version' => 'latest',
                 'region' => $config['region'],
                 'bucket' => $config['bucket'],
+                'credentials' => false,
             ]);
 
             $adapter = new AwsS3V3Adapter(
