@@ -2,7 +2,8 @@
 
 namespace Motor\Core\Providers;
 
-use Motor\Core\Services\AssumedRoleCredentials;
+use League\Flysystem\AwsS3V3\PortableVisibilityConverter as AwsS3PortableVisibilityConverter;
+use League\Flysystem\Visibility;
 use Aws\S3\S3Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\AwsS3V3Adapter as LaravelAwsS3V3Adapter;
@@ -23,9 +24,15 @@ class AwsS3NoCredentialsServiceProvider extends ServiceProvider
                 'credentials' => false,
             ]);
 
+            $visibility = new AwsS3PortableVisibilityConverter(
+                $config['visibility'] ?? Visibility::PRIVATE
+            );
+
             $adapter = new AwsS3V3Adapter(
                 $client,
-                $config['bucket']
+                $config['bucket'],
+                $config['root'] ?? '',
+                $visibility,
             );
 
             return  new LaravelAwsS3V3Adapter(
