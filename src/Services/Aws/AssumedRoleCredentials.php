@@ -24,6 +24,7 @@ class AssumedRoleCredentials
             'assume_role_params' => [
                 'RoleArn' => $assumedRoleArn,
                 'WebIdentityTokenFile' => config('services.s3.token_file_1'),
+                'RoleSessionName' => 'MotorCoreSession',
             ],
         ]);
 
