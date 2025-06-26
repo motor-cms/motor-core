@@ -50,7 +50,7 @@ class MotorServiceProvider extends ServiceProvider
         $config = $this->app['config']->get('motor-docs', []);
         $this->mergeConfigFrom(__DIR__.'/../../config/scramble.php', 'scramble');
         $this->app['config']->set('motor-docs', array_merge_recursive(require __DIR__.'/../../config/motor-docs.php', $config));
-        //$this->app['config']->set('scramble', array_merge_recursive(require __DIR__.'/../../config/scramble.php', $config));
+        // $this->app['config']->set('scramble', array_merge_recursive(require __DIR__.'/../../config/scramble.php', $config));
     }
 
     /**

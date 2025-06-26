@@ -2,15 +2,15 @@
 
 namespace Motor\Core\Providers;
 
-use League\Flysystem\AwsS3V3\PortableVisibilityConverter as AwsS3PortableVisibilityConverter;
-use League\Flysystem\Visibility;
 use Aws\S3\S3Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\AwsS3V3Adapter as LaravelAwsS3V3Adapter;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
+use League\Flysystem\AwsS3V3\PortableVisibilityConverter as AwsS3PortableVisibilityConverter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\Visibility;
 
 class AwsS3NoCredentialsServiceProvider extends ServiceProvider
 {
@@ -38,7 +38,7 @@ class AwsS3NoCredentialsServiceProvider extends ServiceProvider
                 $visibility,
             );
 
-            return  new LaravelAwsS3V3Adapter(
+            return new LaravelAwsS3V3Adapter(
                 new Filesystem($adapter),
                 $adapter,
                 $config,

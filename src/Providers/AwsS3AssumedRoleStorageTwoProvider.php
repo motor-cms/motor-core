@@ -2,7 +2,6 @@
 
 namespace Motor\Core\Providers;
 
-use Motor\Core\Services\Aws\AssumedRoleCredentialsTwo;
 use Aws\S3\S3Client;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\AwsS3V3Adapter as LaravelAwsS3V3Adapter;
@@ -10,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
+use Motor\Core\Services\Aws\AssumedRoleCredentialsTwo;
 
 class AwsS3AssumedRoleStorageTwoProvider extends ServiceProvider
 {
@@ -28,7 +28,7 @@ class AwsS3AssumedRoleStorageTwoProvider extends ServiceProvider
                 $config['bucket']
             );
 
-            return  new LaravelAwsS3V3Adapter(
+            return new LaravelAwsS3V3Adapter(
                 new Filesystem($adapter),
                 $adapter,
                 $config,

@@ -195,12 +195,12 @@ class ExampleTest extends TestCase
         $this->assertIsArray($filter->filters());
     }
 
-    ///** @test */
-    //public function it_can_add_the_client_filter()
-    //{
+    // /** @test */
+    // public function it_can_add_the_client_filter()
+    // {
     //    Auth::onceUsingId(1);
     //    $filter = new Filter(null);
     //    $filter->addClientFilter();
     //    $this->assertTrue(true);
-    //}
+    // }
 }

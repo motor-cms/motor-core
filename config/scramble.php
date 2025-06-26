@@ -59,7 +59,7 @@ return [
         /*
          * URL to an image that displays as a small square logo next to the title, above the table of contents.
          */
-        'logo' => env('APP_URL') . '/logo-small.png',
+        'logo' => env('APP_URL').'/logo-small.png',
 
         /*
          * Use to fetch the credential policy for the Try It feature. Options are: omit, include (default), and same-origin
@@ -104,7 +104,7 @@ return [
 
     'middleware' => [
         'web',
-        //RestrictedDocsAccess::class,
+        // RestrictedDocsAccess::class,
     ],
 
     'extensions' => [],
