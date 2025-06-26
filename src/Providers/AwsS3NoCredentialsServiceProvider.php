@@ -18,12 +18,12 @@ class AwsS3NoCredentialsServiceProvider extends ServiceProvider
     {
         Storage::extend('s3_no_credentials', function (Application $app, array $config) {
             $client = new S3Client([
-                'version' => 'latest',
-                'region' => $config['region'],
-                'bucket' => $config['bucket'],
-                'credentials' => false,
-                'root' => $config['root'] ?? '',
-                'visibility' => $config['visibility'] ?? Visibility::PRIVATE,
+                'version'             => 'latest',
+                'region'              => $config['region'],
+                'bucket'              => $config['bucket'],
+                'credentials'         => false,
+                'root'                => $config['root'] ?? '',
+                'visibility'          => $config['visibility'] ?? Visibility::PRIVATE,
                 'directory_separator' => $config['directory_separator'] ?? '/',
             ]);
 

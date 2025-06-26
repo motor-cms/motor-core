@@ -17,9 +17,9 @@ class AwsS3AssumedRoleStorageProvider extends ServiceProvider
     {
         Storage::extend('s3_assumed_role_1', function (Application $app, array $config) {
             $client = new S3Client([
-                'version' => 'latest',
-                'region' => $config['region'],
-                'bucket' => $config['bucket'],
+                'version'     => 'latest',
+                'region'      => $config['region'],
+                'bucket'      => $config['bucket'],
                 'credentials' => AssumedRoleCredentials::create(),
             ]);
 

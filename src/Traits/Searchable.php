@@ -299,26 +299,26 @@ trait Searchable
 
         return $request->validate([
             'per_page' => 'numeric',
-            'page' => 'numeric',
+            'page'     => 'numeric',
 
             // Basic Search
-            'search' => 'required_without:queries|array',
+            'search'         => 'required_without:queries|array',
             'search.*.field' => [
                 'required',
                 $fieldSearchable,
             ],
             'search.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
-            'search.*.value' => 'present',
+            'search.*.value'     => 'present',
 
             // OR Search Fields
-            'queries' => 'required_without:search|array',
-            'queries.*' => 'array',
+            'queries'           => 'required_without:search|array',
+            'queries.*'         => 'array',
             'queries.*.*.field' => [
                 'required',
                 $fieldSearchable,
             ],
             'queries.*.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
-            'queries.*.*.value' => 'present',
+            'queries.*.*.value'     => 'present',
         ]);
     }
 }

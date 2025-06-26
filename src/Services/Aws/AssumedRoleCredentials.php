@@ -18,13 +18,13 @@ class AssumedRoleCredentials
 
         $assumeRoleCredentials = new AssumeRoleCredentialProvider([
             'client' => new StsClient([
-                'region' => config('services.s3.region'),
+                'region'  => config('services.s3.region'),
                 'version' => config('services.s3.version', 'latest'),
             ]),
             'assume_role_params' => [
-                'RoleArn' => $assumedRoleArn,
+                'RoleArn'              => $assumedRoleArn,
                 'WebIdentityTokenFile' => config('services.s3.token_file_1'),
-                'RoleSessionName' => 'MotorCoreSession',
+                'RoleSessionName'      => 'MotorCoreSession',
             ],
         ]);
 
