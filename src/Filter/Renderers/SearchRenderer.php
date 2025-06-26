@@ -15,6 +15,8 @@ class SearchRenderer extends Base
      */
     protected $searchableColumns = [];
 
+    protected $searchOptions = [];
+
     /**
      * Render the filter
      *
@@ -33,6 +35,11 @@ class SearchRenderer extends Base
         $this->searchableColumns = $columns;
     }
 
+    public function setSearchOptions($options): void
+    {
+        $this->searchOptions = $options;
+    }
+
     /**
      * Run query for the filter
      */
@@ -41,7 +48,7 @@ class SearchRenderer extends Base
         // If we're using scout
         // FIXME: try to find a better method of finding out if we're using scout or not
         if (method_exists($query->getModel(), 'getScoutModelsByIds')) {
-            return $query->getModel()::search($this->getValue());
+            return $query->getModel()::search($this->getValue())->options($this->searchOptions);
         }
 
         if (method_exists($query->getModel(), 'scopeSearch')) {
