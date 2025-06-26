@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class ArtisanCommandsController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $commands = Artisan::all();
 
