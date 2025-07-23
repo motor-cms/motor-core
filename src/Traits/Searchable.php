@@ -13,7 +13,7 @@ use Laravel\Scout\Searchable as ScoutSearch;
  */
 trait Searchable
 {
-    //use ScoutSearch;
+    // use ScoutSearch;
     /**
      * @var array
      */
@@ -101,7 +101,7 @@ trait Searchable
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-            //return $result->orWhere($field, $searchType, $q);
+            // return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()
@@ -229,9 +229,9 @@ trait Searchable
         $id = sprintf('%s-%s', $this->getTable(), $this->getConnectionName());
 
         // No longer necessary as we do not depend on Doctrine in Laravel 11 anymore
-        //if (! isset($columns[$id])) {
+        // if (! isset($columns[$id])) {
         //    $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
-        //}
+        // }
 
         return in_array($field, $columns[$id]);
     }
@@ -299,26 +299,26 @@ trait Searchable
 
         return $request->validate([
             'per_page' => 'numeric',
-            'page' => 'numeric',
+            'page'     => 'numeric',
 
             // Basic Search
-            'search' => 'required_without:queries|array',
+            'search'         => 'required_without:queries|array',
             'search.*.field' => [
                 'required',
                 $fieldSearchable,
             ],
             'search.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
-            'search.*.value' => 'present',
+            'search.*.value'     => 'present',
 
             // OR Search Fields
-            'queries' => 'required_without:search|array',
-            'queries.*' => 'array',
+            'queries'           => 'required_without:search|array',
+            'queries.*'         => 'array',
             'queries.*.*.field' => [
                 'required',
                 $fieldSearchable,
             ],
             'queries.*.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
-            'queries.*.*.value' => 'present',
+            'queries.*.*.value'     => 'present',
         ]);
     }
 }

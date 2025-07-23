@@ -41,8 +41,8 @@ class MotorMakeModuleCommand extends Command
             $extraoptions['--path'] = $this->option('path');
         }
         if (! is_null($this->option('namespace'))) {
-            ////$extraoptions['--namespace'] = $this->option('namespace') . (str_ends_with($this->option('namespace'), '\\') ? '' : '\\') ;
-            //$extraoptions['--namespace'] = $this->option('namespace');
+            // //$extraoptions['--namespace'] = $this->option('namespace') . (str_ends_with($this->option('namespace'), '\\') ? '' : '\\') ;
+            // $extraoptions['--namespace'] = $this->option('namespace');
             $extraoptions['--namespace'] = (str_ends_with($this->option('namespace'), '\\') ? substr($this->option('namespace'), 0, -1) : $this->option('namespace'));
         }
 
