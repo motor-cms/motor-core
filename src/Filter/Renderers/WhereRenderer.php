@@ -52,8 +52,8 @@ class WhereRenderer extends SelectRenderer
                     return $query->whereNotIn($field, [addslashes($value), addslashes($this->getValue())]);
                 }
 
-                // Fixme: this should not be necessary but somehow it is...
-                if (is_null($value)) {
+                // FIXME? this is a special workaround for meilisearch, because it does not support null values
+                if (config('scout.driver') === 'meilisearch' && is_null($value)) {
                     $value = (int) $value;
                 }
 
