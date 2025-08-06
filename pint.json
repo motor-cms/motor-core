@@ -1,6 +1,13 @@
 {
   "preset": "laravel",
   "rules": {
-    "binary_operator_spaces": false
+    "align_multiline_comment": true,
+    "array_indentation": true,
+    "binary_operator_spaces": {
+      "default": "single_space",
+      "operators": {
+        "=>": "align_single_space_minimal"
+      }
+    }
   }
 }
