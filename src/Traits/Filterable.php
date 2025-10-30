@@ -36,7 +36,7 @@ trait Filterable
      * @param  Filter  $filter
      * @return Builder
      */
-    public function scopeFilteredByMultiple(Builder $scope, Filter $filter): Builder
+    public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
     {
         foreach ($filter->filters() as $name => $filter) {
             if ($name === 'per_page') {
