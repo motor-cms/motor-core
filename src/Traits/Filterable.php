@@ -35,13 +35,12 @@ trait Filterable
                 continue;
             }
 
-            // Force using scout
+            // Skip Scout when there is no search query — SearchRenderer::query()
+            // handles the switch to Scout Builder when a search value is present.
+            // Forcing Scout with null caused WhereRenderer to cast null → 0,
+            // breaking IS NULL queries (e.g. parent_id IS NULL for root nodes).
             if ($name === 'search' && is_null($filter->getValue())) {
-                // If we're using scout
-                // FIXME: try to find a better method of finding out if we're using scout or not
-                if (method_exists($scope->getModel(), 'getScoutModelsByIds')) {
-                    $scope = $scope->getModel()::search($filter->getValue());
-                }
+                continue;
             }
 
             if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
