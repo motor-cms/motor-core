@@ -112,9 +112,9 @@ class Base
     {
         $this->visible = $visible;
 
-        // Don't allow values to be changed if the filter is not visible
+        // Directly set value, bypassing the visibility check in setValue()
         if (! $visible) {
-            $this->setValue($this->defaultValue);
+            $this->value = $this->defaultValue;
         }
 
         return $this;
@@ -271,13 +271,6 @@ class Base
         //        $returnValue = $this->defaultValue;
         //    }
         // }
-
-        // Check if the returnValue is allowed from the options array
-        if (! is_null($this->options)) {
-            if (! isset($this->options[$returnValue])) {
-                return null;
-            }
-        }
 
         return $returnValue;
     }
