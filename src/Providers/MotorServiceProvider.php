@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Motor\Core\Console\Commands\GenerateDocsCommand;
 use Motor\Core\Console\Commands\MotorMakeControllerCommand;
@@ -33,11 +34,22 @@ class MotorServiceProvider extends ServiceProvider
     {
         $this->registerCommands();
         $this->documentation();
+        $this->apiRoutes();
         merge_local_config_with_db_configuration_variables('motor-core');
 
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/../../routes/web.php';
         }
+    }
+
+    /**
+     * Set API routes
+     */
+    public function apiRoutes(): void
+    {
+        Route::middleware('api')->prefix('api')->group(function () {
+            $this->loadRoutesFrom(__DIR__.'/../../routes/api.php');
+        });
     }
 
     /**
