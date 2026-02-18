@@ -133,13 +133,14 @@ class GlobalSearchService
             $moduleKey = $moduleKeys[$i];
             $moduleConfig = $activeModules[$moduleKey];
             $estimatedTotal = $indexResult['estimatedTotalHits'] ?? 0;
-            $moduleCounts[$moduleKey] = $estimatedTotal;
+            $packageName = $moduleConfig['module'];
+            $moduleCounts[$packageName] = ($moduleCounts[$packageName] ?? 0) + $estimatedTotal;
             $totalEstimated += $estimatedTotal;
 
             foreach ($indexResult['hits'] as $hit) {
                 $allHits[] = new GlobalSearchHitData(
-                    module: $moduleKey,
-                    index: $moduleConfig['index'],
+                    module: $packageName,
+                    index: $moduleConfig['entity'],
                     id: $hit['id'] ?? null,
                     title: $this->extractField($hit, $moduleConfig['title_field']),
                     excerpt: $this->extractField($hit, $moduleConfig['excerpt_field']),
