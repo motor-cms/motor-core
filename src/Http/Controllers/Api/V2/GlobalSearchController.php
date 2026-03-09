@@ -3,7 +3,7 @@
 namespace Motor\Core\Http\Controllers\Api\V2;
 
 use Motor\Core\Data\GlobalSearchResultData;
-use Motor\Core\Http\Requests\Api\GlobalSearchGetRequest;
+use Motor\Core\Http\Requests\Api\V2\GlobalSearchGetRequest;
 use Motor\Core\Services\GlobalSearchService;
 
 /**
