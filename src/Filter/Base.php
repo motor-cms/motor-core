@@ -304,7 +304,11 @@ class Base
         }
         if ($this->getVisible()) {
             $this->value = $value;
-            $this->setSessionValue($value);
+            if (is_null($value)) {
+                session()->forget('filters.'.$this->baseName.'.'.$this->name);
+            } else {
+                $this->setSessionValue($value);
+            }
         }
         return $this;
     }
