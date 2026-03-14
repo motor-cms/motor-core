@@ -266,7 +266,7 @@ class Base
     {
         $request = request();
 
-        if (! is_null($request->get($this->name))) {
+        if ($request->has($this->name)) {
             $this->setValue($request->get($this->name));
         }
     }
