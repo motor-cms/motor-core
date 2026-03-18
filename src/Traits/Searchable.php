@@ -63,7 +63,7 @@ trait Searchable
 
         if (count($terms) > 1) {
             $searchType = 'REGEXP';
-            $search = implode('|', $terms);
+            $search = implode('|', array_map(fn ($t) => preg_quote($t, '/'), $terms));
         }
 
         $columns = $this->searchableColumns;
