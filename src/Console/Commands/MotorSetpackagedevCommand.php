@@ -14,14 +14,14 @@ class MotorSetpackagedevCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'motor:setpackagedev {status}';
+    protected $signature = 'motor:core:set-package-dev {status}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Set motor package development environment variable. Currently only used when making migrations as they dump the composer autoloader, which, during packag development, is different';
+    protected $description = 'Toggle the MOTOR_PACKAGE_DEVELOPMENT environment variable for local package development';
 
     /**
      * Execute the console command.

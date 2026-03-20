@@ -18,14 +18,14 @@ class GenerateDocsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'motor-swagger:generate {documentation?} {--all}';
+    protected $signature = 'motor:core:generate-docs {documentation?} {--all}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Regenerate docs';
+    protected $description = 'Generate OpenAPI/Swagger API documentation';
 
     /**
      * Execute the console command.
