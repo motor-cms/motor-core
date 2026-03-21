@@ -3,6 +3,7 @@
 namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Support\Str;
+use Laravel\Scout\Builder;
 
 /**
  * Class RelationRenderer
@@ -28,7 +29,7 @@ class RelationRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|Builder $query): object
     {
         if ($query instanceof \Illuminate\Database\Eloquent\Builder) {
             $relationField = $this->relationField ?? Str::singular($query->getModel()->getTable()).'_id';

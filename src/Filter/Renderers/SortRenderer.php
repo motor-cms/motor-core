@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+use Laravel\Scout\Builder;
 use Motor\Core\Filter\Base;
 
 class SortRenderer extends Base
@@ -13,7 +14,7 @@ class SortRenderer extends Base
         return '';
     }
 
-    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
+    public function query(\Illuminate\Database\Eloquent\Builder|Builder $query): object
     {
         if ($this->getValue()) {
             $value = explode(':', $this->getValue());

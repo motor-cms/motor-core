@@ -24,7 +24,7 @@ class WhereRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
+    public function query(Builder|\Laravel\Scout\Builder $query): object
     {
         if ($query instanceof Builder) {
             $field = $query->getModel()->getTable().'.'.$this->field;

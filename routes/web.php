@@ -1,6 +1,8 @@
 <?php
 
-Route::get('artisan/commands', [\Motor\Core\Http\Controllers\ArtisanCommandsController::class, 'index'])
+use Motor\Core\Http\Controllers\ArtisanCommandsController;
+
+Route::get('artisan/commands', [ArtisanCommandsController::class, 'index'])
     ->middleware(['auth.basic', 'can:viewAdminDashboard']);
-Route::get('artisan/commands/{command}', [\Motor\Core\Http\Controllers\ArtisanCommandsController::class, 'execute'])
+Route::get('artisan/commands/{command}', [ArtisanCommandsController::class, 'execute'])
     ->middleware(['auth.basic', 'can:viewAdminDashboard']);

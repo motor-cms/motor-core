@@ -2,6 +2,9 @@
 
 namespace Motor\Core\Filter\Renderers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
@@ -23,7 +26,7 @@ class SelectRenderer extends Base
     /**
      * Render the filter
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     * @return Application|Factory|View|void
      */
     public function render()
     {
@@ -46,7 +49,7 @@ class SelectRenderer extends Base
     /**
      * Run query for the filter
      */
-    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
+    public function query(Builder|\Laravel\Scout\Builder $query): object
     {
         if ($query instanceof Builder) {
             return $query->where($query->getModel()

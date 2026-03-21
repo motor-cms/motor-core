@@ -2,6 +2,7 @@
 
 namespace Motor\Core\Database\Migrations;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 
 /**
@@ -26,7 +27,7 @@ class MigrationCreator extends \Illuminate\Database\Migrations\MigrationCreator
      * @param  string|null  $table
      * @param  bool  $create
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function getStub($table, $create): string
     {

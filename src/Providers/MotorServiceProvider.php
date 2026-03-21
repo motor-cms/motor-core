@@ -18,6 +18,8 @@ use Motor\Core\Console\Commands\MotorMakeSeederCommand;
 use Motor\Core\Console\Commands\MotorMakeServiceCommand;
 use Motor\Core\Console\Commands\MotorMakeTestCommand;
 use Motor\Core\Console\Commands\MotorSetpackagedevCommand;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 /**
  * Class MotorServiceProvider
@@ -27,8 +29,8 @@ class MotorServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
      */
     public function boot(): void
     {
