@@ -4,12 +4,9 @@ namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Database\Eloquent\Builder;
 
-/**
- * Class WhereRenderer
- */
 class WhereRenderer extends SelectRenderer
 {
-    protected $options = null;
+    protected ?array $options = null;
 
     /**
      * Render the filter

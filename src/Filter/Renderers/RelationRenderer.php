@@ -5,22 +5,13 @@ namespace Motor\Core\Filter\Renderers;
 use Illuminate\Support\Str;
 use Laravel\Scout\Builder;
 
-/**
- * Class RelationRenderer
- */
 class RelationRenderer extends SelectRenderer
 {
-    /**
-     * @var null
-     */
-    protected $options = null;
+    protected ?array $options = null;
 
-    protected $relationField = null;
+    protected ?string $relationField = null;
 
-    /**
-     * Base constructor.
-     */
-    public function __construct($name, $relationField = null)
+    public function __construct(string $name, ?string $relationField = null)
     {
         $this->relationField = $relationField;
         parent::__construct($name);

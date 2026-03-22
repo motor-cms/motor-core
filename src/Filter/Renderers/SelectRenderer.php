@@ -8,20 +8,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
-/**
- * Class SelectRenderer
- */
 class SelectRenderer extends Base
 {
-    /**
-     * @var array
-     */
-    protected $options = [];
+    protected ?array $options = [];
 
-    /**
-     * @var string
-     */
-    protected $operator = '=';
+    protected ?string $operator = '=';
 
     /**
      * Render the filter

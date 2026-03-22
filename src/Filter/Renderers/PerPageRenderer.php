@@ -4,15 +4,9 @@ namespace Motor\Core\Filter\Renderers;
 
 use Motor\Core\Filter\Base;
 
-/**
- * Class PerPageRenderer
- */
 class PerPageRenderer extends Base
 {
-    /**
-     * @var array
-     */
-    protected $options = [];
+    protected ?array $options = [];
 
     /**
      * Set up filter with initial values

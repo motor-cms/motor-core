@@ -7,7 +7,7 @@ use Motor\Core\Filter\Base;
 
 class SortRenderer extends Base
 {
-    protected $options = null;
+    protected ?array $options = null;
 
     public function render()
     {
@@ -20,9 +20,11 @@ class SortRenderer extends Base
             $value = explode(':', $this->getValue());
             if (count($value) > 1) {
                 return $query->orderBy($value[0], $value[1]);
-            } else {
-                return $query->orderBy($value[0]);
             }
+
+            return $query->orderBy($value[0]);
         }
+
+        return $query;
     }
 }

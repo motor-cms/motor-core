@@ -8,17 +8,11 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Motor\Core\Filter\Base;
 
-/**
- * Class SearchRenderer
- */
 class SearchRenderer extends Base
 {
-    /**
-     * @var array
-     */
-    protected $searchableColumns = [];
+    protected array $searchableColumns = [];
 
-    protected $searchOptions = [];
+    protected array $searchOptions = [];
 
     /**
      * Render the filter
