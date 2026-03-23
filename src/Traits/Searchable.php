@@ -19,10 +19,20 @@ trait Searchable
             return $builder;
         }
 
+        // Remove sql injection possibilities
+        $query = Str::replace('%', '', $query);
+
         $searchType = 'LIKE';
         $search = $full_text ? trim($query) : '%'.trim($query).'%';
 
         $terms = explode(' ', $query);
+
+        // Strip characters that could break REGEXP or LIKE queries
+        foreach ($terms as $termKey => $term) {
+            $terms[$termKey] = str_replace('"', '', $term);
+            $terms[$termKey] = str_replace('(', '', $terms[$termKey]);
+            $terms[$termKey] = str_replace(')', '', $terms[$termKey]);
+        }
 
         foreach ($terms as $termKey => $term) {
             if (trim($term) === '') {
@@ -39,7 +49,7 @@ trait Searchable
 
         if (count($terms) > 1) {
             $searchType = 'REGEXP';
-            $search = implode('|', $terms);
+            $search = implode('|', array_map(fn ($t) => preg_quote($t, '/'), $terms));
         }
 
         $columns = $this->searchableColumns;
