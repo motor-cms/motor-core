@@ -17,6 +17,7 @@ class GlobalSearchGetRequest extends FormRequest
             'q' => ['required', 'string', 'min:1'],
             'limit' => ['sometimes', 'integer', 'min:1', 'max:100'],
             'page' => ['sometimes', 'integer', 'min:1'],
+            'module' => ['sometimes', 'string'],
         ];
     }
 }

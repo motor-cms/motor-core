@@ -32,6 +32,7 @@ class GlobalSearchController extends ApiController
             query: $request->validated('q'),
             limit: (int) $request->validated('limit', 25),
             page: (int) $request->validated('page', 1),
+            moduleFilter: $request->validated('module'),
         );
     }
 }

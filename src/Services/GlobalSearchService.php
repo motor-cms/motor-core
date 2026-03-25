@@ -24,13 +24,19 @@ class GlobalSearchService
         $this->scoutPrefix = config('scout.prefix', '');
     }
 
-    public function search(string $query, int $limit = 25, int $page = 1): GlobalSearchResultData
+    public function search(string $query, int $limit = 25, int $page = 1, ?string $moduleFilter = null): GlobalSearchResultData
     {
         $parsed = $this->parseQuery($query);
         $searchTerm = $parsed['term'];
         $targetModule = $parsed['module'];
 
-        $activeModules = $this->resolveActiveModules($targetModule);
+        // Explicit ?module= param takes precedence over prefix syntax
+        if ($moduleFilter !== null) {
+            $targetModule = null;
+            $activeModules = $this->resolveActiveModulesByPackage($moduleFilter);
+        } else {
+            $activeModules = $this->resolveActiveModules($targetModule);
+        }
 
         if (empty($activeModules)) {
             return $this->emptyResponse($query, $targetModule, $searchTerm, $limit, $page);
@@ -91,6 +97,14 @@ class GlobalSearchService
         }
 
         return $this->modules;
+    }
+
+    /**
+     * Filter modules by their package name (e.g. "motor-admin", "motor-media").
+     */
+    protected function resolveActiveModulesByPackage(string $packageName): array
+    {
+        return array_filter($this->modules, fn (array $config) => $config['module'] === $packageName);
     }
 
     protected function buildSearchQueries(array $activeModules, string $searchTerm, int $offset, int $limit): array
