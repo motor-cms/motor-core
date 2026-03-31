@@ -26,6 +26,12 @@ class GlobalSearchController extends ApiController
      */
     public function __invoke(GlobalSearchGetRequest $request): GlobalSearchResultData
     {
+        $user = $request->user();
+
+        if (! $user->hasRole('SuperAdmin') && ! $user->hasPermissionTo('search.read')) {
+            abort(403);
+        }
+
         $service = new GlobalSearchService;
 
         return $service->search(
