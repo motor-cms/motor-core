@@ -11,14 +11,55 @@ on:
       - staging
       - production
 
+env:
+  PACKAGE_NAME: motor-cms/motor-core
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger satis build
+      - name: Trigger satis build (non-tag push)
+        if: github.ref_type != 'tag'
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.SATIS_WEBHOOK_URL }}?package=motor-cms/motor-core
+          url: ${{ secrets.SATIS_WEBHOOK_URL }}?package=${{ env.PACKAGE_NAME }}
           method: 'GET'
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+
+      - name: Trigger satis and verify indexing (tag push)
+        if: github.ref_type == 'tag'
+        env:
+          VERSION: ${{ github.ref_name }}
+          WEBHOOK_URL: ${{ secrets.SATIS_WEBHOOK_URL }}
+          AUTH_USER: ${{ secrets.USERNAME }}
+          AUTH_PASS: ${{ secrets.PASSWORD }}
+        run: |
+          check_indexed() {
+            curl -sf -u "$AUTH_USER:$AUTH_PASS" \
+              "https://composer.registry.zeitraum.io/p2/$PACKAGE_NAME.json" \
+              | grep -q "\"$VERSION\""
+          }
+
+          for retry in 1 2 3; do
+            echo "→ Triggering satis webhook (attempt $retry/3)..."
+            if curl -sf -u "$AUTH_USER:$AUTH_PASS" \
+                "$WEBHOOK_URL?package=$PACKAGE_NAME" >/dev/null; then
+              echo "  webhook accepted"
+            else
+              echo "  ⚠ webhook call failed"
+            fi
+
+            echo "Polling for $PACKAGE_NAME@$VERSION (up to 2 minutes)..."
+            for i in $(seq 1 12); do
+              if check_indexed; then
+                echo "✓ $PACKAGE_NAME@$VERSION is indexed in satis"
+                exit 0
+              fi
+              sleep 10
+            done
+            echo "  ⚠ not indexed yet, will re-trigger webhook"
+          done
+
+          echo "✗ Failed: $PACKAGE_NAME@$VERSION did not appear in satis after 3 webhook retries (6 minutes)"
+          exit 1
