@@ -4,12 +4,9 @@ namespace Motor\Core\Filter\Renderers;
 
 use Illuminate\Database\Eloquent\Builder;
 
-/**
- * Class WhereRenderer
- */
 class WhereRenderer extends SelectRenderer
 {
-    protected $options = null;
+    protected ?array $options = null;
 
     /**
      * Render the filter
@@ -24,7 +21,7 @@ class WhereRenderer extends SelectRenderer
     /**
      * Run query for the filter
      */
-    public function query(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $query): object
+    public function query(Builder|\Laravel\Scout\Builder $query): object
     {
         if ($query instanceof Builder) {
             $field = $query->getModel()->getTable().'.'.$this->field;
@@ -40,7 +37,7 @@ class WhereRenderer extends SelectRenderer
             } else {
 
                 // Scout cannot use operators other than '=' and needs to use integers for booleans
-                if (is_null($this->getValue() || is_numeric($this->getValue()))) {
+                if (is_null($this->getValue()) || is_numeric($this->getValue())) {
                     $value = (int) $this->getValue();
                 } elseif ($this->getValue() === true) {
                     $value = 1;

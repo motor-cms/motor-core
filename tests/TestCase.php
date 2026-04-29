@@ -26,7 +26,7 @@ abstract class TestCase extends OrchestraTestCase
     /**
      * Load package alias
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return array
      */
     protected function getPackageAliases($app)

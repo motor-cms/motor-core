@@ -6,25 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Laravel\Scout\Searchable as ScoutSearch;
 
-/**
- * Trait Searchable
- */
 trait Searchable
 {
-    // use ScoutSearch;
-    /**
-     * @var array
-     */
-    protected $joins = [];
+    protected array $joins = [];
 
-    /**
-     * full search base on table field and relation fields
-     *
-     * @param  false  $full_text
-     */
-    public function scopeSearch(Builder $builder, $query, $full_text = false): ?Builder
+    public function scopeSearch(Builder $builder, string $query, bool $full_text = false): ?Builder
     {
         $result = null;
 
@@ -32,12 +19,21 @@ trait Searchable
             return $builder;
         }
 
+        // Remove sql injection possibilities
+        $query = Str::replace('%', '', $query);
+
         $searchType = 'LIKE';
         $search = $full_text ? trim($query) : '%'.trim($query).'%';
 
         $terms = explode(' ', $query);
 
-        // Filter empty terms
+        // Strip characters that could break REGEXP or LIKE queries
+        foreach ($terms as $termKey => $term) {
+            $terms[$termKey] = str_replace('"', '', $term);
+            $terms[$termKey] = str_replace('(', '', $terms[$termKey]);
+            $terms[$termKey] = str_replace(')', '', $terms[$termKey]);
+        }
+
         foreach ($terms as $termKey => $term) {
             if (trim($term) === '') {
                 unset($terms[$termKey]);
@@ -53,7 +49,7 @@ trait Searchable
 
         if (count($terms) > 1) {
             $searchType = 'REGEXP';
-            $search = implode('|', $terms);
+            $search = implode('|', array_map(fn ($t) => preg_quote($t, '/'), $terms));
         }
 
         $columns = $this->searchableColumns;
@@ -91,17 +87,11 @@ trait Searchable
         return $result;
     }
 
-    /**
-     * check if field is for its table or related table and generate the search query
-     *
-     * @param  false  $first
-     */
-    public function performSearch(Builder $builder, $searchType, $query, $field, $first = false): Builder
+    public function performSearch(Builder $builder, string $searchType, string $query, string $field, bool $first = false): Builder
     {
         $where = $first ? 'where' : 'orWhere';
         if (strpos($field, '.') === false) {
             return $builder->$where($field, $searchType, $query);
-            // return $result->orWhere($field, $searchType, $q);
         } else {
             [$table, $field] = explode('.', $field);
             if ($table === $builder->getModel()
@@ -123,16 +113,11 @@ trait Searchable
         }
     }
 
-    /**
-     * Build case clause from all words for a single column.
-     */
-    protected function buildCase($column, array $words): array
+    protected function buildCase(string $column, array $words): array
     {
-        // THIS IS BAD
-        // @todo refactor
         $operator = 'LIKE';
         $bindings = [];
-        $bindings['select'] = $bindings['where'] = array_map(static function ($word) {
+        $bindings['select'] = $bindings['where'] = array_map(static function (string $word): string {
             return str_replace('*', '', $word);
         }, $words);
         $case = $this->buildEqualsCase($column, $words);
@@ -176,18 +161,12 @@ trait Searchable
         return [$case, $bindings];
     }
 
-    /**
-     * Determine whether word starts and ends with wildcards.
-     */
-    protected function isWildcard($word): bool
+    protected function isWildcard(string $word): bool
     {
         return Str::endsWith($word, '*') && Str::startsWith($word, '*');
     }
 
-    /**
-     * Build basic search case for 'equals' comparison.
-     */
-    protected function buildEqualsCase($column, array $words): string
+    protected function buildEqualsCase(string $column, array $words): string
     {
         $columns = explode('.', $column);
         foreach ($columns as $key => $col) {
@@ -201,25 +180,16 @@ trait Searchable
         return "case when {$equals} then {$score} else 0 end";
     }
 
-    /**
-     * Determine whether word ends with wildcard.
-     */
-    protected function isLeftMatching($word): bool
+    protected function isLeftMatching(string $word): bool
     {
         return Str::endsWith($word, '*');
     }
 
-    /**
-     * Replace '?' with single character SQL wildcards.
-     */
-    protected function caseBinding($word): string
+    protected function caseBinding(string $word): string
     {
         return str_replace('?', '_', str_replace('*', '', $word));
     }
 
-    /**
-     * Checks if the given field name is searchable
-     */
     private function isFieldSearchable(string $field): bool
     {
         static $columns;
@@ -228,32 +198,15 @@ trait Searchable
         }
         $id = sprintf('%s-%s', $this->getTable(), $this->getConnectionName());
 
-        // No longer necessary as we do not depend on Doctrine in Laravel 11 anymore
-        // if (! isset($columns[$id])) {
-        //    $columns[$id] = array_keys($this->getConnection()->getDoctrineSchemaManager()->listTableColumns($this->getTable()));
-        // }
-
-        return in_array($field, $columns[$id]);
+        return in_array($field, $columns[$id] ?? []);
     }
 
-    /**
-     * Applies the relevant where calls
-     * from the given search query
-     */
     public static function applySearchQuery(Builder $query, array $searchQuery): Builder
     {
         $instance = new self;
         $dates = $instance->getDates();
 
-        /**
-         * Helper function to apply a group of
-         * AND-WHERE queries to the given builder
-         *
-         * @param  $query
-         * @param  $group
-         * @return mixed
-         */
-        $applyGroup = function ($query, $group) use ($dates) {
+        $applyGroup = function (Builder $query, array $group) use ($dates): Builder {
             foreach ($group as $search) {
                 $value = $search['value'];
                 if (in_array($search['field'], $dates)) {
@@ -267,12 +220,9 @@ trait Searchable
             return $query;
         };
 
-        // Basic Search
         if (isset($searchQuery['search']) && ! is_null($searchQuery['search'])) {
             $query = $applyGroup($query, $searchQuery['search']);
-
-        } // OR Search Fields
-        elseif (isset($searchQuery['queries']) && ! is_null($searchQuery['queries'])) {
+        } elseif (isset($searchQuery['queries']) && ! is_null($searchQuery['queries'])) {
             foreach ($searchQuery['queries'] as $group) {
                 $query = $query->orWhere(function ($q) use ($group, $applyGroup) {
                     $applyGroup($q, $group);
@@ -283,15 +233,11 @@ trait Searchable
         return $query;
     }
 
-    /**
-     * Validates the given search data and returns
-     * the validated fields
-     */
     public static function validateSearchQuery(Request $request): array
     {
         $instance = new self;
 
-        $fieldSearchable = function ($field, $value, $fail) use ($instance) {
+        $fieldSearchable = function (string $field, mixed $value, \Closure $fail) use ($instance): void {
             if (! $instance->isFieldSearchable($value)) {
                 $fail(sprintf('%s is not a searchable field', $value));
             }
@@ -301,7 +247,6 @@ trait Searchable
             'per_page' => 'numeric',
             'page'     => 'numeric',
 
-            // Basic Search
             'search'         => 'required_without:queries|array',
             'search.*.field' => [
                 'required',
@@ -310,7 +255,6 @@ trait Searchable
             'search.*.operation' => 'required|in:=,<,>,<=,>=,!=,like',
             'search.*.value'     => 'present',
 
-            // OR Search Fields
             'queries'           => 'required_without:search|array',
             'queries.*'         => 'array',
             'queries.*.*.field' => [

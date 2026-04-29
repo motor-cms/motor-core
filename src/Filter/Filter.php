@@ -5,52 +5,24 @@ namespace Motor\Core\Filter;
 use Illuminate\Support\Facades\Auth;
 use Motor\Core\Filter\Renderers\SelectRenderer;
 
-/**
- * Class Filter
- */
 class Filter
 {
-    /**
-     * @var string
-     */
-    protected $parent;
+    protected string $parent;
 
-    /**
-     * @var array
-     */
-    protected $filters = [];
+    protected array $filters = [];
 
-    /**
-     * @var array
-     */
-    protected $sortableFields = [];
+    protected array $sortableFields = [];
 
-    /**
-     * @var array
-     */
-    protected $sorting = ['id', 'ASC'];
+    protected array $sorting = ['id', 'ASC'];
 
-    /**
-     * Filter constructor.
-     */
-    public function __construct($parent)
+    public function __construct(string|object $parent)
     {
-        $this->parent = $parent;
-        if (is_object($parent)) {
-            $this->parent = get_class($parent);
-        }
+        $this->parent = is_object($parent) ? get_class($parent) : $parent;
     }
 
-    /**
-     * @return object|null
-     */
-    public function get($name): ?Base
+    public function get(string $name): ?Base
     {
-        if (isset($this->filters[$name])) {
-            return $this->filters[$name];
-        }
-
-        return null;
+        return $this->filters[$name] ?? null;
     }
 
     public function add(Base $filter): Base
@@ -62,9 +34,6 @@ class Filter
         return $filter;
     }
 
-    /**
-     * Add the default client filter
-     */
     public function addClientFilter(): void
     {
         if (Auth::user()->client_id > 0) {
@@ -78,9 +47,6 @@ class Filter
         }
     }
 
-    /**
-     * Return array of all currently set filters
-     */
     public function filters(): array
     {
         return $this->filters;

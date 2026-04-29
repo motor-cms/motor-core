@@ -2,19 +2,14 @@
 
 namespace Motor\Core\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
+use Laravel\Scout\Builder as ScoutBuilder;
 use Motor\Core\Filter\Filter;
 
-/**
- * Trait Filterable
- */
 trait Filterable
 {
-    /**
-     * Set up scope
-     */
-    public function scopeFilteredBy(Builder $scope, Filter $filter, $column): Builder
+    public function scopeFilteredBy(Builder $scope, Filter $filter, string $column): Builder
     {
-        // Get current filter value
         $currentFilter = $filter->get($column);
         if (! is_null($currentFilter) && ! is_null($currentFilter->getValue())) {
             return $scope->where($scope->getModel()
@@ -24,28 +19,20 @@ trait Filterable
         return $scope;
     }
 
-    /**
-     * Set up scope for filtering multiple fields in the same query
-     */
-    public function scopeFilteredByMultiple(\Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder $scope, Filter $filter): \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
+    public function scopeFilteredByMultiple(Builder|ScoutBuilder $scope, Filter $filter): Builder|ScoutBuilder
     {
-        foreach ($filter->filters() as $name => $filter) {
+        foreach ($filter->filters() as $name => $filterItem) {
 
             if ($name === 'per_page') {
                 continue;
             }
 
-            // Force using scout
-            if ($name === 'search' && is_null($filter->getValue())) {
-                // If we're using scout
-                // FIXME: try to find a better method of finding out if we're using scout or not
-                if (method_exists($scope->getModel(), 'getScoutModelsByIds')) {
-                    $scope = $scope->getModel()::search($filter->getValue());
-                }
+            if ($name === 'search' && is_null($filterItem->getValue())) {
+                continue;
             }
 
-            if (! is_null($filter->getValue()) || $filter->getAllowNull() === true) {
-                $scope = $filter->query($scope);
+            if (! is_null($filterItem->getValue()) || $filterItem->getAllowNull() === true) {
+                $scope = $filterItem->query($scope);
             }
         }
 
