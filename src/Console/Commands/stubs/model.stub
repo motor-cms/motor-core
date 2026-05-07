@@ -5,13 +5,13 @@ namespace DummyNamespace;
 use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Traits\Searchable;
 use Motor\Core\Traits\Filterable;
-//use RichanFongdasen\EloquentBlameable\BlameableTrait;
+//use Mattiverse\Userstamps\Traits\Userstamps;
 
 class DummyClass extends Model
 {
     use Searchable;
 	use Filterable;
-    //use BlameableTrait;
+    //use Userstamps;
 
 
     /**
