@@ -69,6 +69,15 @@ trait Searchable
         $columns = $this->searchableColumns;
 
         if (isset($columns) && count($columns) > 0) {
+            $tableName = $builder->getModel()->getTable();
+            $columns = array_map(function ($column) use ($tableName) {
+                if (! str_contains($column, '.')) {
+                    return $tableName.'.'.$column;
+                }
+
+                return $column;
+            }, $columns);
+
             $cases = $bindings = [];
             foreach ($columns as $column) {
                 list($cases[], $binding) = $this->buildCase($column, $words);
