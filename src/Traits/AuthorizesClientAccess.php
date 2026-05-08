@@ -42,20 +42,6 @@ trait AuthorizesClientAccess
 {
     protected function denyForeignClient(?Model $model, string $column = 'client_id'): bool
     {
-        if (! app()->bound(ClientScope::RESOLVER_KEY)) {
-            return false;
-        }
-
-        $ids = (app(ClientScope::RESOLVER_KEY))();
-
-        if ($ids === null) {
-            return false;
-        }
-
-        if ($model === null) {
-            return true;
-        }
-
-        return ! in_array($model->{$column}, $ids);
+        return ClientScope::deniesForModel($model, $column);
     }
 }

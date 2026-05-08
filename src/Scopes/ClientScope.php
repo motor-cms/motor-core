@@ -46,4 +46,32 @@ class ClientScope implements Scope
 
         $builder->whereIn($model->getTable().'.'.$this->column, $ids);
     }
+
+    /**
+     * Public static counterpart to {@see \Motor\Core\Traits\AuthorizesClientAccess::denyForeignClient()}.
+     *
+     * Use this from contexts that cannot pull in the trait — most commonly
+     * static service methods, jobs, or any caller that needs to ask "is this
+     * model out of bounds for the current tenant?" without instantiating a
+     * holder. Returns the same answers and applies the same V1 / SuperAdmin
+     * short-circuits.
+     */
+    public static function deniesForModel(?Model $model, string $column = 'client_id'): bool
+    {
+        if (! app()->bound(self::RESOLVER_KEY)) {
+            return false;
+        }
+
+        $ids = (app(self::RESOLVER_KEY))();
+
+        if ($ids === null) {
+            return false;
+        }
+
+        if ($model === null) {
+            return true;
+        }
+
+        return ! in_array($model->{$column}, $ids);
+    }
 }
