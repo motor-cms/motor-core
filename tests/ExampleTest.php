@@ -9,6 +9,7 @@ use Motor\Core\Filter\Renderers\PerPageRenderer;
 use Motor\Core\Filter\Renderers\SelectRenderer;
 use Motor\Core\Filter\Renderers\WhereRenderer;
 use Motor\Core\Helpers\GeneratorHelper;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Class ExampleTest
@@ -42,21 +43,21 @@ class ExampleTest extends TestCase
         parent::getEnvironmentSetUp($app);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_path()
     {
         $namespace = GeneratorHelper::getPath('test', 'src', $this->app);
         $this->assertEquals(realpath('./').'/src/test.php', $namespace);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_namespace()
     {
         $namespace = GeneratorHelper::getNamespace('Motor\Core', null, $this->app);
         $this->assertEquals('Motor', $namespace);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_root_namespace()
     {
         $namespace = GeneratorHelper::getRootNamespace(null, $this->app);
@@ -66,14 +67,14 @@ class ExampleTest extends TestCase
         $this->assertEquals('Motor\Core\\', $namespace);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_instantiate_the_filter_class()
     {
         $filter = new Filter(null);
         $this->assertInstanceOf(Filter::class, $filter);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_where_filter()
     {
         //  Test name
@@ -81,7 +82,7 @@ class ExampleTest extends TestCase
         $this->assertEquals('where', $filter->getName());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_per_page_filter()
     {
         //  Test name
@@ -92,7 +93,7 @@ class ExampleTest extends TestCase
         $this->assertEquals([25 => 25, 50 => 50, 100 => 100, 200 => 200], $filter->getOptions());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_add_a_select_filter()
     {
         //  Test name
@@ -177,14 +178,14 @@ class ExampleTest extends TestCase
         $this->assertCount(1, $filter->filters());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_empty_filter_array()
     {
         $filter = new Filter(null);
         $this->assertIsArray($filter->filters());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_a_spefific_filter()
     {
         $selectRenderer = new SelectRenderer('select_filter');

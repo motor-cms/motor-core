@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use PHPUnit\Framework\Attributes\Test;
 
 class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
 {
@@ -50,16 +51,14 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returns_403_for_{{singularSnake}}_if_not_authenticated()
     {
         $this->json('GET', '/api/{{pluralSnake}}/1')->seeStatusCode(401)->seeJson([ 'error' => 'Unauthenticated.' ]);
     }
 
 
-    /** @test */
+    #[Test]
     public function returns_404_for_non_existing_{{singularSnake}}_record()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -69,7 +68,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_create_{{singularSnake}}_without_payload()
     {
         $this->user->givePermissionTo($this->writePermission);
@@ -79,7 +78,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_create_{{singularSnake}}_without_permission()
     {
         $this->json('POST', '/api/{{pluralSnake}}?api_token=' . $this->user->api_token)->seeStatusCode(403)->seeJson([
@@ -88,7 +87,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_create_a_new_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->writePermission);
@@ -100,7 +99,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_show_a_single_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -111,7 +110,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function fails_to_show_a_single_{{singularSnake}}_without_permission()
     {
         $record = create_test_{{singularSnake}}();
@@ -121,7 +120,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function can_get_empty_result_when_trying_to_show_multiple_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -131,7 +130,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_show_multiple_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -142,7 +141,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_search_for_a_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -154,7 +153,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_show_a_second_{{singularSnake}}_results_page()
     {
         $this->user->givePermissionTo($this->readPermission);
@@ -166,7 +165,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_update_nonexisting_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->writePermission);
@@ -176,7 +175,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_modify_a_{{singularSnake}}_without_payload()
     {
         $this->user->givePermissionTo($this->writePermission);
@@ -188,7 +187,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_modify_a_{{singularSnake}}_without_permission()
     {
         $record = create_test_{{singularSnake}}();
@@ -198,7 +197,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function can_modify_a_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->writePermission);
@@ -211,7 +210,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_if_trying_to_delete_a_non_existing_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->deletePermission);
@@ -221,7 +220,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function fails_to_delete_a_{{singularSnake}}_without_permission()
     {
         $record = create_test_{{singularSnake}}();
@@ -231,7 +230,7 @@ class {{namespaceNoSlash}}Api{{singularStudly}}Test extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function can_delete_a_{{singularSnake}}()
     {
         $this->user->givePermissionTo($this->deletePermission);
