@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use {{namespace}}Models\{{singularStudly}};
+use PHPUnit\Framework\Attributes\Test;
 
 class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
 {
@@ -54,7 +55,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
     }
 
 
-    /** @test */
+    #[Test]
     public function can_see_grid_without_{{singularSnake}}()
     {
         $this->visit('/backend/{{pluralSnake}}')
@@ -62,7 +63,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->see(trans('motor-backend::backend/global.no_records'));
     }
 
-    /** @test */
+    #[Test]
     public function can_see_grid_with_one_{{singularSnake}}()
     {
         $record = create_test_{{singularSnake}}();
@@ -71,7 +72,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->see($record->name);
     }
 
-    /** @test */
+    #[Test]
     public function can_visit_the_edit_form_of_a_{{singularSnake}}_and_use_the_back_button()
     {
         $record = create_test_{{singularSnake}}();
@@ -84,7 +85,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}');
     }
 
-    /** @test */
+    #[Test]
     public function can_visit_the_edit_form_of_a_{{singularSnake}}_and_change_values()
     {
         $record = create_test_{{singularSnake}}();
@@ -103,7 +104,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
         $this->assertEquals('Updated {{singularTitle}}', $record->name);
     }
 
-    /** @test */
+    #[Test]
     public function can_click_the_{{singularSnake}}_create_button()
     {
         $this->visit('/backend/{{pluralSnake}}')
@@ -111,7 +112,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}/create');
     }
 
-    /** @test */
+    #[Test]
     public function can_create_a_new_{{singularSnake}}()
     {
         $this->visit('/backend/{{pluralSnake}}/create')
@@ -125,7 +126,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}');
     }
 
-    /** @test */
+    #[Test]
     public function cannot_create_a_new_{{singularSnake}}_with_empty_fields()
     {
         $this->visit('/backend/{{pluralSnake}}/create')
@@ -137,7 +138,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}/create');
     }
 
-    /** @test */
+    #[Test]
     public function can_modify_a_{{singularSnake}}()
     {
         $record = create_test_{{singularSnake}}();
@@ -152,7 +153,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}');
     }
 
-    /** @test */
+    #[Test]
     public function can_delete_a_{{singularSnake}}()
     {
         create_test_{{singularSnake}}();
@@ -169,7 +170,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
         $this->assertCount(0, {{singularStudly}}::all());
     }
 
-    /** @test */
+    #[Test]
     public function can_paginate_{{singularSnake}}_results()
     {
         $records = create_test_{{singularSnake}}(100);
@@ -180,7 +181,7 @@ class {{namespaceNoSlash}}Backend{{singularStudly}}Test extends TestCase
             ->seePageIs('/backend/{{pluralSnake}}?page=3');
     }
 
-    /** @test */
+    #[Test]
     public function can_search_{{singularSnake}}_results()
     {
         $records = create_test_{{singularSnake}}(10);
