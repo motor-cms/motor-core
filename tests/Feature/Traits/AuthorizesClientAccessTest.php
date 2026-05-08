@@ -8,7 +8,7 @@ class FixturePolicyForClientAccess
 {
     use AuthorizesClientAccess;
 
-    public function deny(Model $model, string $column = 'client_id'): bool
+    public function deny(?Model $model, string $column = 'client_id'): bool
     {
         return $this->denyForeignClient($model, $column);
     }
@@ -106,5 +106,42 @@ describe('AuthorizesClientAccess', function () {
         $model = new TenantedClientAccessFixture(['client_id' => null]);
 
         expect($policy->deny($model))->toBeTrue();
+    });
+
+    describe('null model (parent-traversal cases)', function () {
+        // A null $model arrives when a policy traverses through a relation that
+        // returned null — either because the parent record was filtered out by
+        // the global ClientScope (foreign tenant) or because the foreign key is
+        // unset (orphan). In both cases, V2 callers must be denied; V1 / SuperAdmin
+        // must still allow (the trait short-circuits before reaching the null check).
+        it('does not deny null when the resolver is unbound (V1 path)', function () {
+            $policy = new FixturePolicyForClientAccess;
+
+            expect($policy->deny(null))->toBeFalse();
+        });
+
+        it('does not deny null when the resolver returns null (SuperAdmin)', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => null);
+
+            $policy = new FixturePolicyForClientAccess;
+
+            expect($policy->deny(null))->toBeFalse();
+        });
+
+        it('denies null when the resolver returns a specific client list', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => [1, 2]);
+
+            $policy = new FixturePolicyForClientAccess;
+
+            expect($policy->deny(null))->toBeTrue();
+        });
+
+        it('denies null when the resolver returns an empty array', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => []);
+
+            $policy = new FixturePolicyForClientAccess;
+
+            expect($policy->deny(null))->toBeTrue();
+        });
     });
 });
