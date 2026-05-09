@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
 use Motor\Admin\Models\Client;
 use Motor\Admin\Models\User;
@@ -30,7 +31,7 @@ function buildFixtureRequest(User $user, array $payload): ValidatesAgainstUserCl
 {
     $request = ValidatesAgainstUserClientsFixtureRequest::create('/test', 'POST', $payload);
     $request->setContainer(app());
-    $request->setRedirector(app(\Illuminate\Routing\Redirector::class));
+    $request->setRedirector(app(Redirector::class));
     $request->setUserResolver(fn () => $user);
 
     return $request;

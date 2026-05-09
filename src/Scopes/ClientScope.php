@@ -5,6 +5,7 @@ namespace Motor\Core\Scopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Motor\Core\Traits\AuthorizesClientAccess;
 
 /**
  * Tenant isolation scope.
@@ -48,7 +49,7 @@ class ClientScope implements Scope
     }
 
     /**
-     * Public static counterpart to {@see \Motor\Core\Traits\AuthorizesClientAccess::denyForeignClient()}.
+     * Public static counterpart to {@see AuthorizesClientAccess::denyForeignClient()}.
      *
      * Use this from contexts that cannot pull in the trait — most commonly
      * static service methods, jobs, or any caller that needs to ask "is this
