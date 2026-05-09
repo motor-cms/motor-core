@@ -22,14 +22,31 @@ use Motor\Core\Search\ClientScopedSearch;
  * Models with a non-default tenant column (e.g. Approval's `approved_by_client_id`)
  * may override {@see static::clientForeignKeyName()} to redirect both the scope
  * and the auto-fill to the alternate column.
+ *
+ * For HTTP-time SuperAdmin tooling that needs to create a row outside the
+ * caller's tenant (or any other escape hatch where the auto-fill would
+ * interfere), wrap the create in {@see static::withoutClientAutoFill()} —
+ * the flag is per-class, so suspending it for one tenanted model does not
+ * affect the others.
  */
 trait BelongsToClient
 {
+    /**
+     * Per-class auto-fill suspension flag. PHP gives each consuming class
+     * its own static, so suspending the auto-fill on one tenanted model
+     * does not leak into the others.
+     */
+    protected static bool $clientAutoFillSuspended = false;
+
     protected static function bootBelongsToClient(): void
     {
         static::addGlobalScope(new ClientScope(static::clientForeignKeyName()));
 
         static::creating(function ($model) {
+            if (static::$clientAutoFillSuspended) {
+                return;
+            }
+
             $key = static::clientForeignKeyName();
 
             if (! empty($model->{$key})) {
@@ -61,5 +78,22 @@ trait BelongsToClient
     public static function searchScopedToClient(string $query): ScoutBuilder
     {
         return ClientScopedSearch::for(static::class, $query, static::clientForeignKeyName());
+    }
+
+    /**
+     * Run a callback with the auto-fill `creating` hook suspended for this
+     * model class. Restores the prior state in a finally block so a thrown
+     * exception cannot leave the suspension bit flipped.
+     */
+    public static function withoutClientAutoFill(callable $callback): mixed
+    {
+        $previous = static::$clientAutoFillSuspended;
+        static::$clientAutoFillSuspended = true;
+
+        try {
+            return $callback();
+        } finally {
+            static::$clientAutoFillSuspended = $previous;
+        }
     }
 }

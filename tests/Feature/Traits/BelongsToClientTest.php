@@ -163,6 +163,54 @@ describe('BelongsToClient', function () {
         });
     });
 
+    describe('withoutClientAutoFill', function () {
+        // Escape hatch for HTTP-time SuperAdmin tooling that needs to create a
+        // row outside the caller's tenant. The flag is per-class, so suspending
+        // the auto-fill on one tenanted model does not affect the others.
+        it('suspends auto-fill inside the callback', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => [42]);
+
+            $row = TenantedTraitFixture::withoutClientAutoFill(function () {
+                return TenantedTraitFixture::withoutGlobalScope(ClientScope::class)
+                    ->create(['name' => 'bypassed']);
+            });
+
+            expect($row->client_id)->toBeNull();
+        });
+
+        it('restores the auto-fill after the callback returns', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => [42]);
+
+            TenantedTraitFixture::withoutClientAutoFill(fn () => null);
+
+            $row = TenantedTraitFixture::create(['name' => 'restored']);
+
+            expect($row->client_id)->toBe(42);
+        });
+
+        it('restores the auto-fill even when the callback throws', function () {
+            app()->instance(ClientScope::RESOLVER_KEY, fn () => [42]);
+
+            try {
+                TenantedTraitFixture::withoutClientAutoFill(function () {
+                    throw new RuntimeException('boom');
+                });
+            } catch (RuntimeException) {
+                // expected
+            }
+
+            $row = TenantedTraitFixture::create(['name' => 'after-throw']);
+
+            expect($row->client_id)->toBe(42);
+        });
+
+        it('returns the callback\'s return value', function () {
+            $result = TenantedTraitFixture::withoutClientAutoFill(fn () => 'payload');
+
+            expect($result)->toBe('payload');
+        });
+    });
+
     describe('searchScopedToClient', function () {
         it('returns a Scout builder with the client filter applied', function () {
             app()->instance(ClientScope::RESOLVER_KEY, fn () => [5]);
