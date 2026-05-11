@@ -1,16 +1,7 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Scopes\ClientScope;
-
-class DeniesFixture extends Model
-{
-    protected $table = 'denies_fixtures';
-
-    public $timestamps = false;
-
-    protected $guarded = [];
-}
+use Motor\Core\Test\Fixtures\Scopes\DeniesFixture;
 
 beforeEach(fn () => app()->forgetInstance(ClientScope::RESOLVER_KEY));
 afterEach(fn () => app()->forgetInstance(ClientScope::RESOLVER_KEY));

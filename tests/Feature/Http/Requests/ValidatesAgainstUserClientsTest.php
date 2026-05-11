@@ -1,31 +1,13 @@
 <?php
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Validator;
 use Motor\Admin\Models\Client;
 use Motor\Admin\Models\User;
-use Motor\Core\Http\Requests\ValidatesAgainstUserClients;
+use Motor\Core\Test\Fixtures\Http\Requests\ValidatesAgainstUserClientsFixtureRequest;
 
 uses(RefreshDatabase::class);
-
-class ValidatesAgainstUserClientsFixtureRequest extends FormRequest
-{
-    use ValidatesAgainstUserClients;
-
-    public function rules(): array
-    {
-        return [
-            'client_id' => ['required', 'integer', $this->allowedClientIdsRule()],
-        ];
-    }
-
-    public function authorize(): bool
-    {
-        return true;
-    }
-}
 
 function buildFixtureRequest(User $user, array $payload): ValidatesAgainstUserClientsFixtureRequest
 {

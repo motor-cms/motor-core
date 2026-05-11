@@ -1,40 +1,10 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Builder as ScoutBuilder;
-use Laravel\Scout\Searchable;
 use Motor\Core\Filter\Renderers\SearchRenderer;
 use Motor\Core\Scopes\ClientScope;
-use Motor\Core\Traits\BelongsToClient;
-
-class TenantedSearchableForRenderer extends Model
-{
-    use BelongsToClient;
-    use Searchable;
-
-    protected $table = 'tenanted_searchable_for_renderer';
-
-    public $timestamps = false;
-
-    public function searchableAs(): string
-    {
-        return 'tenanted_searchable_for_renderer_index';
-    }
-}
-
-class NonTenantedSearchableForRenderer extends Model
-{
-    use Searchable;
-
-    protected $table = 'non_tenanted_searchable_for_renderer';
-
-    public $timestamps = false;
-
-    public function searchableAs(): string
-    {
-        return 'non_tenanted_searchable_for_renderer_index';
-    }
-}
+use Motor\Core\Test\Fixtures\Filter\NonTenantedSearchableForRenderer;
+use Motor\Core\Test\Fixtures\Filter\TenantedSearchableForRenderer;
 
 beforeEach(function () {
     app()->forgetInstance(ClientScope::RESOLVER_KEY);

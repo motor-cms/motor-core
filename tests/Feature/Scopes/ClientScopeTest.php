@@ -1,26 +1,8 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Scopes\ClientScope;
-
-/**
- * Plain Eloquent fixture model used purely to obtain a query builder.
- * No DB interaction — assertions are made against the generated SQL/bindings,
- * never executing the query.
- */
-class TenantedFixtureModel extends Model
-{
-    protected $table = 'tenanted_fixtures';
-
-    public $timestamps = false;
-}
-
-class CustomColumnFixtureModel extends Model
-{
-    protected $table = 'approval_fixtures';
-
-    public $timestamps = false;
-}
+use Motor\Core\Test\Fixtures\Scopes\CustomColumnFixtureModel;
+use Motor\Core\Test\Fixtures\Scopes\TenantedFixtureModel;
 
 beforeEach(function () {
     app()->forgetInstance(ClientScope::RESOLVER_KEY);

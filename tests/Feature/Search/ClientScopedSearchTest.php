@@ -1,24 +1,9 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Builder;
-use Laravel\Scout\Searchable;
 use Motor\Core\Scopes\ClientScope;
 use Motor\Core\Search\ClientScopedSearch;
-
-class SearchableFixtureModel extends Model
-{
-    use Searchable;
-
-    protected $table = 'searchable_fixtures';
-
-    public $timestamps = false;
-
-    public function searchableAs(): string
-    {
-        return 'searchable_fixtures_index';
-    }
-}
+use Motor\Core\Test\Fixtures\Search\SearchableFixtureModel;
 
 beforeEach(function () {
     app()->forgetInstance(ClientScope::RESOLVER_KEY);

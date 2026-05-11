@@ -1,29 +1,9 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 use Motor\Core\Scopes\ClientScope;
 use Motor\Core\Services\GlobalSearchService;
-use Motor\Core\Traits\BelongsToClient;
-
-class TenantedSearchableForGlobalSearch extends Model
-{
-    use BelongsToClient;
-    use Searchable;
-
-    protected $table = 'tenanted_searchable_for_global_search';
-
-    public $timestamps = false;
-}
-
-class NonTenantedSearchableForGlobalSearch extends Model
-{
-    use Searchable;
-
-    protected $table = 'non_tenanted_searchable_for_global_search';
-
-    public $timestamps = false;
-}
+use Motor\Core\Test\Fixtures\Services\NonTenantedSearchableForGlobalSearch;
+use Motor\Core\Test\Fixtures\Services\TenantedSearchableForGlobalSearch;
 
 beforeEach(function () {
     app()->forgetInstance(ClientScope::RESOLVER_KEY);

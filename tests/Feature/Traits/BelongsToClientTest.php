@@ -1,48 +1,14 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Laravel\Scout\Builder as ScoutBuilder;
-use Laravel\Scout\Searchable;
 use Motor\Admin\Models\Client;
 use Motor\Core\Scopes\ClientScope;
-use Motor\Core\Traits\BelongsToClient;
-
-class TenantedTraitFixture extends Model
-{
-    use BelongsToClient;
-    use Searchable;
-
-    protected $table = 'tenanted_trait_fixtures';
-
-    protected $guarded = [];
-
-    public $timestamps = false;
-
-    public function searchableAs(): string
-    {
-        return 'tenanted_trait_fixtures_index';
-    }
-}
-
-class TenantedTraitFixtureCustomColumn extends Model
-{
-    use BelongsToClient;
-
-    protected $table = 'custom_column_fixtures';
-
-    protected $guarded = [];
-
-    public $timestamps = false;
-
-    public static function clientForeignKeyName(): string
-    {
-        return 'approved_by_client_id';
-    }
-}
+use Motor\Core\Test\Fixtures\Traits\TenantedTraitFixture;
+use Motor\Core\Test\Fixtures\Traits\TenantedTraitFixtureCustomColumn;
 
 uses(RefreshDatabase::class);
 

@@ -1,27 +1,8 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use Motor\Core\Scopes\ClientScope;
-use Motor\Core\Traits\AuthorizesClientAccess;
-
-class FixturePolicyForClientAccess
-{
-    use AuthorizesClientAccess;
-
-    public function deny(?Model $model, string $column = 'client_id'): bool
-    {
-        return $this->denyForeignClient($model, $column);
-    }
-}
-
-class TenantedClientAccessFixture extends Model
-{
-    protected $table = 'tenanted_client_access_fixtures';
-
-    public $timestamps = false;
-
-    protected $guarded = [];
-}
+use Motor\Core\Test\Fixtures\Traits\FixturePolicyForClientAccess;
+use Motor\Core\Test\Fixtures\Traits\TenantedClientAccessFixture;
 
 beforeEach(function () {
     app()->forgetInstance(ClientScope::RESOLVER_KEY);
