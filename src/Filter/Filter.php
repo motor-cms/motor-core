@@ -36,10 +36,17 @@ class Filter
 
     public function addClientFilter(): void
     {
-        if (Auth::user()->client_id > 0) {
+        // Phase 7 of ZRMDEV-165: read the first pivot client instead of the
+        // dropped users.client_id scalar. V1-strict semantics: a multi-client
+        // user collapses to their first pivot row, matching the "primary
+        // client" intent that the legacy column used to encode. SuperAdmin /
+        // empty-pivot users fall through to the full client list.
+        $client = Auth::user()?->clients->first();
+
+        if ($client !== null) {
             $this->add(new SelectRenderer('client_id'))
-                ->setOptions([Auth::user()->client_id => Auth::user()->client->name])
-                ->setDefaultValue(Auth::user()->client_id)
+                ->setOptions([$client->id => $client->name])
+                ->setDefaultValue($client->id)
                 ->isVisible(false);
         } else {
             $clients = config('motor-admin.models.client')::orderBy('name')->pluck('name', 'id');
