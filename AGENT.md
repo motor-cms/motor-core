@@ -124,6 +124,48 @@ Located in `src/Console/` -- includes scaffolding generators and utility command
 - No Eloquent models in this package -- only DTOs in `src/Data/`.
 - The `Support/` directory contains additional support classes.
 
+## Tenant scoping (ZRMDEV-165)
+
+Per-request tenant isolation for V2 API traffic. Five components in this package compose the system; downstream packages adopt them by trait or middleware.
+
+### Resolver contract
+
+A single per-request resolver controls every layer. Bound under `ClientScope::RESOLVER_KEY` (`'client.scope.resolver'`) as a `Closure(): ?array<int>`. Three return shapes:
+
+| Returns | Meaning |
+|---|---|
+| `null` | SuperAdmin / unscoped — no filter applied anywhere. |
+| `[]` | Authenticated user with no client pivot — every query returns zero rows, every authz check denies. |
+| `[1, 2, …]` | Allowed client ids — `whereIn` applied; in-list = allowed. |
+| *(unbound)* | V1 / console / job / public path — every layer no-ops. |
+
+The resolver is bound by `ScopeRequestsToClient` middleware on V2 routes only. Test code uses the `actingAsClientScopedUser($user)` Pest helper to bind it explicitly.
+
+### Components
+
+| Component | Purpose |
+|---|---|
+| `Scopes\ClientScope` | Eloquent global scope. Reads the resolver and adds `whereIn($table.client_id, $ids)`. Also exposes `ClientScope::deniesForModel(?Model, string)` as the static counterpart for the trait check. |
+| `Traits\BelongsToClient` | Boots `ClientScope`, declares the `client()` belongsTo via `config('motor-admin.models.client')`, and has a `creating` hook that auto-fills `client_id` when the resolver returns exactly one id. Used by tenanted models in downstream packages. |
+| `Search\ClientScopedSearch` | Wraps `Model::search($query)` with the resolver-driven Scout filter. V2 search call sites use `Model::searchScopedToClient($query)` (provided by the trait) or `ClientScopedSearch::for($modelClass, $query)` directly. |
+| `Traits\AuthorizesClientAccess` | Policy-side `denyForeignClient(?Model)`. Returns true when the resolver is bound, not SuperAdmin, and the model's `client_id` is not in the allowed list — including when the model itself is `null` (parent-traversal chains denying naturally). |
+| `Http\Middleware\ScopeRequestsToClient` | Binds the resolver from `Auth::user()->clients()` on `handle()`; clears it on `terminate()` to prevent leakage across worker processes. |
+| `Http\Requests\ValidatesAgainstUserClients` | Trait for V2 PostRequests. Composes `Rule::in(allowed_client_ids)` onto the existing `client_id` rule list. SuperAdmin gets every seeded client; everyone else gets exactly their pivot. |
+
+### Opt-in / opt-out
+
+- **Opt-in for a model:** `use Motor\Core\Traits\BelongsToClient;`. The trait expects a `client_id` column. For tenanted models without that column (e.g. `Score`, `SeoRedirect`, `CustomContentField{,Data,Conditional}`), do NOT use the trait — enforce tenancy via parent-traversal in the policy instead (`denyForeignClient($model->parent)` reads cleanly because the trait method is null-tolerant).
+- **Opt-in for a policy:** `use Motor\Core\Traits\AuthorizesClientAccess;` and call `if ($this->denyForeignClient($model)) return false;` at the top of every per-instance ability (`view`, `update`, `delete`, `restore`, `forceDelete`, plus any custom abilities). `viewAny` and `create` are not gated here — list endpoints rely on the global scope; create is gated by the `ValidatesAgainstUserClients` trait on the V2 PostRequest.
+- **Opt-out per-row:** the trait does not include a `withoutClientAutoFill()` helper. Seeders and factories don't bind a resolver anyway, so the auto-fill never fires for them.
+
+### Queue / job caveat
+
+The middleware's `terminate()` clears the binding so it does not leak into sync queue dispatches running mid-request, Octane-style request reuse, or other long-lived processes. Jobs that need the same scoping must bind the resolver themselves before dispatching scoped queries — pass the user (or the resolver array) into the job constructor and bind in `handle()`. This is intentional; a job inheriting an arbitrary tenant's resolver would be a security hole.
+
+### Rollout reindex
+
+Phase 2 added `client_id` to several `toSearchableArray()` outputs. Existing Meilisearch documents lack the field and will be filtered out for any non-SuperAdmin caller until reindexed. See `docs/runbooks/zrmdev-165-meilisearch-reindex.md` for the per-index `scout:flush` + `scout:import` sequence.
+
 ## Testing
 
 This package has minimal direct tests. Its functionality is tested indirectly through the packages that extend it (primarily motor-admin).

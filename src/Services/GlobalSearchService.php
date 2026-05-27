@@ -8,6 +8,8 @@ use Meilisearch\Contracts\SearchQuery;
 use Motor\Core\Data\GlobalSearchHitData;
 use Motor\Core\Data\GlobalSearchMetaData;
 use Motor\Core\Data\GlobalSearchResultData;
+use Motor\Core\Scopes\ClientScope;
+use Motor\Core\Traits\BelongsToClient;
 
 class GlobalSearchService
 {
@@ -118,14 +120,68 @@ class GlobalSearchService
             $searchQuery->setShowRankingScore(true);
             $searchQuery->setLimit($offset + $limit);
 
+            $filters = [];
+
             if (! empty($moduleConfig['default_filter'])) {
-                $searchQuery->setFilter([$moduleConfig['default_filter']]);
+                $filters[] = $moduleConfig['default_filter'];
+            }
+
+            if ($clientFilter = $this->clientFilterForModule($moduleConfig)) {
+                $filters[] = $clientFilter;
+            }
+
+            if ($filters !== []) {
+                $searchQuery->setFilter($filters);
             }
 
             $queries[] = $searchQuery;
         }
 
         return $queries;
+    }
+
+    /**
+     * Build a Meilisearch filter expression for the per-request client scope.
+     *
+     * Returns null when no client filter should be applied — i.e. the module's
+     * model is not tenanted, the resolver is unbound (V1 / public / console),
+     * or the resolver represents a SuperAdmin (null result).
+     */
+    protected function clientFilterForModule(array $moduleConfig): ?string
+    {
+        $modelClass = $moduleConfig['model'] ?? null;
+
+        if (! is_string($modelClass) || ! class_exists($modelClass)) {
+            return null;
+        }
+
+        if (! in_array(BelongsToClient::class, class_uses_recursive($modelClass), true)) {
+            return null;
+        }
+
+        if (! app()->bound(ClientScope::RESOLVER_KEY)) {
+            return null;
+        }
+
+        $ids = (app(ClientScope::RESOLVER_KEY))();
+
+        if ($ids === null) {
+            return null;
+        }
+
+        $column = $modelClass::clientForeignKeyName();
+
+        if ($ids === []) {
+            return $column.' = -1';
+        }
+
+        if (count($ids) === 1) {
+            return $column.' = '.(int) $ids[0];
+        }
+
+        $list = implode(', ', array_map('intval', $ids));
+
+        return $column.' IN ['.$list.']';
     }
 
     protected function formatResults(
