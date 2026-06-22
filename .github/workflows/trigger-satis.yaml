@@ -11,6 +11,10 @@ on:
       - staging
       - production
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   PACKAGE_NAME: motor-cms/motor-core
 
@@ -18,22 +22,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch creds from Infisical
+        uses: Infisical/secrets-action@v1.0.7
+        with:
+          method: oidc
+          domain: https://secrets.tastatur-und-maus.net
+          identity-id: ${{ secrets.INFISICAL_IDENTITY_ID }}
+          project-slug: ${{ secrets.INFISICAL_PROJECT_SLUG }}
+          env-slug: prod
+
       - name: Trigger satis build (non-tag push)
         if: github.ref_type != 'tag'
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{ secrets.SATIS_WEBHOOK_URL }}?package=${{ env.PACKAGE_NAME }}
+          url: ${{ vars.SATIS_WEBHOOK_URL }}?package=${{ env.PACKAGE_NAME }}
           method: 'GET'
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          username: ${{ env.COMPOSER_REGISTRY_USERNAME }}
+          password: ${{ env.COMPOSER_REGISTRY_PASSWORD }}
 
       - name: Trigger satis and verify indexing (tag push)
         if: github.ref_type == 'tag'
         env:
           VERSION: ${{ github.ref_name }}
-          WEBHOOK_URL: ${{ secrets.SATIS_WEBHOOK_URL }}
-          AUTH_USER: ${{ secrets.USERNAME }}
-          AUTH_PASS: ${{ secrets.PASSWORD }}
+          WEBHOOK_URL: ${{ vars.SATIS_WEBHOOK_URL }}
+          AUTH_USER: ${{ env.COMPOSER_REGISTRY_USERNAME }}
+          AUTH_PASS: ${{ env.COMPOSER_REGISTRY_PASSWORD }}
         run: |
           check_indexed() {
             curl -sf -u "$AUTH_USER:$AUTH_PASS" \
