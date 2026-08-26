@@ -37,6 +37,11 @@ jobs:
         with:
           url: ${{ vars.SATIS_WEBHOOK_URL }}?package=${{ env.PACKAGE_NAME }}
           method: 'GET'
+          # update.php runs 3.9-15.5s (median 7.6s); the 5s default cuts it off
+          # mid-rebuild - nginx logs 499 while PHP completes normally.
+          timeout: 60000
+          retry: 2
+          retryWait: 15000
           username: ${{ env.COMPOSER_REGISTRY_USERNAME }}
           password: ${{ env.COMPOSER_REGISTRY_PASSWORD }}
 
